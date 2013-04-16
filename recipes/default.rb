@@ -46,30 +46,4 @@ end
 # install ruby and symlink the binaries to /usr/local
 # TODO - use a proper Ruby cookbook for this
 include_recipe "omnibus::ruby"
-
-# Turn off strict host key checking for github
-ruby_block "disable strict host key checking for github.com" do
-  block do
-    f = Chef::Util::FileEdit.new("/etc/ssh/ssh_config")
-    f.insert_line_if_no_match(/github\.com/, <<-EOH
-
-Host github.com
-  StrictHostKeyChecking no
-EOH
-    )
-    f.write_file
-  end
-end
-
-# Ensure SSH_AUTH_SOCK is honored under sudo
-ruby_block "make sudo honor ssh_auth_sock" do
-  block do
-    f = Chef::Util::FileEdit.new("/etc/sudoers")
-    f.insert_line_if_no_match(/SSH_AUTH_SOCK/, <<-EOH
-
-Defaults env_keep+=SSH_AUTH_SOCK
-EOH
-    )
-    f.write_file
-  end
-end
+include_recipe "omnibus::github"
