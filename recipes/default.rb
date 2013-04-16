@@ -23,7 +23,10 @@ directory Chef::Config[:file_cache_path] do
   action :create
 end
 
-user node['omnibus']['build_user']
+user node['omnibus']['build_user'] do
+  action :create
+  not_if { platform_family?("windows") }
+end
 
 [
   node['omnibus']['install_dir'],
