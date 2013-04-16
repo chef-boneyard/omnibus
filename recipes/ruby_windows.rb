@@ -26,7 +26,7 @@ remote_file ::File.join(Chef::Config[:file_cache_path], ruby_filename) do
 end
 
 windows_batch "install ruby" do
-  code "#{Chef::Config[:file_cache_path]}/#{ruby_name} /silent /dir=C:\\Ruby193 /tasks=\"assocfiles\""
+  code "#{Chef::Config[:file_cache_path]}/#{ruby_filename} /silent /dir=C:\\Ruby193 /tasks=\"assocfiles\""
   creates "C:\\Ruby193\\bin\\ruby.exe"
 end
 
