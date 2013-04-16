@@ -17,4 +17,5 @@
 # limitations under the License.
 #
 
+include_recipe "homebrew"
 include_recipe "git"

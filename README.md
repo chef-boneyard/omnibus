@@ -27,6 +27,7 @@ This cookbook depends on the following external cookbooks:
 * [apt](http://community.opscode.com/cookbooks/apt) (Opscode)
 * [build-essential](http://community.opscode.com/cookbooks/build-essential) (Opscode)
 * [git](http://community.opscode.com/cookbooks/git) (Opscode)
+* [homebrew](http://community.opscode.com/cookbooks/homebrew) (Opscode)
 * [pkgutil](http://community.opscode.com/cookbooks/pkgutil) (marthag)
 * [yum](http://community.opscode.com/cookbooks/yum) (Opscode)
 * [wix](http://community.opscode.com/cookbooks/wix) (Opscode)
