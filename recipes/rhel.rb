@@ -18,6 +18,8 @@
 #
 
 include_recipe "yum::epel"
+include_recipe "build-essential"
+include_recipe "git"
 
 %w{
   rpm-build
