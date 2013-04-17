@@ -62,6 +62,21 @@ EOB
   cwd "C:\\DevKit"
 end
 
+# Ensure a certificate authority is available and configured
+# https://gist.github.com/fnichol/867550
+
+# date of the file is in a comment at the start
+cacert_file = "C:\\Ruby193\\cacert-2012.12.19.pem"
+
+remote_file cacert_file do
+  source "http://curl.haxx.se/ca/cacert.pem"
+  checksum "f5f79efd63440f2048ead91090eaca3102d13ea17a548f72f738778a534c646d"
+end
+
+env "SSL_CERT_FILE" do
+  value cacert_file
+end
+
 gem_package "bundler" do
   version "1.3.5"
   gem_binary "C:\\Ruby193\\bin\\gem"
