@@ -17,67 +17,91 @@
 # limitations under the License.
 #
 
-ruby_filename = "rubyinstaller-1.9.3-p392.exe"
+ruby_version = "1.9.3-p392"
+ruby_filename = "rubyinstaller-#{ruby_version}.exe"
 ruby_checksum = "7caa832b52873aaec3bc8da465e19196514149a7e3839a7882003fe80224e90d"
 
-remote_file ::File.join(Chef::Config[:file_cache_path], ruby_filename) do
-  source "http://cdn.rubyinstaller.org/archives/1.9.3-p392/#{ruby_filename}"
+ruby_dir = "C:/Ruby193"
+ruby_bindir = ::File.join(ruby_dir, "bin")
+ruby_bin = ::File.join(ruby_bindir, "ruby.exe")
+
+ruby_download_path = ::File.join(Chef::Config[:file_cache_path], ruby_filename)
+
+remote_file ruby_download_path do
+  source "http://cdn.rubyinstaller.org/archives/#{ruby_version}/#{ruby_filename}"
   checksum ruby_checksum
 end
 
-windows_batch "install ruby" do
-  code "#{Chef::Config[:file_cache_path]}/#{ruby_filename} /silent /dir=C:\\Ruby193 /tasks=\"assocfiles\""
-  creates "C:\\Ruby193\\bin\\ruby.exe"
+windows_batch "install Ruby #{ruby_version}" do
+  code <<-EOB
+"#{OmnibusHelper.win_friendly_path(ruby_download_path)}" ^
+/silent ^
+/dir="#{OmnibusHelper.win_friendly_path(ruby_dir)}" ^
+/tasks="assocfiles"
+EOB
+  creates ruby_bin
 end
 
-windows_path "C:\\Ruby193\\bin" do
+windows_path OmnibusHelper.win_friendly_path(ruby_bindir) do
   action :add
 end
 
 #
 # install the devkit
 #
-kit_file = "DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe"
-kit_checksum = "6c3af5487dafda56808baf76edd262b2020b1b25ab86aabf972629f4a6a54491"
+devkit_file = "DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe"
+devkit_checksum = "6c3af5487dafda56808baf76edd262b2020b1b25ab86aabf972629f4a6a54491"
 
-directory "C:\\DevKit" do
+devkit_dir = "C:/DevKit"
+
+directory devkit_dir do
   action :create
 end
 
-remote_file "C:\\DevKit\\#{kit_file}" do
-  source "https://github.com/downloads/oneclick/rubyinstaller/#{kit_file}"
-  checksum kit_checksum
-  not_if { File.exists?("C:\\DevKit\\#{kit_file}") }
+remote_file ::File.join(devkit_dir, devkit_file) do
+  source "https://github.com/downloads/oneclick/rubyinstaller/#{devkit_file}"
+  checksum devkit_checksum
+  not_if { ::File.exists?(::File.join(devkit_dir, devkit_file)) }
 end
 
-file "C:\\DevKit\\config.yml" do
-  content "- C:\\Ruby193"
+file ::File.join(devkit_dir, "config.yml") do
+  content "- #{OmnibusHelper.win_friendly_path(ruby_dir)}"
 end
 
 windows_batch "install devkit" do
-  code <<EOB
-#{kit_file} -y
-C:\\Ruby193\\bin\\ruby.exe dk.rb install
+  code <<-EOB
+#{devkit_file} -y
+#{OmnibusHelper.win_friendly_path(ruby_bin)} dk.rb install
 EOB
-  cwd "C:\\DevKit"
+  cwd devkit_dir
+  not_if { ::File.exists?(::File.join(devkit_dir, "dk.rb")) }
 end
 
 # Ensure a certificate authority is available and configured
 # https://gist.github.com/fnichol/867550
 
-# date of the file is in a comment at the start
-cacert_file = "C:\\Ruby193\\cacert-2012.12.19.pem"
+cert_dir = ::File.join(ruby_dir, "ssl", "certs")
+cacert_file = ::File.join(cert_dir, "cacert.pem")
+
+directory cert_dir do
+  recursive true
+  action :create
+end
 
 remote_file cacert_file do
   source "http://curl.haxx.se/ca/cacert.pem"
   checksum "f5f79efd63440f2048ead91090eaca3102d13ea17a548f72f738778a534c646d"
+  action :create
 end
+
+ENV['SSL_CERT_FILE'] = cacert_file
 
 env "SSL_CERT_FILE" do
-  value cacert_file
+  value OmnibusHelper.win_friendly_path(cacert_file)
 end
 
+# Ensure Bundler is installed and available
 gem_package "bundler" do
   version "1.3.5"
-  gem_binary "C:\\Ruby193\\bin\\gem"
+  gem_binary ::File.join(ruby_bindir, "gem")
 end
