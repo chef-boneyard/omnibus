@@ -27,6 +27,14 @@ ssh_config_file = case node['platform_family']
                     "/etc/ssh/ssh_config"
                   end
 
+sudoers_file = case node['platform_family']
+               when 'freebsd'
+                 "/usr/local/etc/sudoers"
+               else
+                 "/etc/sudoers"
+               end
+
+
 # Turn off strict host key checking for github
 ruby_block "disable strict host key checking for github.com" do
   block do
@@ -45,7 +53,7 @@ end
 # Ensure SSH_AUTH_SOCK is honored under sudo
 ruby_block "make sudo honor ssh_auth_sock" do
   block do
-    f = Chef::Util::FileEdit.new("/etc/sudoers")
+    f = Chef::Util::FileEdit.new(sudoers_file)
     f.insert_line_if_no_match(/SSH_AUTH_SOCK/, <<-EOH
 
 Defaults env_keep+=SSH_AUTH_SOCK
@@ -53,5 +61,5 @@ EOH
     )
     f.write_file
   end
-  only_if { ::File.exists?("/etc/sudoers") }
+  only_if { ::File.exists?(sudoers_file) }
 end
