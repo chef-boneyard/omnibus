@@ -6,11 +6,12 @@ description       "Prepares a machine to be an Omnibus builder."
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version           "1.0.0"
 
-supports "ubuntu"
-supports "debian"
 supports "centos"
+supports "debian"
 supports "fedora"
+supports "freebsd"
 supports "solaris2"
+supports "ubuntu"
 supports "windows"
 
 depends "apt", "~> 1.9.0"
