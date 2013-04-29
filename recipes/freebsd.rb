@@ -38,3 +38,6 @@ include_recipe "git"
   package pkg
 end
 
+link "/usr/local/bin/make" do
+  to "/usr/local/bin/gmake"
+end
