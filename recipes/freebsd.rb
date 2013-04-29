@@ -30,6 +30,7 @@ end
 include_recipe "build-essential"
 include_recipe "git"
 
+# TODO - move these to build-essential
 %w{
   gmake
   autoconf
@@ -41,3 +42,19 @@ end
 link "/usr/local/bin/make" do
   to "/usr/local/bin/gmake"
 end
+
+# Ensure /usr/local/bin is first in PATH
+ruby_block "Ensure /usr/local/bin is first in PATH" do
+  block do
+    f = Chef::Util::FileEdit.new("/etc/profile")
+    f.insert_line_if_no_match(/PATH/, <<-EOH
+
+PATH=/usr/local/bin:$PATH
+EOH
+    )
+    f.write_file
+  end
+  only_if { ::File.exists?("/etc/profile") }
+end
+
+ENV['PATH'] = "/usr/local/bin:#{ENV['PATH']}"
