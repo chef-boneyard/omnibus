@@ -17,11 +17,20 @@
 # limitations under the License.
 #
 
-include_recipe "build-essential"
+case node['platform_family']
+when "windows"
 
-if node['platform_family'] == 'windows'
+  include_recipe "omnibus::ruby_windows"
 
- include_recipe "omnibus::ruby_windows"
+when "smartos"
+
+  pkgin_package "ruby193"
+
+  gem_package "bundler" do
+    version "1.3.5"
+    gem_binary "/opt/local/bin/gem"
+    options "--bindir=/opt/local/bin"
+  end
 
 else
 
