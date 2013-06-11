@@ -1,3 +1,7 @@
+## v1.0.4:
+
+* [CHEF-3151] Don't extract ports every time in omnibus::freebsd
+
 ## v1.0.2:
 
 FEATURES:
