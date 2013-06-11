@@ -19,16 +19,20 @@
 # limitations under the License.
 #
 
-execute "Update Ports Tree" do
-  command <<-EOS
-    sed -e 's/\\[ ! -t 0 \\]/false/' /usr/sbin/portsnap > /tmp/portsnap
-    chmod +x /tmp/portsnap
-    /tmp/portsnap fetch extract
-  EOS
-end
-
 include_recipe "build-essential"
 include_recipe "git"
+
+# The sed forces portsnap to run non-interactively
+# fetch downloads a ports snapshot, extract puts them on disk (long)
+# update will update an existing ports tree
+portsnap_opts = ::File.exists?("/usr/ports") ? "update" : "fetch extract"
+ 
+execute "Manage Ports Tree - #{portsnap_opts}" do
+  command <<-EOS
+    sed -e 's/\\[ ! -t 0 \\]/false/' /usr/sbin/portsnap > /tmp/portsnap
+    chmod +x /tmp/portsnap #{portsnap_opts}
+  EOS
+end
 
 # TODO - move these to build-essential
 %w{
