@@ -1,3 +1,7 @@
+## v1.0.6:
+
+* [CHEF-3151] Fix regression in /tmp/portsnap call
+
 ## v1.0.4:
 
 * [CHEF-3151] Don't extract ports every time in omnibus::freebsd
