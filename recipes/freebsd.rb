@@ -30,7 +30,8 @@ portsnap_opts = ::File.exists?("/usr/ports") ? "update" : "fetch extract"
 execute "Manage Ports Tree - #{portsnap_opts}" do
   command <<-EOS
     sed -e 's/\\[ ! -t 0 \\]/false/' /usr/sbin/portsnap > /tmp/portsnap
-    chmod +x /tmp/portsnap #{portsnap_opts}
+    chmod +x /tmp/portsnap
+    /tmp/portsnap #{portsnap_opts}
   EOS
 end
 
