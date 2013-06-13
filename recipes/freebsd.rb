@@ -44,22 +44,16 @@ end
   package pkg
 end
 
-link "/usr/local/bin/make" do
-  to "/usr/local/bin/gmake"
-end
-
-# Ensure /usr/local/bin is first in PATH
-ruby_block "Ensure /usr/local/bin is first in PATH" do
+# COOK-3170: FreeBSD make breaks on some software when passed -j
+ruby_block "Disable make parallelization system-wide" do
   block do
-    f = Chef::Util::FileEdit.new("/etc/profile")
-    f.insert_line_if_no_match(/PATH/, <<-EOH
-
-PATH=/usr/local/bin:$PATH
+    f = Chef::Util::FileEdit.new("/etc/make.conf")
+    f.insert_line_if_no_match(/.MAKEFLAGS:/, <<-EOH
+ 
+.MAKEFLAGS: -B
 EOH
     )
     f.write_file
   end
-  only_if { ::File.exists?("/etc/profile") }
+  only_if { ::File.exists?("/etc/make.conf") }
 end
-
-ENV['PATH'] = "/usr/local/bin:#{ENV['PATH']}"
