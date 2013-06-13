@@ -1,3 +1,7 @@
+## v1.0.8:
+
+* [COOK-3170] Linking make to gmake breaks the package provider on FreeBSD
+
 ## v1.0.6:
 
 * [CHEF-3151] Fix regression in /tmp/portsnap call

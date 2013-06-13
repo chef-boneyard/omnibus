@@ -4,7 +4,7 @@ maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Prepares a machine to be an Omnibus builder."
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           "1.0.6"
+version           "1.0.8"
 
 supports "centos"
 supports "debian"
