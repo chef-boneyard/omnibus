@@ -19,14 +19,11 @@
 # limitations under the License.
 #
 
-include_recipe "build-essential"
-include_recipe "git"
-
 # The sed forces portsnap to run non-interactively
 # fetch downloads a ports snapshot, extract puts them on disk (long)
 # update will update an existing ports tree
 portsnap_opts = ::File.exists?("/usr/ports") ? "update" : "fetch extract"
- 
+
 execute "Manage Ports Tree - #{portsnap_opts}" do
   command <<-EOS
     sed -e 's/\\[ ! -t 0 \\]/false/' /usr/sbin/portsnap > /tmp/portsnap
@@ -34,6 +31,9 @@ execute "Manage Ports Tree - #{portsnap_opts}" do
     /tmp/portsnap #{portsnap_opts}
   EOS
 end
+
+include_recipe "build-essential"
+include_recipe "git"
 
 # TODO - move these to build-essential
 %w{
@@ -49,7 +49,7 @@ ruby_block "Disable make parallelization system-wide" do
   block do
     f = Chef::Util::FileEdit.new("/etc/make.conf")
     f.insert_line_if_no_match(/.MAKEFLAGS:/, <<-EOH
- 
+
 .MAKEFLAGS: -B
 EOH
     )
