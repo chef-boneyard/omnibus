@@ -3,6 +3,11 @@ omnibus Cookbook CHANGELOG
 This file is used to list changes made in each version of the omnibus cookbook.
 
 
+v1.0.10
+-------
+### Bug
+- **[COOK-3178](https://tickets.opscode.com/browse/COOK-3178)** - Fix order of git installation on FreeBSD
+
 v1.0.8
 ------
 - [COOK-3170] Linking make to gmake breaks the package provider on FreeBSD
