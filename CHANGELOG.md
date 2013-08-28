@@ -1,22 +1,25 @@
-## v1.0.8:
+omnibus Cookbook CHANGELOG
+==========================
+This file is used to list changes made in each version of the omnibus cookbook.
 
-* [COOK-3170] Linking make to gmake breaks the package provider on FreeBSD
 
-## v1.0.6:
+v1.0.8
+------
+- [COOK-3170] Linking make to gmake breaks the package provider on FreeBSD
 
-* [CHEF-3151] Fix regression in /tmp/portsnap call
+v1.0.6
+------
+- [CHEF-3151] Fix regression in /tmp/portsnap call
 
-## v1.0.4:
+v1.0.4
+------
+- [CHEF-3151] Don't extract ports every time in omnibus::freebsd
 
-* [CHEF-3151] Don't extract ports every time in omnibus::freebsd
+v1.0.2
+------
+- [CHEF-2576] add support for SmartOS
+- [CHEF-4141] Initial Freebsd support for omnibus
 
-## v1.0.2:
-
-FEATURES:
-
-* [CHEF-2576] add support for SmartOS
-* [CHEF-4141] Initial Freebsd support for omnibus
-
-## v1.0.0:
-
-* Initial release!
+v1.0.0
+------
+- Initial release!
