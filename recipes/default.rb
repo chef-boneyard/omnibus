@@ -50,3 +50,8 @@ end
 # TODO - use a proper Ruby cookbook for this
 include_recipe "omnibus::ruby"
 include_recipe "omnibus::github"
+
+case node['platform_family']
+when "debian","freebsd","rhel"
+  include_recipe "omnibus::ccache"
+end
