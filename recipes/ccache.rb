@@ -27,7 +27,8 @@ remote_file ccache_tarball do
   not_if { File.exists?("/usr/local/bin/ccache") }
 end
 
-bash "compile ccache" do
+script "compile ccache" do
+  interpreter 'sh'
   code <<-EOH
 cd #{Chef::Config[:file_cache_path]}
 tar zxvf ccache-3.1.9.tar.gz
