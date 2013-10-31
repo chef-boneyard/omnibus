@@ -18,22 +18,22 @@
 #
 
 case node['platform_family']
-when "windows"
-  include_recipe "omnibus::ruby_windows"
-when "smartos"
+when 'windows'
+  include_recipe 'omnibus::ruby_windows'
+when 'smartos'
 
-  pkgin_package "ruby193"
+  pkgin_package 'ruby193'
 
-  gem_package "bundler" do
-    version "1.3.5"
-    gem_binary "/opt/local/bin/gem"
-    options "--bindir=/opt/local/bin"
+  gem_package 'bundler' do
+    version '1.3.5'
+    gem_binary '/opt/local/bin/gem'
+    options '--bindir=/opt/local/bin'
   end
 
 else
 
-  include_recipe "rbenv::default"
-  include_recipe "rbenv::ruby_build"
+  include_recipe 'rbenv::default'
+  include_recipe 'rbenv::ruby_build'
 
   rbenv_ruby node['omnibus']['ruby_version'] do
     global true
@@ -48,7 +48,7 @@ else
   %w{ bundle erb gem irb rake rdoc ri ruby testrb }.each do |shim|
     user_local_path = "/usr/local/bin/#{shim}"
     link user_local_path do
-      to ::File.join(node['rbenv']['root'], "shims", shim)
+      to ::File.join(node['rbenv']['root'], 'shims', shim)
     end
   end
 end

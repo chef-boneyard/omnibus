@@ -17,11 +17,11 @@
 # limitations under the License.
 #
 
-ENV['PATH'] = "/opt/csw/bin:/usr/local/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/sbin:/usr/bin"
+ENV['PATH'] = '/opt/csw/bin:/usr/local/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/sbin:/usr/bin'
 
-# TODO - Get this in the upstream `pkgutil` cookbook as an `opencsw` recipe.
-bash "download and install pkgutil" do
-  user "root"
+# TODO: Get this in the upstream `pkgutil` cookbook as an `opencsw` recipe.
+bash 'download and install pkgutil' do
+  user 'root'
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
     echo "mail=
@@ -40,7 +40,7 @@ basedir=default" > noask
     echo -e "all" | pkgadd -a noask -d pkgutil.pkg all
     pkgutil -U
   EOH
-  not_if { ::File.exists?("/opt/csw/bin/pkgutil") }
+  not_if { ::File.exists?('/opt/csw/bin/pkgutil') }
 end
 
 %w{
@@ -49,29 +49,29 @@ end
 }.each do |dir|
 
   directory dir do
-    owner  "root"
-    group  "sys"
-    mode   "0755"
+    owner  'root'
+    group  'sys'
+    mode   '0755'
     action :create
   end
 
 end
 
-cookbook_file "/etc/default/login" do
-  source "default.login"
-  user   "root"
-  group  "sys"
-  mode   "0444"
+cookbook_file '/etc/default/login' do
+  source 'default.login'
+  user   'root'
+  group  'sys'
+  mode   '0444'
 end
 
-cookbook_file "/etc/default/su" do
-  source "default.su"
-  user   "root"
-  group  "sys"
-  mode   "0444"
+cookbook_file '/etc/default/su' do
+  source 'default.su'
+  user   'root'
+  group  'sys'
+  mode   '0444'
 end
 
-# TODO - add solaris2 support to git cookbook
+# TODO: add solaris2 support to git cookbook
 %w{
   git
   libxml2_dev
@@ -103,9 +103,9 @@ end
 
 end
 
-cookbook_file "/.profile" do
-  source "root-profile"
-  owner "root"
-  group "root"
-  mode "0600"
+cookbook_file '/.profile' do
+  source 'root-profile'
+  owner 'root'
+  group 'root'
+  mode '0600'
 end

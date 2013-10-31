@@ -22,7 +22,7 @@
 # The sed forces portsnap to run non-interactively
 # fetch downloads a ports snapshot, extract puts them on disk (long)
 # update will update an existing ports tree
-portsnap_opts = ::File.exists?("/usr/ports") ? "update" : "fetch extract"
+portsnap_opts = ::File.exists?('/usr/ports') ? 'update' : 'fetch extract'
 
 execute "Manage Ports Tree - #{portsnap_opts}" do
   command <<-EOS
@@ -32,10 +32,10 @@ execute "Manage Ports Tree - #{portsnap_opts}" do
   EOS
 end
 
-include_recipe "build-essential"
-include_recipe "git"
+include_recipe 'build-essential'
+include_recipe 'git'
 
-# TODO - move these to build-essential
+# TODO: move these to build-essential
 %w{
   gmake
   autoconf
@@ -45,9 +45,9 @@ include_recipe "git"
 end
 
 # COOK-3170: FreeBSD make breaks on some software when passed -j
-ruby_block "Disable make parallelization system-wide" do
+ruby_block 'Disable make parallelization system-wide' do
   block do
-    f = Chef::Util::FileEdit.new("/etc/make.conf")
+    f = Chef::Util::FileEdit.new('/etc/make.conf')
     f.insert_line_if_no_match(/.MAKEFLAGS:/, <<-EOH
 
 .MAKEFLAGS: -B
@@ -55,5 +55,5 @@ EOH
     )
     f.write_file
   end
-  only_if { ::File.exists?("/etc/make.conf") }
+  only_if { ::File.exists?('/etc/make.conf') }
 end

@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe "apt"
-include_recipe "build-essential"
-include_recipe "git"
+include_recipe 'apt'
+include_recipe 'build-essential'
+include_recipe 'git'
 
 %w{
   dpkg-dev
@@ -40,6 +40,7 @@ end
 # the embedded/ directory. Installing ncurses-devel causes ./configure to
 # work, and the resulting erlang is linked to the correct ncurses shared
 # object (in embedded/). So this is ugly, but required to make erlang build.
-if platform?("ubuntu") and node['platform_version'].to_f >= 12.04
-  package "ncurses-dev"
+if platform?('ubuntu') &&
+  Chef::VersionConstraint.new('>= 12.04').include?(node['platform_version'])
+  package 'ncurses-dev'
 end

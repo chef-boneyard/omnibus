@@ -17,26 +17,24 @@
 # limitations under the License.
 #
 
-
-return if platform_family?("windows")
+return if platform_family?('windows')
 
 ssh_config_file = case node['platform_family']
                   when 'mac_os_x'
-                    "/etc/ssh_config"
+                    '/etc/ssh_config'
                   else
-                    "/etc/ssh/ssh_config"
+                    '/etc/ssh/ssh_config'
                   end
 
 sudoers_file = case node['platform_family']
                when 'freebsd'
-                 "/usr/local/etc/sudoers"
+                 '/usr/local/etc/sudoers'
                else
-                 "/etc/sudoers"
+                 '/etc/sudoers'
                end
 
-
 # Turn off strict host key checking for github
-ruby_block "disable strict host key checking for github.com" do
+ruby_block 'disable strict host key checking for github.com' do
   block do
     f = Chef::Util::FileEdit.new(ssh_config_file)
     f.insert_line_if_no_match(/github\.com/, <<-EOH
@@ -51,7 +49,7 @@ EOH
 end
 
 # Ensure SSH_AUTH_SOCK is honored under sudo
-ruby_block "make sudo honor ssh_auth_sock" do
+ruby_block 'make sudo honor ssh_auth_sock' do
   block do
     f = Chef::Util::FileEdit.new(sudoers_file)
     f.insert_line_if_no_match(/SSH_AUTH_SOCK/, <<-EOH

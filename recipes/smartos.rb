@@ -17,11 +17,11 @@
 # limitations under the License.
 #
 
-execute "Update the pkgin database" do
-  command "pkgin -y up"
+execute 'Update the pkgin database' do
+  command 'pkgin -y up'
 end
 
-# TODO - add smartos support to git cookbook
+# TODO: add smartos support to git cookbook
 %w{
   autoconf
   binutils

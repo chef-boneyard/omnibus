@@ -19,15 +19,15 @@
 
 # Set up ccache, to speed up subsequent compilations.
 
-ccache_tarball = File.join(Chef::Config[:file_cache_path], "ccache-3.1.9.tar.gz")
+ccache_tarball = File.join(Chef::Config[:file_cache_path], 'ccache-3.1.9.tar.gz')
 
 remote_file ccache_tarball do
-  source "http://samba.org/ftp/ccache/ccache-3.1.9.tar.gz"
-  mode "0644"
-  not_if { File.exists?("/usr/local/bin/ccache") }
+  source 'http://samba.org/ftp/ccache/ccache-3.1.9.tar.gz'
+  mode '0644'
+  not_if { File.exists?('/usr/local/bin/ccache') }
 end
 
-script "compile ccache" do
+script 'compile ccache' do
   interpreter 'sh'
   code <<-EOH
 cd #{Chef::Config[:file_cache_path]}
@@ -37,11 +37,11 @@ cd ccache-3.1.9
 make
 make install
 EOH
-  not_if { File.exists?("/usr/local/bin/ccache") }
+  not_if { File.exists?('/usr/local/bin/ccache') }
 end
 
-[ "gcc", "g++", "cc", "c++" ].each do |compiler|
+%w{ gcc g++ cc c++ }.each do |compiler|
   link "/usr/local/bin/#{compiler}" do
-    to "/usr/local/bin/ccache"
+    to '/usr/local/bin/ccache'
   end
 end
