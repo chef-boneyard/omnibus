@@ -9,6 +9,10 @@ platforms:
   driver_config:
     box: opscode-debian-6.0.7
     box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_debian-6.0.7_chef-11.2.0.box
+- name: freebsd-9
+  driver_config:
+    box: dyn-freebsd-9.1
+    box_url: http://dyn-vm.s3.amazonaws.com/vagrant/dyn-chef-11.4.0-virtualbox-freebsd-9.1.box
 - name: ubuntu-13.04
 - name: ubuntu-12.04
 - name: ubuntu-10.04
