@@ -32,6 +32,13 @@ when 'smartos'
 
 else
 
+  # /etc/profile.d may not exist on FreeBSD
+  directory '/etc/profile.d' do
+    mode 0755
+    owner 'root'
+    only_if { platform_family?('freebsd') }
+  end
+
   # Workaround for CHEF-3940
   with_home_for_user(node['rbenv']['user']) do
 
