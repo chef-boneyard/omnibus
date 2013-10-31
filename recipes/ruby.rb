@@ -32,8 +32,13 @@ when 'smartos'
 
 else
 
-  include_recipe 'rbenv::default'
-  include_recipe 'rbenv::ruby_build'
+  # Workaround for CHEF-3940
+  with_home_for_user(node['rbenv']['user']) do
+
+    include_recipe 'rbenv::default'
+    include_recipe 'rbenv::ruby_build'
+
+  end
 
   rbenv_ruby node['omnibus']['ruby_version'] do
     global true

@@ -34,15 +34,15 @@ end
 
 windows_batch "install Ruby #{ruby_version}" do
   code <<-EOB
-"#{OmnibusHelper.win_friendly_path(ruby_download_path)}" ^
+"#{win_friendly_path(ruby_download_path)}" ^
 /silent ^
-/dir="#{OmnibusHelper.win_friendly_path(ruby_dir)}" ^
+/dir="#{win_friendly_path(ruby_dir)}" ^
 /tasks="assocfiles"
 EOB
   creates ruby_bin
 end
 
-windows_path OmnibusHelper.win_friendly_path(ruby_bindir) do
+windows_path win_friendly_path(ruby_bindir) do
   action :add
 end
 
@@ -65,13 +65,13 @@ remote_file ::File.join(devkit_dir, devkit_file) do
 end
 
 file ::File.join(devkit_dir, 'config.yml') do
-  content "- #{OmnibusHelper.win_friendly_path(ruby_dir)}"
+  content "- #{win_friendly_path(ruby_dir)}"
 end
 
 windows_batch 'install devkit' do
   code <<-EOB
 #{devkit_file} -y
-#{OmnibusHelper.win_friendly_path(ruby_bin)} dk.rb install
+#{win_friendly_path(ruby_bin)} dk.rb install
 EOB
   cwd devkit_dir
   not_if { ::File.exists?(::File.join(devkit_dir, 'dk.rb')) }
@@ -97,7 +97,7 @@ end
 ENV['SSL_CERT_FILE'] = cacert_file
 
 env 'SSL_CERT_FILE' do
-  value OmnibusHelper.win_friendly_path(cacert_file)
+  value win_friendly_path(cacert_file)
 end
 
 # Ensure Bundler is installed and available
