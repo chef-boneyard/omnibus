@@ -1,7 +1,8 @@
 omnibus Cookbook
 ================
-Prepares a machine to be an Omnibus builder.
+[![Build Status](https://secure.travis-ci.org/opscode-cookbooks/omnibus.png?branch=master)](http://travis-ci.org/opscode-cookbooks/omnibus)
 
+Prepares a machine to be an Omnibus builder.
 
 Requirements
 ------------
