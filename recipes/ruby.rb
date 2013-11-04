@@ -18,70 +18,49 @@
 #
 
 case node['platform_family']
-when "windows"
+when 'windows'
+  include_recipe 'omnibus::ruby_windows'
+when 'smartos'
 
-  include_recipe "omnibus::ruby_windows"
+  pkgin_package 'ruby193'
 
-when "smartos"
-
-  pkgin_package "ruby193"
-
-  gem_package "bundler" do
-    version "1.3.5"
-    gem_binary "/opt/local/bin/gem"
-    options "--bindir=/opt/local/bin"
+  gem_package 'bundler' do
+    version '1.3.5'
+    gem_binary '/opt/local/bin/gem'
+    options '--bindir=/opt/local/bin'
   end
 
 else
 
-  # fix yaml and ensure ruby1.9 builds with openssl gem
-  case node['platform_family']
-  when 'debian'
-    package "libtool"
-    package "libyaml-dev"
-    package "libssl-dev"
-  when 'rhel'
-    package "libtool"
-    package "libyaml-devel"
-    package "openssl-devel"
+  # /etc/profile.d may not exist on FreeBSD
+  directory '/etc/profile.d' do
+    mode 0755
+    owner 'root'
+    only_if { platform_family?('freebsd') }
   end
 
-  ruby_version  = "1.9.3-p392"
-  ruby_filename = "ruby-#{ruby_version}.tar.gz"
-  ruby_checksum = "8861ddadb2cd30fb30e42122741130d12f6543c3d62d05906cd41076db70975f"
+  # Workaround for CHEF-3940
+  with_home_for_user(node['rbenv']['user']) do
 
-  remote_file ::File.join(Chef::Config[:file_cache_path], ruby_filename) do
-    source "http://ftp.ruby-lang.org/pub/ruby/1.9/#{ruby_filename}"
-    checksum ruby_checksum
-    not_if { ::File.exists?("/opt/ruby1.9/bin/ruby") }
+    include_recipe 'rbenv::default'
+    include_recipe 'rbenv::ruby_build'
+
   end
 
-  execute "install ruby-1.9.3" do
-    cwd Chef::Config[:file_cache_path]
-    command <<-EOH
-tar zxf #{ruby_filename}
-cd ruby-#{ruby_version}
-./configure --prefix=/opt/ruby1.9
-make
-make install
-EOH
-    environment(
-      'CFLAGS' => '-L/usr/lib -I/usr/include',
-      'LDFLAGS' => '-L/usr/lib -I/usr/include'
-    )
-    not_if { ::File.exists?("/opt/ruby1.9/bin/ruby") }
+  rbenv_ruby node['omnibus']['ruby_version'] do
+    global true
   end
 
-  gem_package "bundler" do
-    version "1.3.5"
-    gem_binary "/opt/ruby1.9/bin/gem"
+  rbenv_gem 'bundler' do
+    ruby_version node['omnibus']['ruby_version']
+    version '1.3.5'
   end
 
-  %w{ bundle fpm gem omnibus rake ruby }.each do |bin|
-
-    link "/usr/local/bin/#{bin}" do
-      to "/opt/ruby1.9/bin/#{bin}"
+  # link rbenv's shims for the ruby toolchain into a known path
+  %w{ bundle erb gem irb rake rdoc ri ruby testrb }.each do |shim|
+    user_local_path = "/usr/local/bin/#{shim}"
+    link user_local_path do
+      to ::File.join(node['rbenv']['root'], 'shims', shim)
     end
-
   end
 end

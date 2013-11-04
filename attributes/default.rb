@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
-default["omnibus"]["build_user"] = "omnibus"
-default["omnibus"]["install_dir"] = "/opt/omnibus"
-default['omnibus']['cache_dir'] = "/var/cache/omnibus"
+default['omnibus']['build_user'] = 'omnibus'
+default['omnibus']['install_dir'] = '/opt/omnibus'
+default['omnibus']['cache_dir'] = '/var/cache/omnibus'
+default['omnibus']['ruby_version'] = '1.9.3-p448'

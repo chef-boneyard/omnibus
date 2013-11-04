@@ -25,7 +25,7 @@ end
 
 user node['omnibus']['build_user'] do
   action :create
-  not_if { platform_family?("windows") }
+  not_if { platform_family?('windows') }
 end
 
 [
@@ -34,7 +34,7 @@ end
 ].each do |dir|
   directory dir do
     mode 0755
-    owner node["omnibus"]["build_user"]
+    owner node['omnibus']['build_user']
     recursive true
   end
 end
@@ -47,11 +47,11 @@ rescue Chef::Exceptions::RecipeNotFound
 end
 
 # install ruby and symlink the binaries to /usr/local
-# TODO - use a proper Ruby cookbook for this
-include_recipe "omnibus::ruby"
-include_recipe "omnibus::github"
+# TODO: use a proper Ruby cookbook for this
+include_recipe 'omnibus::ruby'
+include_recipe 'omnibus::github'
 
 case node['platform_family']
-when "debian","freebsd","rhel"
-  include_recipe "omnibus::ccache"
+when 'debian', 'freebsd', 'rhel'
+  include_recipe 'omnibus::ccache'
 end
