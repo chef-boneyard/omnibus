@@ -14,7 +14,9 @@ Supported platforms by platform family:
 
 - debian (debian, ubuntu)
 - fedora
+- freebsd
 - rhel (centos, redhat, amazon, scientific etc.)
+- smartos
 - solaris2
 - windows
 
@@ -26,10 +28,10 @@ This cookbook depends on the following external cookbooks:
 - [git](http://community.opscode.com/cookbooks/git) (Opscode)
 - [homebrew](http://community.opscode.com/cookbooks/homebrew) (Opscode)
 - [pkgutil](http://community.opscode.com/cookbooks/pkgutil) (marthag)
+- [rbenv](http://community.opscode.com/cookbooks/rbenv) (Riot Games)
 - [yum](http://community.opscode.com/cookbooks/yum) (Opscode)
 - [wix](http://community.opscode.com/cookbooks/wix) (Opscode)
 - [7-zip](http://community.opscode.com/cookbooks/7-zip) (Opscode)
-
 
 Recipes
 -------
