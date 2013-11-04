@@ -2,6 +2,17 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v1.2.0
+-------
+## Feature
+- Install Ruby using rbenv
+
+## Improvement
+- Add serverspec integration test coverage
+- Add Foodcritic and Rubocop linting support
+- Add Travis CI support
+- Add FreeBSD to `.kitchen.yml`
+
 v1.1.0
 -------
 ## Feature
