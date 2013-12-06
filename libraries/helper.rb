@@ -21,10 +21,12 @@ module Omnibus
   # Recipe Helpers
   module Helper
 
-    # returns windows friendly version of the provided path,
-    # ensures backslashes are used everywhere
-    def win_friendly_path(path)
-      path.gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR) if path
+    def windows_safe_path_join(*args)
+      ::File.join(args).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR)
+    end
+
+    def windows_safe_path_expand(arg)
+      ::File.expand_path(arg).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR)
     end
 
     # Ensures $HOME is temporarily set to the given user. The original
@@ -66,3 +68,4 @@ module Omnibus
 end
 
 Chef::Recipe.send(:include, Omnibus::Helper)
+Chef::Resource.send(:include, Omnibus::Helper)
