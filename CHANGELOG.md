@@ -2,6 +2,14 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v1.2.2
+------
+## Improvement
+- Change default Ruby to 1.9.3-p484 (addresses [CVE-2013-4164])
+- Refactor recipe to install Ruby on Windows. Main change is using 
+  `*.7zip` package instead of `*.msi`.
+- Update .kitchen.yml for final 1.0 format.
+
 v1.2.0
 -------
 ## Feature
