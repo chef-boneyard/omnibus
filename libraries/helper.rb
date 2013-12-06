@@ -20,7 +20,6 @@
 module Omnibus
   # Recipe Helpers
   module Helper
-
     def windows_safe_path_join(*args)
       ::File.join(args).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR)
     end
@@ -41,7 +40,6 @@ module Omnibus
     #   https://github.com/git/git/commit/4698c8feb1bb56497215e0c10003dd046df352fa
     #
     def with_home_for_user(username, &block)
-
       time = Time.now.to_i
 
       ruby_block "set HOME for #{username} at #{time}" do
