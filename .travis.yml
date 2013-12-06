@@ -4,5 +4,5 @@ rvm:
 before_script:
   - bundle exec berks install
 script:
-  - bundle exec foodcritic -f any .
+  - bundle exec foodcritic -f any -c 11.6.0 .
   - bundle exec rubocop
