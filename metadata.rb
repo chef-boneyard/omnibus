@@ -18,7 +18,7 @@ supports 'windows'
 
 depends 'apt', '~> 1.9.0'
 depends 'build-essential', '~> 1.4.0'
-depends 'git', '~> 2.3.0'
+depends 'git', '~> 2.9.0'
 depends 'homebrew', '~> 1.3.2'
 depends 'pkgin', '~> 0.4.0'
 depends 'pkgutil', '~> 0.0.3'
