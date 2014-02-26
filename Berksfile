@@ -1,3 +1,2 @@
 site :opscode
-
 metadata

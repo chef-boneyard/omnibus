@@ -1,7 +1,18 @@
 rvm:
   - 1.9.3
   - 2.0.0
+  - 2.1.0
 
-script:
-  - bundle exec foodcritic -f any -c 11.6.0 .
-  - bundle exec rubocop
+bundler_args: --jobs 7
+
+branches:
+  only:
+    - master
+
+script: bundle exec rake travis:ci
+
+notifications:
+  hipchat:
+    rooms:
+      - secure: Hh+4hhTO67a1+TOxlq1x6WtKWSx7c47YFuQWtCNEEk8u0ouwqVfKqxoc7FtPIJbZDNH0UqQCMXBq4t86a+JLtrP47Lk8z1L1ohnxb+vlqdNRRo2z0Z27/ji3J/VEmE4fCJ5r5/nJVVkjv5lHklQCHHr29ZJKuGZbRvVv6AkVMWc= # Build Statuses
+      - secure: nMkt6FPinXoxHIZruEqbL3NHexhrP1ih9yKYDKiX4+koQkF9vAUmnuzYXO90XHhIQqOdgsS6WpES/rtoeDevH122YDnZr5oenJcjgDZZQ6+6J+J1refTdkTwp/bC5NkquY8e1ACO98PUdM32CYIdtD5g+M4MODcdr/3SjL+1QlU= # Release Engineering
