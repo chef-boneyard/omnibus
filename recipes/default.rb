@@ -18,7 +18,6 @@
 #
 
 include_recipe 'chef-sugar::default'
-include_recipe 'omnibus::_bash' unless windows?
 
 # make certain our chef-solo cache dir exists
 directory Chef::Config[:file_cache_path] do
@@ -49,6 +48,7 @@ rescue Chef::Exceptions::RecipeNotFound
   Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
 end
 
+include_recipe 'omnibus::_bash' unless windows?
 include_recipe 'omnibus::ruby'
 include_recipe 'omnibus::github'
 
