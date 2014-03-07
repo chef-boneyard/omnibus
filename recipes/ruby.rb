@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-version = node['omnibus']['ruby_version']
-
 case node['platform_family']
 when 'windows'
   include_recipe 'omnibus::ruby_windows'
@@ -26,26 +24,13 @@ else
   include_recipe 'omnibus::_chruby'
   include_recipe 'omnibus::_ruby_install'
 
-  execute "install ruby-#{version}" do
-    command "ruby-install ruby #{version}"
-    notifies :run, "bash[set ruby-#{version}]", :immediately
-    not_if { File.directory?("/opt/rubies/ruby-#{version}") }
+  ruby_version = node['omnibus']['ruby_version']
+
+  ruby_install ruby_version do
+    default true
   end
 
-  # Set the Ruby for the rest of this CCR (first-run)
-  bash "set ruby-#{version}" do
-    command "chruby ruby-#{version}"
-    action  :nothing
+  ruby_gem 'bundler' do
+    ruby ruby_version
   end
-
-  # Save the Ruby for all future logins
-  file '/etc/profile.d/ruby.sh' do
-    content <<-EOH.gsub(/^ {4}/, '')
-      if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-        chruby ruby-#{version}
-      fi
-    EOH
-  end
-
-  gem_package 'bundler'
 end
