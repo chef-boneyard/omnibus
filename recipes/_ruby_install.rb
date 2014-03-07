@@ -17,21 +17,13 @@
 # limitations under the License.
 #
 
-# This should NOT be a node attribute
-version = '0.4.1'
+include_recipe 'chef-sugar::default'
+include_recipe 'build-essential::default'
 
-remote_file "#{Chef::Config[:file_cache_path]}/ruby-install-#{version}.tar.gz" do
-  source   "https://github.com/postmodern/ruby-install/archive/v#{version}.tar.gz"
-  notifies :run, "execute[install ruby-install-#{version}]", :immediately
-  not_if   { File.exists?('/usr/local/bin/ruby-install') }
-end
-
-execute "install ruby-install-#{version}" do
-  command <<-EOH.gsub(/^ {4}/, '')
-    tar -xzvf ruby-install-#{version}.tar.gz
-    cd ruby-install-#{version}
-    make install
-  EOH
-  cwd    Chef::Config[:file_cache_path]
-  action :nothing
+remote_install 'ruby-install' do
+  source 'https://github.com/postmodern/ruby-install/archive/v0.4.1.tar.gz'
+  checksum '1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e'
+  version '0.4.1'
+  install_command 'make install'
+  not_if { installed_at_version?('ruby-install', '0.4.1') }
 end
