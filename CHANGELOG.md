@@ -2,6 +2,13 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v1.2.4
+------
+## Improvement
+- Pessimistically lock deps to `MAJOR.MINOR`
+- Update to `git` cookbook `~> 3.0`
+- Switch to using the `yum-epel` cookbook
+
 v1.2.2
 ------
 ## Improvement
