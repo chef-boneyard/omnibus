@@ -2,7 +2,7 @@ driver:
   name: vagrant
   customize:
     cpus: 2
-    memory: 1024
+    memory: 4096
 
 provisioner:
   name: chef_zero
