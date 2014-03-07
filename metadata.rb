@@ -1,5 +1,5 @@
 name              'omnibus'
-maintainer        'Opscode, Inc.'
+maintainer        'Chef Software, Inc.'
 maintainer_email  'cookbooks@opscode.com'
 license           'Apache 2.0'
 description       'Prepares a machine to be an Omnibus builder.'
