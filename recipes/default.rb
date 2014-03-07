@@ -48,8 +48,6 @@ rescue Chef::Exceptions::RecipeNotFound
   Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
 end
 
-# install ruby and symlink the binaries to /usr/local
-# TODO: use a proper Ruby cookbook for this
 include_recipe 'omnibus::ruby'
 include_recipe 'omnibus::github'
 
