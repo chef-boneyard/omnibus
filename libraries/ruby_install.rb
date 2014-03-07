@@ -23,8 +23,8 @@ class Chef
       :ruby_install
     end
 
-    actions :run
-    default_action :run
+    actions :install
+    default_action :install
 
     attribute :version, kind_of: String, name_attribute: true
     attribute :default, kind_of: [TrueClass, FalseClass]
@@ -35,7 +35,7 @@ class Chef
       true
     end
 
-    action :run do
+    action :install do
       if ::File.directory?("/opt/rubies/ruby-#{version}")
         Chef::Log.debug("#{new_resource} installed - skipping")
       else
