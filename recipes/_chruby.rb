@@ -17,30 +17,15 @@
 # limitations under the License.
 #
 
-# This should NOT be a node attribute
-version = '0.3.8'
+include_recipe 'chef-sugar::default'
+include_recipe 'build-essential::default'
 
-remote_file "#{Chef::Config[:file_cache_path]}/chruby-#{version}.tar.gz" do
-  source   "https://github.com/postmodern/chruby/archive/v#{version}.tar.gz"
-  notifies :run, "execute[install chruby-#{version}]", :immediately
-  not_if   { File.exists?('/usr/local/bin/chruby-exec') }
-end
-
-execute "install chruby-#{version}" do
-  command <<-EOH.gsub(/^ {4}/, '')
-    tar -xzvf chruby-#{version}.tar.gz
-    cd chruby-#{version}
-    make install
-  EOH
-  cwd      Chef::Config[:file_cache_path]
-  notifies :run, "bash[source chruby-#{version}]", :immediately
-  action   :nothing
-end
-
-# Set the Ruby for the rest of this CCR (first-run)
-bash "source chruby-#{version}" do
-  command 'source /usr/local/share/chruby/chruby.sh'
-  action  :nothing
+remote_install 'chruby' do
+  source 'https://github.com/postmodern/chruby/archive/v0.3.8.tar.gz'
+  version '0.3.8'
+  checksum 'd980872cf2cd047bc9dba78c4b72684c046e246c0fca5ea6509cae7b1ada63be'
+  install_command 'make install'
+  not_if { installed_at_version?('chruby-exec', '0.3.8') }
 end
 
 # Load chruby on all future logins
