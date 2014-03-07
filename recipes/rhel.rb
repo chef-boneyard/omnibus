@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'yum::epel'
+include_recipe 'yum-epel::default'
 include_recipe 'build-essential'
 include_recipe 'git'
 
