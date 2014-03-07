@@ -1,5 +1,5 @@
 #
-# Copyright:: Copyright (c) 2012 Opscode, Inc.
+# Copyright:: Copyright (c) 2012 Chef Software, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,16 @@
 # limitations under the License.
 #
 
-default['omnibus']['build_user'] = 'omnibus'
-default['omnibus']['install_dir'] = '/opt/omnibus'
-default['omnibus']['cache_dir'] = '/var/cache/omnibus'
-default['omnibus']['ruby_version'] = '1.9.3-p484'
+default['omnibus'].tap do |omnibus|
+  omnibus['build_user']   = 'omnibus'
+  omnibus['install_dir']  = '/opt/omnibus'
+  omnibus['cache_dir']    = '/var/cache/omnibus'
+  omnibus['ruby_version'] = '2.1.1'
 
-default['omnibus']['windows']['ruby_root'] = "#{ENV['SYSTEMDRIVE']}\\ruby"
-default['omnibus']['windows']['ruby_checksum'] = '2dd1bfc4d48a5690480eea94a2b53450a39ef8f46f7d65f9e806485b0b2efdf5'
-default['omnibus']['windows']['dev_kit_url'] = 'http://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe'
-default['omnibus']['windows']['dev_kit_checksum'] = '6c3af5487dafda56808baf76edd262b2020b1b25ab86aabf972629f4a6a54491'
+  omnibus['windows'].tap do |windows|
+    windows['ruby_root']        = "#{ENV['SYSTEMDRIVE']}\\ruby"
+    windows['ruby_checksum']    = '2dd1bfc4d48a5690480eea94a2b53450a39ef8f46f7d65f9e806485b0b2efdf5'
+    windows['dev_key_url']      = 'http://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe'
+    windows['dev_key_checksum'] = '6c3af5487dafda56808baf76edd262b2020b1b25ab86aabf972629f4a6a54491'
+  end
+end
