@@ -19,6 +19,7 @@
 
 include_recipe 'apt::default'
 include_recipe 'build-essential::default'
+include_recipe 'chef-sugar::default'
 include_recipe 'git::default'
 
 %w[
@@ -38,6 +39,4 @@ end
 # the embedded/ directory. Installing ncurses-devel causes ./configure to
 # work, and the resulting erlang is linked to the correct ncurses shared
 # object (in embedded/). So this is ugly, but required to make erlang build.
-if ubuntu_after_or_at_precise?
-  package 'ncurses-dev'
-end
+package 'ncurses-dev' if ubuntu_after_or_at_precise?
