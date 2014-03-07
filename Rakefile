@@ -13,6 +13,9 @@ end
 desc 'Run all style checks'
 task style: ['style:chef', 'style:ruby']
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:unit)
+
 require 'kitchen'
 desc 'Run Test Kitchen integration tests'
 task :integration do
@@ -25,8 +28,8 @@ end
 # We cannot run Test Kitchen on Travis CI yet...
 namespace :travis do
   desc 'Run tests on Travis'
-  task ci: ['style']
+  task ci: ['style', 'unit']
 end
 
 # The default rake task should just run it all
-task default: ['style', 'integration']
+task default: ['travis:ci', 'integration']

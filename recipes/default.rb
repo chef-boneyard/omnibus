@@ -35,7 +35,7 @@ end
   node['omnibus']['cache_dir'],
 ].each do |dir|
   directory dir do
-    mode 0755
+    mode '0755'
     owner node['omnibus']['build_user']
     recursive true
   end

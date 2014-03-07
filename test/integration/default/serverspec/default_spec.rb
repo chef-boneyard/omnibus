@@ -11,23 +11,6 @@ else
   include Serverspec::Helper::DetectOS
 end
 
-# Ensure omnibus user is created
-describe user('omnibus') do
-  it { should exist }
-end
-
-# Ensure required build dirs exist
-describe file('/opt/omnibus') do
-  it { should be_directory }
-  it { should be_mode 755 }
-  it { should be_owned_by 'omnibus' }
-end
-describe file('/var/cache/omnibus') do
-  it { should be_directory }
-  it { should be_mode 755 }
-  it { should be_owned_by 'omnibus' }
-end
-
 # Ensure rbenv Ruby is linked to /usr/local/bin
 describe command('/usr/local/bin/ruby --version') do
   it { should return_stdout(/^ruby 1.9.3/) }
