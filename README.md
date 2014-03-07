@@ -25,15 +25,14 @@ Supported platforms by platform family:
 ### Cookbooks
 This cookbook depends on the following external cookbooks:
 
-- [apt](http://community.opscode.com/cookbooks/apt) (Opscode)
-- [build-essential](http://community.opscode.com/cookbooks/build-essential) (Opscode)
-- [git](http://community.opscode.com/cookbooks/git) (Opscode)
-- [homebrew](http://community.opscode.com/cookbooks/homebrew) (Opscode)
+- [apt](http://community.opscode.com/cookbooks/apt) (Chef Software)
+- [build-essential](http://community.opscode.com/cookbooks/build-essential) (Chef Software)
+- [git](http://community.opscode.com/cookbooks/git) (Chef Software)
+- [homebrew](http://community.opscode.com/cookbooks/homebrew) (Chef Software)
 - [pkgutil](http://community.opscode.com/cookbooks/pkgutil) (marthag)
-- [rbenv](http://community.opscode.com/cookbooks/rbenv) (Riot Games)
-- [yum](http://community.opscode.com/cookbooks/yum) (Opscode)
-- [wix](http://community.opscode.com/cookbooks/wix) (Opscode)
-- [7-zip](http://community.opscode.com/cookbooks/7-zip) (Opscode)
+- [yum](http://community.opscode.com/cookbooks/yum) (Chef Software)
+- [wix](http://community.opscode.com/cookbooks/wix) (Chef Software)
+- [7-zip](http://community.opscode.com/cookbooks/7-zip) (Chef Software)
 
 Recipes
 -------

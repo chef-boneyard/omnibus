@@ -17,50 +17,35 @@
 # limitations under the License.
 #
 
+version = node['omnibus']['ruby_version']
+
 case node['platform_family']
 when 'windows'
   include_recipe 'omnibus::ruby_windows'
-when 'smartos'
-
-  pkgin_package 'ruby193'
-
-  gem_package 'bundler' do
-    version '1.3.5'
-    gem_binary '/opt/local/bin/gem'
-    options '--bindir=/opt/local/bin'
-  end
-
 else
+  include_recipe 'omnibus::_chruby'
+  include_recipe 'omnibus::_ruby_install'
 
-  # /etc/profile.d may not exist on FreeBSD
-  directory '/etc/profile.d' do
-    mode 0755
-    owner 'root'
-    only_if { platform_family?('freebsd') }
+  execute "install ruby-#{version}" do
+    command "ruby-install ruby #{version}"
+    notifies :run, "bash[set ruby-#{version}]", :immediately
+    not_if { File.directory?("/opt/rubies/ruby-#{version}") }
   end
 
-  # Workaround for CHEF-3940
-  with_home_for_user(node['rbenv']['user']) do
-
-    include_recipe 'rbenv::default'
-    include_recipe 'rbenv::ruby_build'
-
+  # Set the Ruby for the rest of this CCR (first-run)
+  bash "set ruby-#{version}" do
+    command "chruby ruby-#{version}"
+    action  :nothing
   end
 
-  rbenv_ruby node['omnibus']['ruby_version'] do
-    global true
+  # Save the Ruby for all future logins
+  file '/etc/profile.d/ruby.sh' do
+    content <<-EOH.gsub(/^ {4}/, '')
+      if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+        chruby ruby-#{version}
+      fi
+    EOH
   end
 
-  rbenv_gem 'bundler' do
-    ruby_version node['omnibus']['ruby_version']
-    version '1.3.5'
-  end
-
-  # link rbenv's shims for the ruby toolchain into a known path
-  %w{ bundle erb gem irb rake rdoc ri ruby testrb }.each do |shim|
-    user_local_path = "/usr/local/bin/#{shim}"
-    link user_local_path do
-      to ::File.join(node['rbenv']['root'], 'shims', shim)
-    end
-  end
+  gem_package 'bundler'
 end
