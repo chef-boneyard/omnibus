@@ -29,3 +29,7 @@ remote_install 'bash' do
   install_command 'make install'
   not_if { installed_at_version?('bash', '4.3') }
 end
+
+link '/bin/bash' do
+  to '/usr/local/bin/bash'
+end
