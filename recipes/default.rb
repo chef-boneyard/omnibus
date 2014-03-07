@@ -18,6 +18,7 @@
 #
 
 include_recipe 'chef-sugar::default'
+include_recipe 'omnibus::_bash' unless windows?
 
 # make certain our chef-solo cache dir exists
 directory Chef::Config[:file_cache_path] do
