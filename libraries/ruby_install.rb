@@ -27,7 +27,6 @@ class Chef
     default_action :install
 
     attribute :version, kind_of: String, name_attribute: true
-    attribute :default, kind_of: [TrueClass, FalseClass]
   end
 
   class Provider::RubyInstall < Provider::LWRPBase
@@ -41,9 +40,6 @@ class Chef
       else
         converge_by("install #{new_resource}") do
           install
-          set_as_default if new_resource.default
-
-          # If we are in this block, the resource was updated
           new_resource.updated_by_last_action(true)
         end
       end
@@ -67,20 +63,6 @@ class Chef
     def install
       execute "install ruby-#{version}" do
         command "ruby-install ruby #{version} -- #{compile_flags.join(' ')}"
-      end
-    end
-
-    def set_as_default
-      bash "set ruby-#{version}" do
-        command "chruby ruby-#{version}"
-      end
-
-      file '/etc/profile.d/ruby.sh' do
-        content <<-EOH.gsub(/^ {10}/, '')
-          if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-            chruby ruby-#{version}
-          fi
-        EOH
       end
     end
   end

@@ -26,9 +26,7 @@ else
 
   ruby_version = node['omnibus']['ruby_version']
 
-  ruby_install ruby_version do
-    default true
-  end
+  ruby_install ruby_version
 
   ruby_gem 'bundler' do
     ruby ruby_version
