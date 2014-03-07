@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe '7-zip'
+include_recipe '7-zip::default'
 
 # Determine download urls
 ruby_version = node['omnibus']['ruby_version']

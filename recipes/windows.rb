@@ -17,5 +17,5 @@
 # limitations under the License.
 #
 
-include_recipe '7-zip'
-include_recipe 'wix'
+include_recipe '7-zip::default'
+include_recipe 'wix::default'

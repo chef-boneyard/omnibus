@@ -29,18 +29,18 @@ end
 
 script 'compile ccache' do
   interpreter 'sh'
-  code <<-EOH
-cd #{Chef::Config[:file_cache_path]}
-tar zxvf ccache-3.1.9.tar.gz
-cd ccache-3.1.9
-./configure
-make
-make install
-EOH
+  code <<-EOH.gsub(/^ {4}/, '')
+    cd #{Chef::Config[:file_cache_path]}
+    tar zxvf ccache-3.1.9.tar.gz
+    cd ccache-3.1.9
+    ./configure
+    make
+    make install
+  EOH
   not_if { File.exists?('/usr/local/bin/ccache') }
 end
 
-%w{ gcc g++ cc c++ }.each do |compiler|
+%w[gcc g++ cc c++].each do |compiler|
   link "/usr/local/bin/#{compiler}" do
     to '/usr/local/bin/ccache'
   end

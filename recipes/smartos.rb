@@ -22,7 +22,7 @@ execute 'Update the pkgin database' do
 end
 
 # TODO: add smartos support to git cookbook
-%w{
+%w[
   autoconf
   binutils
   gcc47
@@ -32,6 +32,6 @@ end
   libxslt
   pkg-config
   scmgit
-}.each do |pkg|
+].each do |pkg|
   pkgin_package pkg
 end

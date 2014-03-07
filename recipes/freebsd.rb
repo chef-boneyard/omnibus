@@ -25,22 +25,22 @@
 portsnap_opts = ::File.exists?('/usr/ports') ? 'update' : 'fetch extract'
 
 execute "Manage Ports Tree - #{portsnap_opts}" do
-  command <<-EOS
+  command <<-EOH.gsub(/^ {4}/, '')
     sed -e 's/\\[ ! -t 0 \\]/false/' /usr/sbin/portsnap > /tmp/portsnap
     chmod +x /tmp/portsnap
     /tmp/portsnap #{portsnap_opts}
-  EOS
+  EOH
 end
 
-include_recipe 'build-essential'
-include_recipe 'git'
+include_recipe 'build-essential::default'
+include_recipe 'git::default'
 
 # TODO: move these to build-essential
-%w{
+%w[
   gmake
   autoconf
   m4
-}.each do |pkg|
+].each do |pkg|
   package pkg
 end
 
@@ -55,5 +55,5 @@ EOH
     )
     f.write_file
   end
-  only_if { ::File.exists?('/etc/make.conf') }
+  only_if { File.exists?('/etc/make.conf') }
 end

@@ -18,10 +18,10 @@
 #
 
 include_recipe 'yum-epel::default'
-include_recipe 'build-essential'
-include_recipe 'git'
+include_recipe 'build-essential::default'
+include_recipe 'git::default'
 
-%w{
+%w[
   rpm-build
   libxml2
   libxml2-devel
@@ -30,8 +30,6 @@ include_recipe 'git'
   zlib
   zlib-devel
   openssl-devel
-}.each do |pkg|
-
+].each do |pkg|
   package pkg
-
 end
