@@ -17,5 +17,13 @@
 # limitations under the License.
 #
 
+include_recipe 'chef-sugar'
+
+xcode_cli node['platform_version'] do
+  action :install
+end
+
 include_recipe 'homebrew::default'
 include_recipe 'git::default'
+
+directory '/etc/profile.d'
