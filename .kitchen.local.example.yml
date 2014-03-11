@@ -8,7 +8,7 @@ platforms:
     driver_config:
       provider: vmware_fusion
       box: opscode-macosx-10.9
-      box_url: <%= ENV['MAVERICKS_BOX_URL'] %>
+      box_url: <%= ENV['MAVERICKS_BOX_URL'] || raise('You must specify a URL to download the box!') %>
   - name: ubuntu-13.04
   - name: ubuntu-12.04
   - name: ubuntu-10.04
