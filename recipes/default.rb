@@ -19,7 +19,7 @@
 
 include_recipe 'omnibus::_common'
 
-# apply any platform-specific tweaks
+# Apply any platform-specific tweaks
 begin
   include_recipe "omnibus::#{node['platform_family']}"
 rescue Chef::Exceptions::RecipeNotFound
@@ -30,9 +30,9 @@ include_recipe 'omnibus::_bash'   unless windows?
 include_recipe 'omnibus::_ccache' unless windows?
 include_recipe 'omnibus::_git'    unless windows?
 include_recipe 'omnibus::_ruby'
-include_recipe 'omnibus::github'
+include_recipe 'omnibus::_github'
 
 case node['platform_family']
 when 'debian', 'freebsd', 'rhel'
-  include_recipe 'omnibus::ccache'
+  include_recipe 'omnibus::_ccache'
 end
