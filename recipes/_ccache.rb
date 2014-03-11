@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: default
+# Recipe:: ccache
 #
 # Copyright 2013, Chef Software, Inc.
 #
@@ -17,22 +17,22 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_common'
+include_recipe 'chef-sugar::default'
+include_recipe 'build-essential::default'
 
-# apply any platform-specific tweaks
-begin
-  include_recipe "omnibus::#{node['platform_family']}"
-rescue Chef::Exceptions::RecipeNotFound
-  Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
+# Set up ccache, to speed up subsequent compilations.
+remote_install 'ccache' do
+  source 'http://samba.org/ftp/ccache/ccache-3.1.9.tar.gz'
+  version '3.1.9'
+  checksum 'a2270654537e4b736e437975e0cb99871de0975164a509dee34cf91e36eeb447'
+  build_command './configure'
+  compile_command 'make'
+  install_command 'make install'
+  not_if { installed_at_version?('ccache', '3.1.9') }
 end
 
-include_recipe 'omnibus::_bash'   unless windows?
-include_recipe 'omnibus::_ccache' unless windows?
-include_recipe 'omnibus::_git'    unless windows?
-include_recipe 'omnibus::_ruby'
-include_recipe 'omnibus::github'
-
-case node['platform_family']
-when 'debian', 'freebsd', 'rhel'
-  include_recipe 'omnibus::ccache'
+%w[gcc g++ cc c++].each do |compiler|
+  link "/usr/local/bin/#{compiler}" do
+    to '/usr/local/bin/ccache'
+  end
 end
