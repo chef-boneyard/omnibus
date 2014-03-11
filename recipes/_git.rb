@@ -43,4 +43,3 @@ remote_install 'git' do
   install_command 'make prefix=/usr/local install'
   not_if { installed_at_version?('git', '1.9.0') }
 end
-
