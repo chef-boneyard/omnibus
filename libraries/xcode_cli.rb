@@ -112,7 +112,7 @@ class Chef
         return nil if command.status != 0
 
         @current_xcode_install = {
-          version: new_resource.version
+          version: new_resource.version,
         }
         @current_xcode_install
       end
