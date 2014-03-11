@@ -1,0 +1,14 @@
+platforms:
+  - name: centos-6.5
+  - name: centos-5.10
+  - name: debian-7.2.0
+  - name: debian-6.0.8
+  - name: freebsd-9.2
+  - name: macosx-10.9
+    driver_config:
+      provider: vmware_fusion
+      box: opscode-macosx-10.9
+      box_url: <%= ENV['MAVERICKS_BOX_URL'] %>
+  - name: ubuntu-13.04
+  - name: ubuntu-12.04
+  - name: ubuntu-10.04
