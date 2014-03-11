@@ -20,7 +20,6 @@
 include_recipe 'apt::default'
 include_recipe 'build-essential::default'
 include_recipe 'chef-sugar::default'
-include_recipe 'git::default'
 
 %w[
   dpkg-dev

@@ -33,7 +33,6 @@ execute "Manage Ports Tree - #{portsnap_opts}" do
 end
 
 include_recipe 'build-essential::default'
-include_recipe 'git::default'
 
 # TODO: move these to build-essential
 %w[

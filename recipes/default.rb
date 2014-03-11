@@ -49,6 +49,7 @@ rescue Chef::Exceptions::RecipeNotFound
 end
 
 include_recipe 'omnibus::_bash' unless windows?
+include_recipe 'omnibus::_git' unless windows?
 include_recipe 'omnibus::ruby'
 include_recipe 'omnibus::github'
 

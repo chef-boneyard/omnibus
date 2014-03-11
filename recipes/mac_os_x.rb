@@ -22,6 +22,5 @@ include_recipe 'chef-sugar::default'
 xcode_cli node['platform_version']
 
 include_recipe 'homebrew::default'
-include_recipe 'git::default'
 
 directory '/etc/profile.d'

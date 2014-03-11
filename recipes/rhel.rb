@@ -19,7 +19,6 @@
 
 include_recipe 'yum-epel::default'
 include_recipe 'build-essential::default'
-include_recipe 'git::default'
 
 %w[
   rpm-build
