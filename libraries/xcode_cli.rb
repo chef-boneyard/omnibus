@@ -49,6 +49,9 @@ class Chef
     # @return [String]
     #
     def version(arg = nil)
+      unless arg.nil? || Chef::Sugar::Constraints.version(arg).satisfies?('~> 10.9')
+        fail 'Installation of Xcode CLI tools is supported for Mac OS X 10.9 only'
+      end
       set_or_return(:version, arg, kind_of: String)
     end
 
@@ -99,23 +102,22 @@ class Chef
 
     #
     #  Load the current resource
+    #  @return [STDOUT from install command]
     #
     def current_xcode_install
       return @current_xcode_install if @current_xcode_install
 
-      if Chef::Sugar::Constraints.version(new_resource.version).satisfies?('~> 10.9')
-        cmd = 'pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'
-        command = Mixlib::ShellOut.new(cmd, timeout: 30)
-        command.run_command
-        command.stdout.strip
+      fail 'Installation of Xcode CLI tools is supported for Mac OS X 10.9 only' unless Chef::Sugar::Constraints.version(new_resource.version).satisfies?('~> 10.9')
 
-        return nil if command.status != 0
-
-        @current_xcode_install = {
-          version: new_resource.version,
-        }
-        @current_xcode_install
-      end
+      cmd = 'pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'
+      command = Mixlib::ShellOut.new(cmd, timeout: 30)
+      command.run_command
+      command.stdout.strip
+      return nil if command.status != 0
+      @current_xcode_install = {
+        version: new_resource.version,
+      }
+      @current_xcode_install
     end
 
     #
@@ -134,12 +136,11 @@ class Chef
     #
     def install_xcode_cli
       if Chef::Sugar::Constraints.version(new_resource.version).satisfies?('~> 10.9')
-        bash_script = <<-EOF
+        execute <<-EOH.gsub(/^ {8}/, '')
           touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
           PROD=$(softwareupdate -l | grep -B 1 "Developer" | head -n 1 | awk -F"*" '{print $2}')
           softwareupdate -i $PROD -v
-        EOF
-        execute(bash_script)
+        EOH
       end
     end
   end
