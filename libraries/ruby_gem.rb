@@ -35,7 +35,7 @@ class Chef
     private
 
     def gem_bin
-      "/opt/rubies/ruby-#{ruby}*/bin/gem"
+      '/usr/local/bin/gem'
     end
   end
 end

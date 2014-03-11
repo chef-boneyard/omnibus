@@ -17,23 +17,19 @@ if RUBY_PLATFORM =~ /darwin/
   end
 end
 
-# Ensure rbenv Ruby is linked to /usr/local/bin
+describe command('which ruby') do
+  it { should return_stdout('/usr/local/bin/ruby') }
+end
+
 describe command('/usr/local/bin/ruby --version') do
-  it { should return_stdout(/^ruby 1.9.3/) }
+  it { should return_stdout(/^ruby 2\.1\.1(.+)/) }
 end
 
-# Ensure all rbenv shims are linked to /usr/local/bin
-%w{ bundle erb gem irb rake rdoc ri ruby testrb }.each do |shim|
-  describe file("/usr/local/bin/#{shim}") do
-    it { should be_linked_to "/opt/rbenv/shims/#{shim}" }
-  end
-end
-
-# Ensure ccache is installed and linked in
 describe file('/usr/local/bin/ccache') do
   it { should be_executable }
 end
-%w{ gcc g++ cc c++ }.each do |compiler|
+
+%w[gcc g++ cc c++].each do |compiler|
   describe file("/usr/local/bin/#{compiler}") do
     it { should be_linked_to '/usr/local/bin/ccache' }
   end

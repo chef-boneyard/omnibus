@@ -27,7 +27,6 @@ class Chef
     default_action :install
 
     attribute :version, kind_of: String, name_attribute: true
-    attribute :default, kind_of: [TrueClass, FalseClass], default: false
   end
 
   class Provider::RubyInstall < Provider::LWRPBase
@@ -36,12 +35,11 @@ class Chef
     end
 
     action :install do
-      if ::File.directory?("/opt/rubies/ruby-#{version}")
+      if installed_ruby_version.include?(version)
         Chef::Log.debug("#{new_resource} installed - skipping")
       else
         converge_by("install #{new_resource}") do
           install
-          set_as_default if new_resource.default
           new_resource.updated_by_last_action(true)
         end
       end
@@ -59,23 +57,20 @@ class Chef
         '--disable-install-ri',
         '--with-out-ext=tcl',
         '--with-out-ext=tk',
-      ]
+      ].join(' ')
     end
 
     def install
       execute "install ruby-#{version}" do
-        command "ruby-install ruby #{version} -- #{compile_flags.join(' ')}"
+        command "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
       end
     end
 
-    def set_as_default
-      file '/etc/profile.d/ruby.sh' do
-        content <<-EOH.gsub(/^ {10}/, '')
-          if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-            chruby #{version}
-          fi
-        EOH
-      end
+    # @return [String]
+    def installed_ruby_version
+      require 'chef-sugar' unless defined?(Chef::Sugar)
+
+      (Chef::Sugar::Shell.which('ruby') && Chef::Sugar::Shell.version_for('ruby')) || ''
     end
   end
 end
