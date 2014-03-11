@@ -11,6 +11,12 @@ else
   include Serverspec::Helper::DetectOS
 end
 
+if RUBY_PLATFORM =~ /darwin/
+  describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables') do
+    it { should return_exit_status 0 }
+  end
+end
+
 # Ensure rbenv Ruby is linked to /usr/local/bin
 describe command('/usr/local/bin/ruby --version') do
   it { should return_stdout(/^ruby 1.9.3/) }
