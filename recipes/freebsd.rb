@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+include_recipe 'freebsd::portsnap'
+
 # COOK-3170: FreeBSD make breaks on some software when passed -j
 ruby_block 'Disable make parallelization system-wide' do
   block do
