@@ -29,33 +29,41 @@ when 'debian'
   package 'gettext'
   package 'libz-dev'
   package 'perl-modules'
+  mkcmd = 'make'
 when 'freebsd'
   package 'curl'
-  package 'expat'
+  package 'expat2'
   package 'gettext'
   package 'libzip'
-  package 'perl5'
+  package 'perl5' do
+    not_if { `perl -v | grep "perl 5"` }
+    source 'ports'
+  end
+  mkcmd = 'gmake'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
   package 'gettext'
+  mkcmd = 'make'
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
   package 'gettext-devel'
   package 'perl-ExtUtils-MakeMaker'
   package 'zlib-devel'
+  mkcmd = 'make'
 when 'smartos'
   package 'curl'
   package 'expat'
   package 'gettext'
+  mkcmd = 'make'
 end
 
 remote_install 'git' do
   source 'https://github.com/git/git/archive/v1.9.0.tar.gz'
   checksum '064f2ee279cc05f92f0df79c1ca768771393bc3134c0fa53b17577679383f039'
   version '1.9.0'
-  build_command 'make prefix=/usr/local all'
-  install_command 'make prefix=/usr/local install'
+  build_command "#{mkcmd} prefix=/usr/local all"
+  install_command "#{mkcmd} prefix=/usr/local install"
   not_if { installed_at_version?('git', '1.9.0') }
 end
