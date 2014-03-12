@@ -17,8 +17,10 @@
 # limitations under the License.
 #
 
-include_recipe 'build-essential::default'
-include_recipe 'chef-sugar::default'
+include_recipe 'omnibus::_bash'
+include_recipe 'omnibus::_common'
+include_recipe 'omnibus::_compile'
+include_recipe 'omnibus::_openssl'
 
 case node['platform_family']
 when 'debian'
@@ -26,13 +28,27 @@ when 'debian'
   package 'libexpat1-dev'
   package 'gettext'
   package 'libz-dev'
-  package 'libssl-dev'
+  package 'perl-modules'
+when 'freebsd'
+  package 'curl'
+  package 'expat'
+  package 'gettext'
+  package 'libzip'
+  package 'perl5'
+when 'mac_os_x'
+  package 'curl'
+  package 'expat'
+  package 'gettext'
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
   package 'gettext-devel'
-  package 'openssl-devel'
+  package 'perl-ExtUtils-MakeMaker'
   package 'zlib-devel'
+when 'smartos'
+  package 'curl'
+  package 'expat'
+  package 'gettext'
 end
 
 remote_install 'git' do

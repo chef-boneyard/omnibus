@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: _bash
+# Recipe:: _xml
 #
 # Copyright 2014, Chef Software, Inc.
 #
@@ -17,21 +17,31 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_common'
-include_recipe 'omnibus::_compile'
+#
+# This recipe is used to install the platform-specific development headers for
+# working with XML (aka the nokogiri gem).
+#
 
-remote_install 'bash' do
-  source 'http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz'
-  version '4.3'
-  checksum 'afc687a28e0e24dc21b988fa159ff9dbcf6b7caa92ade8645cc6d5605cd024d4'
-  build_command './configure'
-  compile_command 'make'
-  install_command 'make install'
-  not_if { installed_at_version?('bash', '4.3') }
-end
-
-# Link /bin/bash to our bash, since some systems have their own bash, but we
-# will force our will on them!
-link '/bin/bash' do
-  to '/usr/local/bin/bash'
+case node['platform_family']
+when 'debian'
+  package 'libxml2-dev'
+  package 'libxslt-dev'
+  package 'ncurses-dev'
+  package 'zlib1g-dev'
+when 'freebsd'
+  package 'libxml2'
+  package 'libxslt'
+  package 'ncurses'
+when 'mac_os_x'
+  package 'libxml2'
+  package 'libxslt'
+when 'rhel'
+  package 'libxml2-devel'
+  package 'libxslt-devel'
+  package 'ncurses-devel'
+  package 'zlib-devel'
+when 'smartos'
+  package 'libxml2'
+  package 'libxslt'
+  package 'ncurses'
 end

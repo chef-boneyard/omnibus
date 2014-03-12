@@ -17,22 +17,21 @@
 # limitations under the License.
 #
 
+# # Apply any platform-specific tweaks
+# begin
+#   include_recipe "omnibus::#{node['platform_family']}"
+# rescue Chef::Exceptions::RecipeNotFound
+#   Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
+# end
+
+include_recipe 'omnibus::_bash'
+include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_common'
-
-# Apply any platform-specific tweaks
-begin
-  include_recipe "omnibus::#{node['platform_family']}"
-rescue Chef::Exceptions::RecipeNotFound
-  Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
-end
-
-include_recipe 'omnibus::_bash'   unless windows?
-include_recipe 'omnibus::_ccache' unless windows?
-include_recipe 'omnibus::_git'    unless windows?
-include_recipe 'omnibus::_ruby'
+include_recipe 'omnibus::_compile'
+include_recipe 'omnibus::_git'
 include_recipe 'omnibus::_github'
-
-case node['platform_family']
-when 'debian', 'freebsd', 'rhel'
-  include_recipe 'omnibus::_ccache'
-end
+include_recipe 'omnibus::_openssl'
+include_recipe 'omnibus::_packaging'
+include_recipe 'omnibus::_ruby'
+include_recipe 'omnibus::_xml'
+include_recipe 'omnibus::_yaml'

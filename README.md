@@ -19,7 +19,6 @@ Supported platforms by platform family:
 - freebsd
 - rhel (centos, redhat, amazon, scientific etc.)
 - smartos
-- solaris2
 - windows
 
 ### Cookbooks

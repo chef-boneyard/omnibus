@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: ccache
+# Recipe:: _ccache
 #
 # Copyright 2013, Chef Software, Inc.
 #
@@ -17,8 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
-include_recipe 'build-essential::default'
+include_recipe 'omnibus::_bash'
+include_recipe 'omnibus::_common'
+include_recipe 'omnibus::_compile'
 
 # Set up ccache, to speed up subsequent compilations.
 remote_install 'ccache' do

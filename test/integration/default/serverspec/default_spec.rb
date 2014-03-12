@@ -17,10 +17,6 @@ if RUBY_PLATFORM =~ /darwin/
   end
 end
 
-describe command('which ruby') do
-  it { should return_stdout('/usr/local/bin/ruby') }
-end
-
 describe command('/usr/local/bin/ruby --version') do
   it { should return_stdout(/^ruby 2\.1\.1(.+)/) }
 end

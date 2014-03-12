@@ -19,30 +19,6 @@
 # limitations under the License.
 #
 
-# The sed forces portsnap to run non-interactively
-# fetch downloads a ports snapshot, extract puts them on disk (long)
-# update will update an existing ports tree
-portsnap_opts = ::File.exists?('/usr/ports') ? 'update' : 'fetch extract'
-
-execute "Manage Ports Tree - #{portsnap_opts}" do
-  command <<-EOH.gsub(/^ {4}/, '')
-    sed -e 's/\\[ ! -t 0 \\]/false/' /usr/sbin/portsnap > /tmp/portsnap
-    chmod +x /tmp/portsnap
-    /tmp/portsnap #{portsnap_opts}
-  EOH
-end
-
-include_recipe 'build-essential::default'
-
-# TODO: move these to build-essential
-%w[
-  gmake
-  autoconf
-  m4
-].each do |pkg|
-  package pkg
-end
-
 # COOK-3170: FreeBSD make breaks on some software when passed -j
 ruby_block 'Disable make parallelization system-wide' do
   block do

@@ -35,7 +35,7 @@ class Chef
     end
 
     action :install do
-      if installed_ruby_version.include?(version)
+      if installed?
         Chef::Log.debug("#{new_resource} installed - skipping")
       else
         converge_by("install #{new_resource}") do
@@ -68,9 +68,15 @@ class Chef
 
     # @return [String]
     def installed_ruby_version
-      require 'chef-sugar' unless defined?(Chef::Sugar)
+      ::File.exists?('/usr/local/bin/ruby') && Chef::Sugar::Shell.version_for('/usr/local/bin/ruby')
+    end
 
-      (Chef::Sugar::Shell.which('ruby') && Chef::Sugar::Shell.version_for('ruby')) || ''
+    def installed?
+      if version = installed_ruby_version
+        version.include?(version)
+      else
+        false
+      end
     end
   end
 end

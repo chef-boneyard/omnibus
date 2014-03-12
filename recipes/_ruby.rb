@@ -17,12 +17,16 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+include_recipe 'omnibus::_common'
 
 if windows?
   include_recipe 'omnibus::_ruby_windows'
 else
-  include_recipe 'build-essential::default'
+  include_recipe 'omnibus::_bash'
+  include_recipe 'omnibus::_compile'
+  include_recipe 'omnibus::_openssl'
+  include_recipe 'omnibus::_xml'
+  include_recipe 'omnibus::_yaml'
 
   # Install ruby-install so we can easily install and manage rubies. This is
   # needed by the +ruby_install+ HWRP which installs rubies for us.
