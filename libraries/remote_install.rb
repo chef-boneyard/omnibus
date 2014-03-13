@@ -115,7 +115,7 @@ EOH
       end
     end
 
-    %w[build compile install].each do |stage|
+    %w(build compile install).each do |stage|
       class_eval <<-EOH, __FILE__, __LINE__ + 1
         def #{stage}
           return if new_resource.#{stage}_command.nil?

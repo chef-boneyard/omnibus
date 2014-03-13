@@ -22,7 +22,7 @@ describe 'ccache' do
     it { should return_stdout(/3\.1\.9/) }
   end
 
-  %w[gcc g++ cc c++].each do |compiler|
+  %w(gcc g++ cc c++).each do |compiler|
     describe file("/usr/local/bin/#{compiler}") do
       it { should be_linked_to('/usr/local/bin/ccache') }
     end

@@ -1,3 +1,5 @@
+ClassAndModuleChildren:
+  Enabled: false
 Documentation:
   Enabled: false
 Encoding:
