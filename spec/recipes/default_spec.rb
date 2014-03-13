@@ -1,10 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::default' do
-  cached(:chef_run) do
-    ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04')
-      .converge(described_recipe)
-  end
+  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
   it 'creates the Chef::Config[:file_cache_path] directory' do
     expect(chef_run).to create_directory(Chef::Config[:file_cache_path])
