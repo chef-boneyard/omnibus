@@ -25,19 +25,4 @@
 #
 
 include_recipe 'omnibus::_common'
-
-# There is a bug/feature in the OSX cookbook that installs a very old version
-# of the XCode command line utilities.
-include_recipe 'build-essential::default' unless mac_os_x?
-
-case node['platform_family']
-when 'debian'
-  package 'ncurses-dev'
-when 'freebsd'
-  package 'gmake'
-  package 'autoconf'
-  package 'm4'
-when 'mac_os_x'
-  raise 'Need to fix build-essential for OSX'
-when 'rhel'
-end
+include_recipe 'build-essential::default'
