@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: default
+# Recipe:: _bash
 #
-# Copyright 2013-2014, Chef Software, Inc.
+# Copyright 2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,14 +17,21 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_bash'
-include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
-include_recipe 'omnibus::_git'
-include_recipe 'omnibus::_github'
-include_recipe 'omnibus::_openssl'
-include_recipe 'omnibus::_packaging'
-include_recipe 'omnibus::_ruby'
-include_recipe 'omnibus::_xml'
-include_recipe 'omnibus::_yaml'
+
+remote_install 'bash' do
+  source 'http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz'
+  version '4.3'
+  checksum 'afc687a28e0e24dc21b988fa159ff9dbcf6b7caa92ade8645cc6d5605cd024d4'
+  build_command './configure'
+  compile_command 'make'
+  install_command 'make install'
+  not_if { installed_at_version?('bash', '4.3') }
+end
+
+# Link /bin/bash to our bash, since some systems have their own bash, but we
+# will force our will on them!
+link '/bin/bash' do
+  to '/usr/local/bin/bash'
+end

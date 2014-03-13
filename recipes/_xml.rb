@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: rhel
+# Recipe:: _xml
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,21 +17,27 @@
 # limitations under the License.
 #
 
-include_recipe 'yum-epel::default'
-include_recipe 'build-essential'
-include_recipe 'git'
+#
+# This recipe is used to install the platform-specific development headers for
+# working with XML (aka the nokogiri gem).
+#
 
-%w{
-  rpm-build
-  libxml2
-  libxml2-devel
-  libxslt
-  libxslt-devel
-  zlib
-  zlib-devel
-  openssl-devel
-}.each do |pkg|
-
-  package pkg
-
+case node['platform_family']
+when 'debian'
+  package 'libxml2-dev'
+  package 'libxslt-dev'
+  package 'ncurses-dev'
+  package 'zlib1g-dev'
+when 'freebsd'
+  package 'libxml2'
+  package 'libxslt'
+  package 'ncurses'
+when 'mac_os_x'
+  package 'libxml2'
+  package 'libxslt'
+when 'rhel'
+  package 'libxml2-devel'
+  package 'libxslt-devel'
+  package 'ncurses-devel'
+  package 'zlib-devel'
 end

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: mac_os_x
+# Recipe:: _compile
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,5 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe 'homebrew'
-include_recipe 'git'
+#
+# This recipe is used to install additional packages/utilities that are not
+# included by default in the build-essential cookbook. In the long term, this
+# recipe should just "go away" and the build-essential cookbook should become
+# more awesome.
+#
+
+include_recipe 'omnibus::_common'
+include_recipe 'build-essential::default'

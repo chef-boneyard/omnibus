@@ -2,7 +2,7 @@ driver:
   name: vagrant
   customize:
     cpus: 2
-    memory: 1024
+    memory: 4096
 
 provisioner:
   name: chef_zero
@@ -10,14 +10,23 @@ provisioner:
 
 platforms:
   - name: centos-6.5
+    run_list: yum-epel::default
   - name: centos-5.10
+    run_list: yum-epel::default
   - name: debian-7.2.0
+    run_list: apt::default
   - name: debian-6.0.8
+    run_list: apt::default
   - name: freebsd-9.2
+    run_list: freebsd::portsnap
+  - name: macosx-10.9
   - name: ubuntu-13.04
+    run_list: apt::default
   - name: ubuntu-12.04
+    run_list: apt::default
   - name: ubuntu-10.04
+    run_list: apt::default
 
 suites:
   - name: default
-    run_list: recipe[omnibus::default]
+    run_list: omnibus::default

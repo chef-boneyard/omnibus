@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: smartos
+# HWRP:: ruby_gem
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,21 +17,25 @@
 # limitations under the License.
 #
 
-execute 'Update the pkgin database' do
-  command 'pkgin -y up'
-end
+class Chef
+  class Resource::RubyGem < Resource::GemPackage
+    def initialize(*args)
+      super
+      @resource_name = :ruby_gem
+    end
 
-# TODO: add smartos support to git cookbook
-%w{
-  autoconf
-  binutils
-  gcc47
-  gmake
-  libyaml
-  libxml2
-  libxslt
-  pkg-config
-  scmgit
-}.each do |pkg|
-  pkgin_package pkg
+    def gem_binary(arg = nil)
+      set_or_return(:gem_binary, arg, kind_of: String, default: gem_bin)
+    end
+
+    def ruby(arg = nil)
+      set_or_return(:ruby, arg, kind_of: String, required: true)
+    end
+
+    private
+
+    def gem_bin
+      '/usr/local/bin/gem'
+    end
+  end
 end

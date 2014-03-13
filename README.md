@@ -8,32 +8,10 @@ This project is managed by the CHEF Release Engineering team. For more informati
 
 Requirements
 ------------
-### Chef
-- Chef 11.0.0+
+This cookbook requires Chef 11.0.0+.
 
-### Platform
-Supported platforms by platform family:
+For a full list of supported platforms and external cookbook requirements, please see the `metadata.rb` file at the root of the cookbook.
 
-- debian (debian, ubuntu)
-- fedora
-- freebsd
-- rhel (centos, redhat, amazon, scientific etc.)
-- smartos
-- solaris2
-- windows
-
-### Cookbooks
-This cookbook depends on the following external cookbooks:
-
-- [apt](http://community.opscode.com/cookbooks/apt) (Opscode)
-- [build-essential](http://community.opscode.com/cookbooks/build-essential) (Opscode)
-- [git](http://community.opscode.com/cookbooks/git) (Opscode)
-- [homebrew](http://community.opscode.com/cookbooks/homebrew) (Opscode)
-- [pkgutil](http://community.opscode.com/cookbooks/pkgutil) (marthag)
-- [rbenv](http://community.opscode.com/cookbooks/rbenv) (Riot Games)
-- [yum](http://community.opscode.com/cookbooks/yum) (Opscode)
-- [wix](http://community.opscode.com/cookbooks/wix) (Opscode)
-- [7-zip](http://community.opscode.com/cookbooks/7-zip) (Opscode)
 
 Recipes
 -------
@@ -49,32 +27,11 @@ All other recipes should be treated as "private" and are not meant to be used in
 
 Attributes
 ----------
-<table>
-  <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td>build_user</td>
-    <td>User Omnibus build will be performed as</td>
-    <td>String</td>
-    <td>omnibus</td>
-  </tr>
-  <tr>
-    <td>install_dir</td>
-    <td>Installation directory of the Omnibus package</td>
-    <td>String</td>
-    <td>/opt/omnibus</td>
-  </tr>
-  <tr>
-    <td>cache_dir</td>
-    <td>The directory the Omnibus project uses for caching</td>
-    <td>String</td>
-    <td>/var/cache/omnibus</td>
-  </tr>
-</table>
+| Attribute     | Default              | Description                           |
+|---------------|----------------------|---------------------------------------|
+| `build_user`  | `omnibus`            | The user to perform the Omnibus build |
+| `install_dir` | `/opt/omnibus`       | The directory to install Omnibus      |
+| `cache_dir`   | `/var/cache/omnibus` | The cache directory for Omnibus       |
 
 
 Usage
@@ -97,11 +54,13 @@ rake travis:ci    # Run tests on Travis
 
 License & Authors
 -----------------
-- Author:: Seth Chisamore (<schisamo@opscode.com>)
-- Author:: Stephen Delano (<stephen@opscode.com>)
+- Author: Seth Vargo (<sethvargo@gmail.com>)
+- Author: Yvonne Lam (<yvonne@getchef.com>)
+- Author: Seth Chisamore (<schisamo@getchef.com>)
+- Author: Stephen Delano (<stephen@getchef.com>)
 
 ```text
-Copyright 2012-2013, Opscode, Inc. (<legal@opscode.com>)
+Copyright 2012-2014, Chef Software, Inc. (<legal@getchef.com>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

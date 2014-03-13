@@ -2,7 +2,7 @@
 # Cookbook Name:: omnibus
 # Recipe:: ruby_windows
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013-2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-include_recipe '7-zip'
+include_recipe '7-zip::default'
+include_recipe 'wix::default'
 
 # Determine download urls
 ruby_version = node['omnibus']['ruby_version']
@@ -33,7 +34,7 @@ zip_bin = windows_safe_path_join(node['7-zip']['home'], '7z.exe')
 remote_file ruby_package_path do
   source ruby_download_url
   checksum node['omnibus']['windows']['win_ruby_checksum']
-  not_if { File.exists?(ruby_package_path) }
+  not_if { ::File.exist?(ruby_package_path) }
 end
 
 install_dir = windows_safe_path_join(node['omnibus']['windows']['ruby_root'], ruby_version)
@@ -91,7 +92,7 @@ windows_batch 'install_devkit_and_enhance_ruby' do
   cd \"#{install_dir}\" & \"#{ruby_bin}\" \"#{dk_rb_path}\" install
   EOH
   action :run
-  not_if { ::File.exists?(dk_rb_path) }
+  not_if { ::File.exist?(dk_rb_path) }
 end
 
 # Ensure a certificate authority is available and configured

@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'foodcritic', '~> 3.0'
-gem 'rubocop',    '~> 0.18'
+gem 'berkshelf',  '~> 3.0.0.beta'
+gem 'chefspec',   '~> 3.2'
+gem 'chef-sugar', '~> 1.1'
+gem 'rubocop',    '~> 0.19'
 gem 'rake'
 
 group :integration do

@@ -11,41 +11,38 @@ else
   include Serverspec::Helper::DetectOS
 end
 
-# Ensure omnibus user is created
-describe user('omnibus') do
-  it { should exist }
-end
-
-# Ensure required build dirs exist
-describe file('/opt/omnibus') do
-  it { should be_directory }
-  it { should be_mode 755 }
-  it { should be_owned_by 'omnibus' }
-end
-describe file('/var/cache/omnibus') do
-  it { should be_directory }
-  it { should be_mode 755 }
-  it { should be_owned_by 'omnibus' }
-end
-
-# Ensure rbenv Ruby is linked to /usr/local/bin
-describe command('/usr/local/bin/ruby --version') do
-  it { should return_stdout(/^ruby 1.9.3/) }
-end
-
-# Ensure all rbenv shims are linked to /usr/local/bin
-%w{ bundle erb gem irb rake rdoc ri ruby testrb }.each do |shim|
-  describe file("/usr/local/bin/#{shim}") do
-    it { should be_linked_to "/opt/rbenv/shims/#{shim}" }
+if RUBY_PLATFORM =~ /darwin/
+  describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables') do
+    it { should return_exit_status 0 }
   end
 end
 
-# Ensure ccache is installed and linked in
-describe file('/usr/local/bin/ccache') do
-  it { should be_executable }
+describe 'ccache' do
+  describe command('/usr/local/bin/ccache --version') do
+    it { should return_stdout(/3\.1\.9/) }
+  end
+
+  %w(gcc g++ cc c++).each do |compiler|
+    describe file("/usr/local/bin/#{compiler}") do
+      it { should be_linked_to('/usr/local/bin/ccache') }
+    end
+  end
 end
-%w{ gcc g++ cc c++ }.each do |compiler|
-  describe file("/usr/local/bin/#{compiler}") do
-    it { should be_linked_to '/usr/local/bin/ccache' }
+
+describe 'ruby' do
+  describe command('/usr/local/bin/ruby --version') do
+    it { should return_stdout(/^ruby 2\.1\.1(.+)/) }
+  end
+end
+
+describe 'bash' do
+  describe command('/usr/local/bin/bash --version') do
+    it { should return_stdout(/4\.3/) }
+  end
+end
+
+describe 'git' do
+  describe command('/usr/local/bin/git --version') do
+    it { should return_stdout(/1\.9\.0/) }
   end
 end

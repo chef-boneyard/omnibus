@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: default
+# Recipe:: _yaml
 #
-# Copyright 2013-2014, Chef Software, Inc.
+# Copyright 2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,14 +17,18 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_bash'
-include_recipe 'omnibus::_ccache'
-include_recipe 'omnibus::_common'
-include_recipe 'omnibus::_compile'
-include_recipe 'omnibus::_git'
-include_recipe 'omnibus::_github'
-include_recipe 'omnibus::_openssl'
-include_recipe 'omnibus::_packaging'
-include_recipe 'omnibus::_ruby'
-include_recipe 'omnibus::_xml'
-include_recipe 'omnibus::_yaml'
+#
+# This recipe is used to install the platform-specific development headers for
+# working with YAML (aka the native ruby bindings for YAML).
+#
+
+case node['platform_family']
+when 'debian'
+  package 'libyaml-dev'
+when 'freebsd'
+  package 'libyaml'
+when 'mac_os_x'
+  package 'libyaml'
+when 'rhel'
+  Chef::Log.debug 'No yaml packages for rhel'
+end

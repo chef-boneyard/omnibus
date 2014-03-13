@@ -8,6 +8,7 @@
 *.bk
 *.bkup
 .kitchen.local.yml
+.rspec
 Berksfile.lock
 Gemfile.lock
 

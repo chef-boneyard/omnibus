@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: ccache
+# Recipe:: _ccache
 #
-# Copyright 2013, Opscode, Inc.
+# Copyright 2013-2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,30 +17,22 @@
 # limitations under the License.
 #
 
+include_recipe 'omnibus::_bash'
+include_recipe 'omnibus::_common'
+include_recipe 'omnibus::_compile'
+
 # Set up ccache, to speed up subsequent compilations.
-
-ccache_tarball = File.join(Chef::Config[:file_cache_path], 'ccache-3.1.9.tar.gz')
-
-remote_file ccache_tarball do
+remote_install 'ccache' do
   source 'http://samba.org/ftp/ccache/ccache-3.1.9.tar.gz'
-  mode '0644'
-  not_if { File.exists?('/usr/local/bin/ccache') }
+  version '3.1.9'
+  checksum 'a2270654537e4b736e437975e0cb99871de0975164a509dee34cf91e36eeb447'
+  build_command './configure'
+  compile_command 'make'
+  install_command 'make install'
+  not_if { installed_at_version?('ccache', '3.1.9') }
 end
 
-script 'compile ccache' do
-  interpreter 'sh'
-  code <<-EOH
-cd #{Chef::Config[:file_cache_path]}
-tar zxvf ccache-3.1.9.tar.gz
-cd ccache-3.1.9
-./configure
-make
-make install
-EOH
-  not_if { File.exists?('/usr/local/bin/ccache') }
-end
-
-%w{ gcc g++ cc c++ }.each do |compiler|
+%w(gcc g++ cc c++).each do |compiler|
   link "/usr/local/bin/#{compiler}" do
     to '/usr/local/bin/ccache'
   end
