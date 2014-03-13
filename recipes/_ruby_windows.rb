@@ -18,6 +18,7 @@
 #
 
 include_recipe '7-zip::default'
+include_recipe 'wix::default'
 
 # Determine download urls
 ruby_version = node['omnibus']['ruby_version']
