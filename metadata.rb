@@ -15,7 +15,7 @@ supports 'ubuntu'
 supports 'windows'
 
 depends '7-zip',           '~> 1.0'
-depends 'build-essential', '~> 1.4'
+depends 'build-essential', '~> 2.0'
 depends 'chef-sugar',      '~> 1.1'
 depends 'homebrew',        '~> 1.5'
 depends 'windows',         '~> 1.30'
