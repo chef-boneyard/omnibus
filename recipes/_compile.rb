@@ -24,6 +24,8 @@
 # more awesome.
 #
 
+include_recipe 'omnibus::_common'
+
 # There is a bug/feature in the OSX cookbook that installs a very old version
 # of the XCode command line utilities.
 include_recipe 'build-essential::default' unless mac_os_x?
