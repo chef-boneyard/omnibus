@@ -61,8 +61,12 @@ class Chef
     end
 
     def install
+      # Need to compile the command outside of the execute resource because
+      # Ruby is bad at instance_eval
+      install_command = "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
+
       execute "install ruby-#{version}" do
-        command "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
+        command(install_command)
       end
     end
 
@@ -72,8 +76,8 @@ class Chef
     end
 
     def installed?
-      if (version = installed_ruby_version)
-        version.include?(version)
+      if (installed_version = installed_ruby_version)
+        installed_version.include?(version)
       else
         false
       end
