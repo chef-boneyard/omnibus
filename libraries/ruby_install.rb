@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+require 'mixlib/shellout'
+
 class Chef
   class Resource::RubyInstall < Resource::LWRPBase
     def self.resource_name
@@ -61,9 +63,14 @@ class Chef
     end
 
     def install
-      execute "install ruby-#{version}" do
-        command "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
-      end
+      #execute "install ruby-#{version}" do
+      #  command "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
+      #end
+      cmd = "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
+      command = Mixlib::ShellOut.new(cmd, timeout: 300)
+      command.run_command
+      command.error!
+      command.stdout.strip
     end
 
     # @return [String]
