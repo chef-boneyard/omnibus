@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gem 'berkshelf',  '~> 3.0.0.beta'
 gem 'chefspec',   '~> 3.2'
 gem 'chef-sugar', '~> 1.1'
-gem 'foodcritic', '~> 3.0'
 gem 'rubocop',    '~> 0.18'
 gem 'rake'
 
