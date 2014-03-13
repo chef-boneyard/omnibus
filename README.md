@@ -96,6 +96,7 @@ rake travis:ci    # Run tests on Travis
 License & Authors
 -----------------
 - Author: Seth Vargo (<sethvargo@gmail.com>)
+- Author: Yvonne Lam (<yvonne@getchef.com>)
 - Author: Seth Chisamore (<schisamo@getchef.com>)
 - Author: Stephen Delano (<stephen@getchef.com>)
 
