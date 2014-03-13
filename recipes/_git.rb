@@ -54,11 +54,14 @@ when 'smartos'
   package 'gettext'
 end
 
+# For whatever reason, FreeBSD requires gmake instead of make
+make = freebsd? ? 'gmake' : 'make'
+
 remote_install 'git' do
   source 'https://github.com/git/git/archive/v1.9.0.tar.gz'
   checksum '064f2ee279cc05f92f0df79c1ca768771393bc3134c0fa53b17577679383f039'
   version '1.9.0'
-  build_command 'make prefix=/usr/local all'
-  install_command 'make prefix=/usr/local install'
+  build_command "#{make} prefix=/usr/local all"
+  install_command "#{make} prefix=/usr/local install"
   not_if { installed_at_version?('git', '1.9.0') }
 end
