@@ -53,17 +53,18 @@ describe 'omnibus::_git' do
   end
 
   context 'on mac_os_x' do
-    pending
-    # let(:chef_run) do
-    #   ChefSpec::Runner.new(platform: 'mac_os_x', version: '10.8.2')
-    #     .converge(described_recipe)
-    # end
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'mac_os_x', version: '10.8.2')
+        .converge(described_recipe)
+    end
 
-    # it 'installs the correct development packages' do
-    #   expect(chef_run).to install_package('curl')
-    #   expect(chef_run).to install_package('expat')
-    #   expect(chef_run).to install_package('gettext')
-    # end
+    it 'installs the correct development packages' do
+      stub_command('which git')
+
+      expect(chef_run).to install_package('curl')
+      expect(chef_run).to install_package('expat')
+      expect(chef_run).to install_package('gettext')
+    end
   end
 
   context 'on rhel' do
