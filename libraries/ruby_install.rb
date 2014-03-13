@@ -72,7 +72,7 @@ class Chef
     end
 
     def installed?
-      if version = installed_ruby_version
+      if (version = installed_ruby_version)
         version.include?(version)
       else
         false
