@@ -19,6 +19,9 @@
 
 include_recipe 'chef-sugar::default'
 
+# Use homebrew as the default package manager on OSX
+include_recipe 'homebrew::default' if mac_os_x?
+
 # Ensure the cache directory exists
 directory Chef::Config[:file_cache_path] do
   recursive true
