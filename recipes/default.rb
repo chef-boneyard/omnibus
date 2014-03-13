@@ -24,6 +24,11 @@
 #   Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
 # end
 
+case node['platform_family']
+when 'freebsd'
+  include_recipe 'omnibus::freebsd'
+end
+
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_common'
