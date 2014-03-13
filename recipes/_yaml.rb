@@ -31,6 +31,4 @@ when 'mac_os_x'
   package 'libyaml'
 when 'rhel'
   Chef::Log.debug 'No yaml packages for rhel'
-when 'smartos'
-  package 'libyaml'
 end

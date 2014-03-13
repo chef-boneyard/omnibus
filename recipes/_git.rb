@@ -48,10 +48,6 @@ when 'rhel'
   package 'gettext-devel'
   package 'perl-ExtUtils-MakeMaker'
   package 'zlib-devel'
-when 'smartos'
-  package 'curl'
-  package 'expat'
-  package 'gettext'
 end
 
 # For whatever reason, FreeBSD requires gmake instead of make

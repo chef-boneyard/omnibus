@@ -40,8 +40,4 @@ when 'rhel'
   package 'libxslt-devel'
   package 'ncurses-devel'
   package 'zlib-devel'
-when 'smartos'
-  package 'libxml2'
-  package 'libxslt'
-  package 'ncurses'
 end

@@ -11,7 +11,6 @@ supports 'debian'
 supports 'fedora'
 supports 'freebsd'
 supports 'mac_os_x'
-supports 'smartos'
 supports 'ubuntu'
 supports 'windows'
 

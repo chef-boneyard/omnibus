@@ -34,6 +34,4 @@ when 'mac_os_x'
   # See: http://stackoverflow.com/questions/17477933
 when 'rhel'
   package 'openssl-devel'
-when 'smartos'
-  package 'openssl'
 end
