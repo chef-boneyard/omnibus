@@ -17,13 +17,6 @@
 # limitations under the License.
 #
 
-# # Apply any platform-specific tweaks
-# begin
-#   include_recipe "omnibus::#{node['platform_family']}"
-# rescue Chef::Exceptions::RecipeNotFound
-#   Chef::Log.warn "An Omnibus platform recipe does not exist for the platform_family: #{node['platform_family']}"
-# end
-
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_common'
