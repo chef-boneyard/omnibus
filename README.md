@@ -95,11 +95,12 @@ rake travis:ci    # Run tests on Travis
 
 License & Authors
 -----------------
-- Author:: Seth Chisamore (<schisamo@opscode.com>)
-- Author:: Stephen Delano (<stephen@opscode.com>)
+- Author: Seth Vargo (<sethvargo@gmail.com>)
+- Author: Seth Chisamore (<schisamo@getchef.com>)
+- Author: Stephen Delano (<stephen@getchef.com>)
 
 ```text
-Copyright 2012-2013, Chef Software, Inc. (<legal@getchef.com>)
+Copyright 2012-2014, Chef Software, Inc. (<legal@getchef.com>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
