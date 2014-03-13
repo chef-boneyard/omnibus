@@ -27,6 +27,12 @@ directory Chef::Config[:file_cache_path] do
   recursive true
 end
 
+# Create the profile.d
+directory '/etc/profile.d' do
+  action :create
+  not_if { windows? }
+end
+
 # Create the onnibus user
 user node['omnibus']['build_user'] do
   action :create
