@@ -41,7 +41,20 @@ when 'freebsd'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
-  package 'gettext'
+
+  # We cannot install gettext from homebrew (it's too old or something prevents
+  # it from working with git), so we need to compile from source. It is also
+  # worth noting that the "version" gettext reports does not include the last
+  # digit (0.18.3.2 -> 0.18.3).
+  remote_install 'gettext' do
+    source 'http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.3.2.tar.gz'
+    checksum 'd1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7'
+    version '0.18.3.2'
+    build_command './configure'
+    compile_command 'make'
+    install_command 'make install'
+    not_if { installed_at_version?('gettext', '0.18.3') }
+  end
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
