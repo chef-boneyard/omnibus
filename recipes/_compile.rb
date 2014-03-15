@@ -26,3 +26,7 @@
 
 include_recipe 'omnibus::_common'
 include_recipe 'build-essential::default'
+
+# Use homebrew as the default package manager on OSX. We cannot install homebrew
+# until AFTER we have installed the XCode command line tools via build-essential
+include_recipe 'homebrew::default' if mac_os_x?
