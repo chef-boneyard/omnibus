@@ -63,7 +63,19 @@ describe 'omnibus::_git' do
 
       expect(chef_run).to install_package('curl')
       expect(chef_run).to install_package('expat')
-      expect(chef_run).to install_package('gettext')
+    end
+
+    it 'compiles gettext from source' do
+      stub_command('which git')
+      Chef::Resource.any_instance.stub(:installed_at_version?).and_return(false)
+
+      expect(chef_run).to install_remote_install('gettext')
+        .with_source('http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.3.2.tar.gz')
+        .with_checksum('d1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7')
+        .with_version('0.18.3.2')
+        .with_build_command('./configure')
+        .with_compile_command('make')
+        .with_install_command('make install')
     end
   end
 

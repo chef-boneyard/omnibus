@@ -6,4 +6,11 @@ describe 'omnibus::_compile' do
   it 'includes build-esssential' do
     expect(chef_run).to include_recipe('build-essential::default')
   end
+
+  it 'includes homebrew on OSX' do
+    stub_command('which git')
+    osx_chef_run = ChefSpec::Runner.new(platform: 'mac_os_x', version: '10.8.2')
+                     .converge(described_recipe)
+    expect(osx_chef_run).to include_recipe('homebrew::default')
+  end
 end
