@@ -46,3 +46,12 @@ describe 'git' do
     it { should return_stdout(/1\.9\.0/) }
   end
 end
+
+describe '$PATH' do
+  # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
+  # check the $PATH because ServerSpec doesn't execute a login shell
+  # automatically.
+  describe command("su - omnibus -c 'echo $PATH'") do
+    it { should return_stdout(%r{^/usr/local/bin(.+)}) }
+  end
+end
