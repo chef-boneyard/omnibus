@@ -12,14 +12,6 @@ describe 'omnibus::_common' do
       .with_recursive(true)
   end
 
-  it 'creates /etc/profile.d' do
-    expect(chef_run).to create_directory('/etc/profile.d')
-  end
-
-  it 'creates the omnibus user' do
-    expect(chef_run).to create_user('omnibus')
-  end
-
   it 'creates the install dir' do
     expect(chef_run).to create_directory('/opt/omnibus')
       .with_mode('0755')
