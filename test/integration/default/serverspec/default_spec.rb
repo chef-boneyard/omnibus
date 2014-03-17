@@ -55,3 +55,8 @@ describe '$PATH' do
     it { should return_stdout(%r{^/usr/local/bin(.+)}) }
   end
 end
+
+describe user('omnibus') do
+  it { should exist }
+  it { should have_login_shell '/bin/bash' }
+end
