@@ -98,8 +98,8 @@ describe 'omnibus::_git' do
     Chef::Resource.any_instance.stub(:installed_at_version?).and_return(false)
 
     expect(chef_run).to install_remote_install('git')
-      .with_source('https://github.com/git/git/archive/v1.9.0.tar.gz')
-      .with_checksum('064f2ee279cc05f92f0df79c1ca768771393bc3134c0fa53b17577679383f039')
+      .with_source('https://git-core.googlecode.com/files/git-1.9.0.tar.gz')
+      .with_checksum('de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882')
       .with_version('1.9.0')
       .with_build_command('make prefix=/usr/local all')
       .with_install_command('make prefix=/usr/local install')

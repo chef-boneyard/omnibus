@@ -67,8 +67,8 @@ end
 make = freebsd? ? 'gmake' : 'make'
 
 remote_install 'git' do
-  source 'https://github.com/git/git/archive/v1.9.0.tar.gz'
-  checksum '064f2ee279cc05f92f0df79c1ca768771393bc3134c0fa53b17577679383f039'
+  source 'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
+  checksum 'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
   version '1.9.0'
   build_command "#{make} prefix=/usr/local all"
   install_command "#{make} prefix=/usr/local install"
