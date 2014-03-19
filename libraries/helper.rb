@@ -27,6 +27,18 @@ module Omnibus
     def windows_safe_path_expand(arg)
       ::File.expand_path(arg).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR)
     end
+
+    def build_user_home
+      @build_user_home ||= begin
+        if node['omnibus']['build_user_home']
+          node['omnibus']['build_user_home']
+        elsif mac_os_x?
+          File.join('/Users', node['omnibus']['build_user'])
+        else
+          File.join('/home', node['omnibus']['build_user'])
+        end
+      end
+    end
   end
 end
 

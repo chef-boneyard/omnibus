@@ -16,10 +16,11 @@
 #
 
 default['omnibus'].tap do |omnibus|
-  omnibus['build_user']   = 'omnibus'
-  omnibus['install_dir']  = '/opt/omnibus'
-  omnibus['cache_dir']    = '/var/cache/omnibus'
-  omnibus['ruby_version'] = '2.1.1'
+  omnibus['build_user']      = 'omnibus'
+  omnibus['build_user_home'] = nil
+  omnibus['install_dir']     = '/opt/omnibus'
+  omnibus['cache_dir']       = '/var/cache/omnibus'
+  omnibus['ruby_version']    = '2.1.1'
 
   omnibus['windows'].tap do |windows|
     windows['ruby_root']        = "#{ENV['SYSTEMDRIVE']}\\ruby"
