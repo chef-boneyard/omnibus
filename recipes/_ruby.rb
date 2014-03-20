@@ -31,7 +31,7 @@ else
   # Install ruby-install so we can easily install and manage rubies. This is
   # needed by the +ruby_install+ HWRP which installs rubies for us.
   remote_install 'ruby-install' do
-    source 'https://github.com/postmodern/ruby-install/archive/v0.4.1.tar.gz'
+    source 'https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1'
     checksum '1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e'
     version '0.4.1'
     install_command 'make install'

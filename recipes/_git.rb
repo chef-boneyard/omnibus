@@ -22,55 +22,45 @@ include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_openssl'
 
+make        = 'make'
+install_env = {}
+
+# We define NO_GETTEXT since we don't really
+# care if our Git output is translated.
+install_env['NO_GETTEXT'] = '1'
+
 case node['platform_family']
 when 'debian'
   package 'libcurl4-gnutls-dev'
   package 'libexpat1-dev'
-  package 'gettext'
   package 'libz-dev'
   package 'perl-modules'
 when 'freebsd'
   package 'curl'
   package 'expat2'
-  package 'gettext'
   package 'libzip'
   package 'perl5' do
     source 'ports'
     not_if 'perl -v | grep "perl 5"'
   end
+  # FreeBSD requires gmake instead of make
+  make = 'gmake'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
-
-  # We cannot install gettext from homebrew (it's too old or something prevents
-  # it from working with git), so we need to compile from source. It is also
-  # worth noting that the "version" gettext reports does not include the last
-  # digit (0.18.3.2 -> 0.18.3).
-  remote_install 'gettext' do
-    source 'http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.3.2.tar.gz'
-    checksum 'd1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7'
-    version '0.18.3.2'
-    build_command './configure'
-    compile_command 'make'
-    install_command 'make install'
-    not_if { installed_at_version?('gettext', '0.18.3') }
-  end
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
-  package 'gettext-devel'
-  package 'perl-ExtUtils-MakeMaker'
+  package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('~> 6')
   package 'zlib-devel'
 end
 
-# For whatever reason, FreeBSD requires gmake instead of make
-make = freebsd? ? 'gmake' : 'make'
-
 remote_install 'git' do
-  source 'https://github.com/git/git/archive/v1.9.0.tar.gz'
-  checksum '064f2ee279cc05f92f0df79c1ca768771393bc3134c0fa53b17577679383f039'
+  source 'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
+  checksum 'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
   version '1.9.0'
   build_command "#{make} prefix=/usr/local all"
   install_command "#{make} prefix=/usr/local install"
+  environment install_env
   not_if { installed_at_version?('git', '1.9.0') }
 end

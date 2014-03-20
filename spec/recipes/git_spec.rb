@@ -28,7 +28,6 @@ describe 'omnibus::_git' do
     it 'installs the correct development packages' do
       expect(chef_run).to install_package('libcurl4-gnutls-dev')
       expect(chef_run).to install_package('libexpat1-dev')
-      expect(chef_run).to install_package('gettext')
       expect(chef_run).to install_package('libz-dev')
       expect(chef_run).to install_package('perl-modules')
     end
@@ -45,7 +44,6 @@ describe 'omnibus::_git' do
 
       expect(chef_run).to install_package('curl')
       expect(chef_run).to install_package('expat2')
-      expect(chef_run).to install_package('gettext')
       expect(chef_run).to install_package('libzip')
       expect(chef_run).to install_package('perl5')
         .with_source('ports')
@@ -64,22 +62,22 @@ describe 'omnibus::_git' do
       expect(chef_run).to install_package('curl')
       expect(chef_run).to install_package('expat')
     end
+  end
 
-    it 'compiles gettext from source' do
-      stub_command('which git')
-      Chef::Resource.any_instance.stub(:installed_at_version?).and_return(false)
+  context 'on rhel 5' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'redhat', version: '5.10')
+        .converge(described_recipe)
+    end
 
-      expect(chef_run).to install_remote_install('gettext')
-        .with_source('http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.3.2.tar.gz')
-        .with_checksum('d1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7')
-        .with_version('0.18.3.2')
-        .with_build_command('./configure')
-        .with_compile_command('make')
-        .with_install_command('make install')
+    it 'installs the correct development packages' do
+      expect(chef_run).to install_package('curl-devel')
+      expect(chef_run).to install_package('expat-devel')
+      expect(chef_run).to install_package('zlib-devel')
     end
   end
 
-  context 'on rhel' do
+  context 'on rhel 6' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'redhat', version: '6.5')
         .converge(described_recipe)
@@ -88,7 +86,6 @@ describe 'omnibus::_git' do
     it 'installs the correct development packages' do
       expect(chef_run).to install_package('curl-devel')
       expect(chef_run).to install_package('expat-devel')
-      expect(chef_run).to install_package('gettext-devel')
       expect(chef_run).to install_package('perl-ExtUtils-MakeMaker')
       expect(chef_run).to install_package('zlib-devel')
     end
@@ -98,8 +95,8 @@ describe 'omnibus::_git' do
     Chef::Resource.any_instance.stub(:installed_at_version?).and_return(false)
 
     expect(chef_run).to install_remote_install('git')
-      .with_source('https://github.com/git/git/archive/v1.9.0.tar.gz')
-      .with_checksum('064f2ee279cc05f92f0df79c1ca768771393bc3134c0fa53b17577679383f039')
+      .with_source('https://git-core.googlecode.com/files/git-1.9.0.tar.gz')
+      .with_checksum('de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882')
       .with_version('1.9.0')
       .with_build_command('make prefix=/usr/local all')
       .with_install_command('make prefix=/usr/local install')

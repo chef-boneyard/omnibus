@@ -43,7 +43,7 @@ describe 'omnibus::_ruby' do
       Chef::Resource.any_instance.stub(:installed_at_version?)
 
       expect(chef_run).to install_remote_install('ruby-install')
-        .with_source('https://github.com/postmodern/ruby-install/archive/v0.4.1.tar.gz')
+        .with_source('https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1')
         .with_checksum('1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e')
         .with_version('0.4.1')
         .with_install_command('make install')

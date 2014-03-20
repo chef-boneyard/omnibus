@@ -19,16 +19,13 @@
 
 include_recipe 'omnibus::_bash'
 
-home = File.join('/home', node['omnibus']['build_user'])
-
 user node['omnibus']['build_user'] do
-  home     home
+  home     build_user_home
   shell    '/bin/bash'
   action   :create
-  supports manage_home: true
 end
 
-directory home do
+directory build_user_home do
   owner node['omnibus']['build_user']
   mode '0755'
 end
@@ -36,7 +33,7 @@ end
 #
 # Create an .bashrc.d-style directory for arbitrary loading.
 #
-directory File.join(home, '.bashrc.d') do
+directory File.join(build_user_home, '.bashrc.d') do
   owner node['omnibus']['build_user']
   mode '0755'
 end
@@ -44,7 +41,7 @@ end
 #
 # Write a .bash_profile that just loads .bashrc
 #
-file File.join(home, '.bash_profile') do
+file File.join(build_user_home, '.bash_profile') do
   owner   node['omnibus']['build_user']
   mode    '0644'
   content <<-EOH.gsub(/^ {4}/, '')
@@ -61,7 +58,7 @@ end
 #
 # Load the regular profile
 #
-file File.join(home, '.bashrc') do
+file File.join(build_user_home, '.bashrc') do
   owner   node['omnibus']['build_user']
   mode    '0644'
   content <<-EOH.gsub(/^ {4}/, '')
@@ -87,7 +84,7 @@ end
 #
 # We fully control the $PATH for the omnibus build user.
 #
-file File.join(home, '.bashrc.d', 'omnibus-path.sh') do
+file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
   owner   node['omnibus']['build_user']
   mode    '0644'
   content <<-EOH.gsub(/^ {4}/, '')
