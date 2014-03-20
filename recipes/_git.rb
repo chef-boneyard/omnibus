@@ -22,6 +22,7 @@ include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_openssl'
 
+make        = 'make'
 install_env = {}
 
 # We define NO_GETTEXT since we don't really
@@ -42,6 +43,8 @@ when 'freebsd'
     source 'ports'
     not_if 'perl -v | grep "perl 5"'
   end
+  # FreeBSD requires gmake instead of make
+  make = 'gmake'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
@@ -51,9 +54,6 @@ when 'rhel'
   package 'perl-ExtUtils-MakeMaker'
   package 'zlib-devel'
 end
-
-# For whatever reason, FreeBSD requires gmake instead of make
-make = freebsd? ? 'gmake' : 'make'
 
 remote_install 'git' do
   source 'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
