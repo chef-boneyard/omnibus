@@ -51,7 +51,7 @@ when 'mac_os_x'
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
-  package 'perl-ExtUtils-MakeMaker'
+  package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('~> 6')
   package 'zlib-devel'
 end
 

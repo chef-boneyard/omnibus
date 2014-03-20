@@ -64,7 +64,20 @@ describe 'omnibus::_git' do
     end
   end
 
-  context 'on rhel' do
+  context 'on rhel 5' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'redhat', version: '5.10')
+        .converge(described_recipe)
+    end
+
+    it 'installs the correct development packages' do
+      expect(chef_run).to install_package('curl-devel')
+      expect(chef_run).to install_package('expat-devel')
+      expect(chef_run).to install_package('zlib-devel')
+    end
+  end
+
+  context 'on rhel 6' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'redhat', version: '6.5')
         .converge(described_recipe)
