@@ -32,6 +32,7 @@ class Chef
     attribute :build_command,     kind_of: String
     attribute :compile_command,   kind_of: String
     attribute :install_command,   kind_of: String, required: true
+    attribute :environment,       kind_of: Hash,   default: {}
   end
 
   class Provider::RemoteInstall < Provider::LWRPBase
@@ -123,6 +124,7 @@ EOH
           execute label('#{stage}') do
             command(new_resource.#{stage}_command)
             cwd(extract_path)
+            environment(new_resource.environment)
           end
         end
       EOH
