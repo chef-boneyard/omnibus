@@ -22,17 +22,21 @@ include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_openssl'
 
+install_env = {}
+
+# We define NO_GETTEXT since we don't really
+# care if our Git output is translated.
+install_env['NO_GETTEXT'] = '1'
+
 case node['platform_family']
 when 'debian'
   package 'libcurl4-gnutls-dev'
   package 'libexpat1-dev'
-  package 'gettext'
   package 'libz-dev'
   package 'perl-modules'
 when 'freebsd'
   package 'curl'
   package 'expat2'
-  package 'gettext'
   package 'libzip'
   package 'perl5' do
     source 'ports'
@@ -41,24 +45,9 @@ when 'freebsd'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
-
-  # We cannot install gettext from homebrew (it's too old or something prevents
-  # it from working with git), so we need to compile from source. It is also
-  # worth noting that the "version" gettext reports does not include the last
-  # digit (0.18.3.2 -> 0.18.3).
-  remote_install 'gettext' do
-    source 'http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.3.2.tar.gz'
-    checksum 'd1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7'
-    version '0.18.3.2'
-    build_command './configure'
-    compile_command 'make'
-    install_command 'make install'
-    not_if { installed_at_version?('gettext', '0.18.3') }
-  end
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
-  package 'gettext-devel'
   package 'perl-ExtUtils-MakeMaker'
   package 'zlib-devel'
 end
@@ -72,5 +61,6 @@ remote_install 'git' do
   version '1.9.0'
   build_command "#{make} prefix=/usr/local all"
   install_command "#{make} prefix=/usr/local install"
+  environment install_env
   not_if { installed_at_version?('git', '1.9.0') }
 end
