@@ -19,9 +19,7 @@
 
 class Chef
   class Resource::RemoteInstall < Resource::LWRPBase
-    def self.resource_name
-      :remote_install
-    end
+    self.resource_name = :remote_install
 
     actions :install
     default_action :install
