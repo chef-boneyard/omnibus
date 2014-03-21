@@ -62,9 +62,9 @@ class Chef
       # Ruby is bad at instance_eval
       install_command = "ruby-install ruby #{version} -- #{compile_flags}"
 
-      execute "install ruby-#{version}" do
-        command(install_command)
-      end
+      execute = Chef::Resource::Execute.new("install ruby-#{version}", run_context)
+      execute.command(install_command)
+      execute.run_action(:run)
     end
 
     # Check if the given Ruby is installed by directory. If the full directory
