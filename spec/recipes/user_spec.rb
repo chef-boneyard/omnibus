@@ -23,11 +23,19 @@ describe 'omnibus::_user' do
     expect(chef_run).to create_file('/home/omnibus/.bash_profile')
   end
 
-  it 'creates the .bash_profile' do
+  it 'creates the .bashrc' do
     expect(chef_run).to create_file('/home/omnibus/.bashrc')
   end
 
-  it 'creates the .bash_profile' do
+  it 'creates the .omnibus-path' do
     expect(chef_run).to create_file('/home/omnibus/.bashrc.d/omnibus-path.sh')
+      .with_owner('omnibus')
+      .with_mode('0755')
+  end
+
+  it 'creates the .chruby-default' do
+    expect(chef_run).to create_file('/home/omnibus/.bashrc.d/chruby-default.sh')
+      .with_owner('omnibus')
+      .with_mode('0755')
   end
 end
