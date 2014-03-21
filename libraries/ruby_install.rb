@@ -68,17 +68,13 @@ class Chef
       end
     end
 
-    # @return [String]
-    def installed_ruby_version
-      ::File.exists?('/usr/local/bin/ruby') && Chef::Sugar::Shell.version_for('/usr/local/bin/ruby')
-    end
-
+    # Check if the given Ruby is installed by directory. If the full directory
+    # does not exist, we can do partial global matching.
+    #
+    # @return [true, false]
     def installed?
-      if (installed_version = installed_ruby_version)
-        installed_version.include?(version)
-      else
-        false
-      end
+      ::File.directory?("/opt/rubies/ruby-#{version}") ||
+        Dir['/opt/rubies/ruby-*'].any? { |ruby| ruby.include?(version) }
     end
   end
 end
