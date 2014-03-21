@@ -32,7 +32,7 @@ end
 class Chef
   class Provider::RubyGem < Provider::LWRPBase
     require 'chef/mixin/shell_out'
-    include Chef::Mixin::ShellOut
+    include Mixin::ShellOut
 
     action(:install) do
       if installed?

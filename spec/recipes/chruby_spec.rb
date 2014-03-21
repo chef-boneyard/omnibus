@@ -25,16 +25,6 @@ describe 'omnibus::_chruby' do
       .with_install_command('make install')
   end
 
-  it 'notifies chruby to source' do
-    chruby_install = chef_run.remote_install('chruby')
-    expect(chruby_install).to notify('execute[source_chruby]').to(:run).immediately
-  end
-
-  it 'sources chruby' do
-    execute = chef_run.execute('source_chruby')
-    expect(execute).to do_nothing
-  end
-
   it 'creates an /etc/profile.d entry' do
     expect(chef_run).to create_file('/etc/profile.d/chruby.sh')
       .with_mode('0755')

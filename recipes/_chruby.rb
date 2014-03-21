@@ -28,13 +28,6 @@ remote_install 'chruby' do
   version '0.3.8'
   install_command 'make install'
   not_if { installed_at_version?('chruby-exec', '0.3.8') }
-  notifies :run, 'execute[source_chruby]', :immediately
-end
-
-# Source chruby for the rest of this CCR
-execute 'source_chruby' do
-  command 'source /usr/local/share/chruby/chruby.sh'
-  action  :nothing
 end
 
 # Source chruby all the time in the future

@@ -54,7 +54,7 @@ EOH
       true
     end
 
-    action :install do
+    action(:install) do
       converge_by("Install #{new_resource}") do
         download
         verify
@@ -62,9 +62,6 @@ EOH
         build
         compile
         install
-
-        # It is the responsibility of the developer to use appropiate guards...
-        new_resource.updated_by_last_action(true)
       end
     end
 
@@ -79,39 +76,36 @@ EOH
     end
 
     def cache_path
-      @cache_path ||= ::File.join(Chef::Config[:file_cache_path], "#{id}.tar.gz")
+      @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}.tar.gz")
     end
 
     def extract_path
-      @extract_path ||= ::File.join(Chef::Config[:file_cache_path], id)
+      @extract_path ||= ::File.join(Config[:file_cache_path], id)
     end
 
     def download
-      remote_file label('download') do
-        path   cache_path
-        source new_resource.source
-        backup false
-      end
+      remote_file = Resource::RemoteFile.new(label('download'), run_context)
+      remote_file.path(cache_path)
+      remote_file.source(new_resource.source)
+      remote_file.backup(false)
+      remote_file.run_action(:create)
     end
 
     def verify
-      ruby_block label('verify') do
-        block do
-          require 'digest/sha2' unless defined?(Digest::SHA256)
-          checksum = Digest::SHA256.file(cache_path).hexdigest
+      require 'digest/sha2' unless defined?(Digest::SHA256)
 
-          unless new_resource.checksum == checksum
-            raise ChecksumVerificationFailure.new(new_resource, checksum)
-          end
-        end
+      checksum = Digest::SHA256.file(cache_path).hexdigest
+
+      unless new_resource.checksum == checksum
+        raise ChecksumVerificationFailure.new(new_resource, checksum)
       end
     end
 
     def extract
-      execute label('extract') do
-        command "tar -xzvf #{id}.tar.gz"
-        cwd     Chef::Config[:file_cache_path]
-      end
+      execute = Resource::Execute.new(label('extract'), run_context)
+      execute.command("tar -xzvf #{id}.tar.gz")
+      execute.cwd(Config[:file_cache_path])
+      execute.run_action(:run)
     end
 
     %w(build compile install).each do |stage|
@@ -119,11 +113,11 @@ EOH
         def #{stage}
           return if new_resource.#{stage}_command.nil?
 
-          execute label('#{stage}') do
-            command(new_resource.#{stage}_command)
-            cwd(extract_path)
-            environment(new_resource.environment)
-          end
+          execute = Resource::Execute.new(label('#{stage}'), run_context)
+          execute.command(new_resource.#{stage}_command)
+          execute.cwd(extract_path)
+          execute.environment(new_resource.environment)
+          execute.run_action(:run)
         end
       EOH
     end
