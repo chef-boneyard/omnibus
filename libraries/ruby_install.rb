@@ -32,7 +32,7 @@ class Chef
       true
     end
 
-    action :install do
+    action(:install) do
       if installed?
         Chef::Log.debug("#{new_resource} installed - skipping")
       else
