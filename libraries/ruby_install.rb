@@ -38,7 +38,6 @@ class Chef
       else
         converge_by("install #{new_resource}") do
           install
-          new_resource.updated_by_last_action(true)
         end
       end
     end
