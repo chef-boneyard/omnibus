@@ -19,9 +19,7 @@
 
 class Chef
   class Resource::RubyInstall < Resource::LWRPBase
-    def self.resource_name
-      :ruby_install
-    end
+    self.resource_name = :ruby_install
 
     actions :install
     default_action :install
