@@ -23,6 +23,7 @@ if windows?
   include_recipe 'omnibus::_ruby_windows'
 else
   include_recipe 'omnibus::_bash'
+  include_recipe 'omnibus::_chruby'
   include_recipe 'omnibus::_compile'
   include_recipe 'omnibus::_openssl'
   include_recipe 'omnibus::_xml'
