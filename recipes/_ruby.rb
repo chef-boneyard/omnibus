@@ -43,5 +43,7 @@ else
   ruby_install node['omnibus']['ruby_version']
 
   # Install bundler (into the Ruby we just installed)
-  ruby_gem 'bundler'
+  ruby_gem 'bundler' do
+    ruby node['omnibus']['ruby_version']
+  end
 end
