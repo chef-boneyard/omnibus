@@ -96,3 +96,18 @@ file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
     export PATH="/usr/local/bin:$PATH"
   EOH
 end
+
+#
+# Automatically load our Ruby for the omnibus user.
+#
+file File.join(build_user_home, '.bashrc.d', 'chruby-default.sh') do
+  owner   node['omnibus']['build_user']
+  mode    '0755'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    # Automatically set the ruby version for the omnibus user
+    chruby #{node['omnibus']['ruby_version']}
+  EOH
+end
