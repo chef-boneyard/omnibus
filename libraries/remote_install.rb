@@ -76,15 +76,15 @@ EOH
     end
 
     def cache_path
-      @cache_path ||= ::File.join(Chef::Config[:file_cache_path], "#{id}.tar.gz")
+      @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}.tar.gz")
     end
 
     def extract_path
-      @extract_path ||= ::File.join(Chef::Config[:file_cache_path], id)
+      @extract_path ||= ::File.join(Config[:file_cache_path], id)
     end
 
     def download
-      remote_file = Chef::Resource::RemoteFile.new(label('download'), run_context)
+      remote_file = Resource::RemoteFile.new(label('download'), run_context)
       remote_file.path(cache_path)
       remote_file.source(new_resource.source)
       remote_file.backup(false)
@@ -102,9 +102,9 @@ EOH
     end
 
     def extract
-      execute = Chef::Resource::Execute.new(label('extract'), run_context)
+      execute = Resource::Execute.new(label('extract'), run_context)
       execute.command("tar -xzvf #{id}.tar.gz")
-      execute.cwd(Chef::Config[:file_cache_path])
+      execute.cwd(Config[:file_cache_path])
       execute.run_action(:run)
     end
 
@@ -113,7 +113,7 @@ EOH
         def #{stage}
           return if new_resource.#{stage}_command.nil?
 
-          execute = Chef::Resource::Execute.new(label('#{stage}'), run_context)
+          execute = Resource::Execute.new(label('#{stage}'), run_context)
           execute.command(new_resource.#{stage}_command)
           execute.cwd(extract_path)
           execute.environment(new_resource.environment)

@@ -62,7 +62,7 @@ class Chef
       # Ruby is bad at instance_eval
       install_command = "ruby-install ruby #{version} -- #{compile_flags}"
 
-      execute = Chef::Resource::Execute.new("install ruby-#{version}", run_context)
+      execute = Resource::Execute.new("install ruby-#{version}", run_context)
       execute.command(install_command)
       execute.run_action(:run)
     end
