@@ -19,9 +19,7 @@
 
 class Chef
   class Resource::RubyInstall < Resource::LWRPBase
-    def self.resource_name
-      :ruby_install
-    end
+    self.resource_name = :ruby_install
 
     actions :install
     default_action :install
@@ -34,7 +32,7 @@ class Chef
       true
     end
 
-    action :install do
+    action(:install) do
       if installed?
         Chef::Log.debug("#{new_resource} installed - skipping")
       else
@@ -63,24 +61,20 @@ class Chef
     def install
       # Need to compile the command outside of the execute resource because
       # Ruby is bad at instance_eval
-      install_command = "ruby-install --install-dir /usr/local ruby #{version} -- #{compile_flags}"
+      install_command = "ruby-install ruby #{version} -- #{compile_flags}"
 
       execute "install ruby-#{version}" do
         command(install_command)
       end
     end
 
-    # @return [String]
-    def installed_ruby_version
-      ::File.exists?('/usr/local/bin/ruby') && Chef::Sugar::Shell.version_for('/usr/local/bin/ruby')
-    end
-
+    # Check if the given Ruby is installed by directory. If the full directory
+    # does not exist, we can do partial global matching.
+    #
+    # @return [true, false]
     def installed?
-      if (installed_version = installed_ruby_version)
-        installed_version.include?(version)
-      else
-        false
-      end
+      ::File.directory?("/opt/rubies/ruby-#{version}") ||
+        Dir['/opt/rubies/ruby-*'].any? { |ruby| ruby.include?(version) }
     end
   end
 end

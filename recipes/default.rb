@@ -20,6 +20,7 @@
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_common'
+include_recipe 'omnibus::_chruby'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_git'
 include_recipe 'omnibus::_github'

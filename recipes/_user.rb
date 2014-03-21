@@ -43,7 +43,7 @@ end
 #
 file File.join(build_user_home, '.bash_profile') do
   owner   node['omnibus']['build_user']
-  mode    '0644'
+  mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.
     # Do NOT modify this file by hand.
@@ -60,7 +60,7 @@ end
 #
 file File.join(build_user_home, '.bashrc') do
   owner   node['omnibus']['build_user']
-  mode    '0644'
+  mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.
     # Do NOT modify this file by hand.
@@ -86,7 +86,7 @@ end
 #
 file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
   owner   node['omnibus']['build_user']
-  mode    '0644'
+  mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.
     # Do NOT modify this file by hand.
@@ -94,5 +94,20 @@ file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
     # The omnibus cookbook is very opinionated and puts all of it's things in
     # /usr/local/bin.
     export PATH="/usr/local/bin:$PATH"
+  EOH
+end
+
+#
+# Automatically load our Ruby for the omnibus user.
+#
+file File.join(build_user_home, '.bashrc.d', 'chruby-default.sh') do
+  owner   node['omnibus']['build_user']
+  mode    '0755'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    # Automatically set the ruby version for the omnibus user
+    chruby #{node['omnibus']['ruby_version']}
   EOH
 end

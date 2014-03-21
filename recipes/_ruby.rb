@@ -23,6 +23,7 @@ if windows?
   include_recipe 'omnibus::_ruby_windows'
 else
   include_recipe 'omnibus::_bash'
+  include_recipe 'omnibus::_chruby'
   include_recipe 'omnibus::_compile'
   include_recipe 'omnibus::_openssl'
   include_recipe 'omnibus::_xml'
@@ -42,5 +43,7 @@ else
   ruby_install node['omnibus']['ruby_version']
 
   # Install bundler (into the Ruby we just installed)
-  ruby_gem 'bundler'
+  ruby_gem 'bundler' do
+    ruby node['omnibus']['ruby_version']
+  end
 end

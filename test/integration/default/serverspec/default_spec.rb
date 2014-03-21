@@ -30,8 +30,12 @@ describe 'ccache' do
 end
 
 describe 'ruby' do
-  describe command('/usr/local/bin/ruby --version') do
-    it { should return_stdout(/^ruby 2\.1\.1(.+)/) }
+  describe command("su - omnibus -c 'which ruby'") do
+    it { should return_stdout('/opt/rubies/ruby-2.1.1/bin/ruby') }
+  end
+
+  describe command("su - omnibus -c 'ruby --version'") do
+    it { should return_stdout(/2\.1\.1/) }
   end
 end
 
