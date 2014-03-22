@@ -36,7 +36,6 @@ file '/etc/profile.d/chruby.sh' do
   content <<-EOH.gsub(/^ {4}/, '')
     if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
       source /usr/local/share/chruby/chruby.sh
-      source /usr/local/share/chruby/auto.sh
     fi
   EOH
 end
