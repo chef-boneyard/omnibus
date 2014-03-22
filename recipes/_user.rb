@@ -49,8 +49,8 @@ file File.join(build_user_home, '.bash_profile') do
     # Do NOT modify this file by hand.
 
     # Source our bashrc
-    if [ -f $HOME/.bashrc ]; then
-      source $HOME/.bashrc
+    if [ -f ~/.bashrc ]; then
+      source ~/.bashrc
     fi
   EOH
 end
@@ -71,8 +71,8 @@ file File.join(build_user_home, '.bashrc') do
     fi
 
     # Source all our .d files
-    if [ -d $HOME/.bashrc.d ]; then
-      for rc in $HOME/.bashrc.d/*; do
+    if [ -d ~/.bashrc.d ]; then
+      for rc in ~/.bashrc.d/*; do
         test -f "$rc" || continue
         test -x "$rc" || continue
         source "$rc"
