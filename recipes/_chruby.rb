@@ -29,13 +29,3 @@ remote_install 'chruby' do
   install_command 'make install'
   not_if { installed_at_version?('chruby-exec', '0.3.8') }
 end
-
-# Source chruby all the time in the future
-file '/etc/profile.d/chruby.sh' do
-  mode    '0755'
-  content <<-EOH.gsub(/^ {4}/, '')
-    if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-      source /usr/local/share/chruby/chruby.sh
-    fi
-  EOH
-end

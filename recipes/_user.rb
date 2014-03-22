@@ -107,8 +107,7 @@ file File.join(build_user_home, '.bashrc.d', 'chruby-default.sh') do
     # This file is written by Chef for #{node['fqdn']}.
     # Do NOT modify this file by hand.
 
-    # Ensure chruby has actually been loaded. BSD variants ignore
-    # /etc/profile.d/chruby.sh
+    # Load chruby
     if ! command -v chruby > /dev/null; then
       source /usr/local/share/chruby/chruby.sh
     fi
