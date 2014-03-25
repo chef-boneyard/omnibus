@@ -30,13 +30,58 @@ remote_install 'chruby' do
   not_if { installed_at_version?('chruby-exec', '0.3.8') }
 end
 
-# Source chruby all the time in the future
-file '/etc/profile.d/chruby.sh' do
-  mode    '0755'
+file '/usr/local/bin/chruby-exec' do
   content <<-EOH.gsub(/^ {4}/, '')
-    if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-      source /usr/local/share/chruby/chruby.sh
-      source /usr/local/share/chruby/auto.sh
+    #!/usr/bin/env bash
+
+    #
+    # The version of `chruby-exec` that ships in `chruby` 0.3.8 does not work
+    # under non-login shells as it assumes `/etc/profile.d/chruby.sh` loaded
+    # the `chruby` function. This file was taken from the following un-merged
+    # PR that fixes the issue:
+    #
+    # https://github.com/postmodern/chruby/pull/250/files
+    #
+
+    case "$1" in
+      -h|--help)
+        echo "usage: chruby-exec RUBY [RUBYOPTS] -- COMMAND [ARGS...]"
+        exit
+        ;;
+      -V|--version)
+        echo "chruby version $CHRUBY_VERSION"
+        exit
+        ;;
+    esac
+
+    if (( $# == 0 )); then
+      echo "chruby-exec: RUBY and COMMAND required" >&2
+      exit 1
+    fi
+
+    argv=()
+
+    for arg in $@; do
+      shift
+
+      if [[ "$arg" == "--" ]]; then break
+      else                          argv+=($arg)
+      fi
+    done
+
+    if (( $# == 0 )); then
+      echo "chruby-exec: COMMAND required" >&2
+      exit 1
+    fi
+
+    chruby_sh="${0%/*}/../share/chruby/chruby.sh"
+    source_command="[[ -z \\"\\`type -t chruby\\`\\" ]] && source $chruby_sh"
+
+    command="$source_command; chruby $argv && $*"
+
+    if [[ -t 0 ]]; then exec "$SHELL" -i -l -c "$command"
+    else                exec "$SHELL"    -l -c "$command"
     fi
   EOH
+  mode '0755'
 end

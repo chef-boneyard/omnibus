@@ -24,9 +24,4 @@ describe 'omnibus::_chruby' do
       .with_version('0.3.8')
       .with_install_command('make install')
   end
-
-  it 'creates an /etc/profile.d entry' do
-    expect(chef_run).to create_file('/etc/profile.d/chruby.sh')
-      .with_mode('0755')
-  end
 end

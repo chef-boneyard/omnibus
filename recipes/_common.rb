@@ -24,11 +24,6 @@ directory Chef::Config[:file_cache_path] do
   recursive true
 end
 
-# Some systems (cough BSD) don't create /etc/profile.d
-directory '/etc/profile.d' do
-  recursive true
-end
-
 # Create the omnibus directories
 [
   node['omnibus']['install_dir'],
