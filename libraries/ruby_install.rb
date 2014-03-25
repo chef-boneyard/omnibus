@@ -54,6 +54,8 @@ class Chef
         '--disable-install-ri',
         '--with-out-ext=tcl',
         '--with-out-ext=tk',
+        '--without-tcl',
+        '--without-tk',
       ].join(' ')
     end
 
