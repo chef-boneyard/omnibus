@@ -75,12 +75,22 @@ EOH
       @label ||= "#{name}[#{id}]"
     end
 
+    def tarball_name
+      @tarball_name ||= begin
+        if (tarball_extension = new_resource.source.match(/\.tgz|\.tar\.gz$/))
+          ::File.basename(new_resource.source, tarball_extension.to_s)
+        else
+          id
+        end
+      end
+    end
+
     def cache_path
       @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}.tar.gz")
     end
 
     def extract_path
-      @extract_path ||= ::File.join(Config[:file_cache_path], id)
+      @extract_path ||= ::File.join(Config[:file_cache_path], tarball_name)
     end
 
     def download
