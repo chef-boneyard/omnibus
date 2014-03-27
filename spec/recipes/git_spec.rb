@@ -98,7 +98,8 @@ describe 'omnibus::_git' do
       .with_source('https://git-core.googlecode.com/files/git-1.9.0.tar.gz')
       .with_checksum('de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882')
       .with_version('1.9.0')
-      .with_build_command('make prefix=/usr/local all')
-      .with_install_command('make prefix=/usr/local install')
+      .with_build_command('./configure --prefix=/usr/local --without-tcltk')
+      .with_compile_command('make')
+      .with_install_command('make install')
   end
 end
