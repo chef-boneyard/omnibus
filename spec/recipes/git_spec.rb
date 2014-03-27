@@ -26,6 +26,7 @@ describe 'omnibus::_git' do
     end
 
     it 'installs the correct development packages' do
+      expect(chef_run).to install_package('gettext')
       expect(chef_run).to install_package('libcurl4-gnutls-dev')
       expect(chef_run).to install_package('libexpat1-dev')
       expect(chef_run).to install_package('libz-dev')
@@ -44,6 +45,7 @@ describe 'omnibus::_git' do
 
       expect(chef_run).to install_package('curl')
       expect(chef_run).to install_package('expat2')
+      expect(chef_run).to install_package('gettext')
       expect(chef_run).to install_package('libzip')
       expect(chef_run).to install_package('perl5')
         .with_source('ports')
@@ -61,6 +63,7 @@ describe 'omnibus::_git' do
 
       expect(chef_run).to install_package('curl')
       expect(chef_run).to install_package('expat')
+      expect(chef_run).to install_package('gettext')
     end
   end
 
@@ -73,6 +76,7 @@ describe 'omnibus::_git' do
     it 'installs the correct development packages' do
       expect(chef_run).to install_package('curl-devel')
       expect(chef_run).to install_package('expat-devel')
+      expect(chef_run).to install_package('gettext-devel')
       expect(chef_run).to install_package('zlib-devel')
     end
   end
@@ -86,6 +90,7 @@ describe 'omnibus::_git' do
     it 'installs the correct development packages' do
       expect(chef_run).to install_package('curl-devel')
       expect(chef_run).to install_package('expat-devel')
+      expect(chef_run).to install_package('gettext-devel')
       expect(chef_run).to install_package('perl-ExtUtils-MakeMaker')
       expect(chef_run).to install_package('zlib-devel')
     end

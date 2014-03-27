@@ -31,6 +31,7 @@ install_env['NO_GETTEXT'] = '1'
 
 case node['platform_family']
 when 'debian'
+  package 'gettext'
   package 'libcurl4-gnutls-dev'
   package 'libexpat1-dev'
   package 'libz-dev'
@@ -38,6 +39,7 @@ when 'debian'
 when 'freebsd'
   package 'curl'
   package 'expat2'
+  package 'gettext'
   package 'libzip'
   package 'perl5' do
     source 'ports'
@@ -48,9 +50,11 @@ when 'freebsd'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
+  package 'gettext'
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
+  package 'gettext-devel'
   package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('~> 6')
   package 'zlib-devel'
 end
