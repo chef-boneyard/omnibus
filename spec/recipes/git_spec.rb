@@ -40,15 +40,25 @@ describe 'omnibus::_git' do
         .converge(described_recipe)
     end
 
-    it 'installs the correct development packages' do
+    before do
       stub_command('perl -v | grep "perl 5"').and_return(false)
+    end
 
+    it 'installs the correct development packages' do
       expect(chef_run).to install_package('curl')
       expect(chef_run).to install_package('expat2')
       expect(chef_run).to install_package('gettext')
       expect(chef_run).to install_package('libzip')
       expect(chef_run).to install_package('perl5')
         .with_source('ports')
+    end
+
+    it 'uses GNU Make' do
+      Chef::Resource.any_instance.stub(:installed_at_version?).and_return(false)
+
+      expect(chef_run).to install_remote_install('git')
+        .with_compile_command('gmake')
+        .with_install_command('gmake install')
     end
   end
 
