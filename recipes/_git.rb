@@ -21,13 +21,9 @@ include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_openssl'
+include_recipe 'omnibus::_user'
 
-make        = 'make'
-install_env = {}
-
-# We define NO_GETTEXT since we don't really
-# care if our Git output is translated.
-install_env['NO_GETTEXT'] = '1'
+make = 'make'
 
 case node['platform_family']
 when 'debian'
@@ -60,12 +56,41 @@ when 'rhel'
 end
 
 remote_install 'git' do
-  source 'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
-  checksum 'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
-  version '1.9.0'
-  build_command './configure --prefix=/usr/local --without-tcltk'
+  source          'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
+  checksum        'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
+  version         '1.9.0'
+  build_command   './configure --prefix=/usr/local --without-tcltk'
   compile_command "#{make}"
   install_command "#{make} install"
-  environment install_env
+  environment     'NO_GETTEXT' => '1'
   not_if { installed_at_version?('git', '1.9.0') }
+end
+
+file File.join(build_user_home, '.gitconfig') do
+  owner   node['omnibus']['build_user']
+  mode    '0644'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    [user]
+      ; Set a sane user name and email. This makes git happy and prevents
+      ; spammy output on each git command.
+      name  = Omnibus
+      email = omnibus@getchef.com
+    [color]
+      ; Since this is a build machine, we do not want colored output.
+      ui = false
+    [core]
+      editor = $EDITOR
+      whitespace = fix
+    [apply]
+      whitespace = fix
+    [push]
+      default = tracking
+    [branch]
+      autosetuprebase = always
+    [pull]
+      rebase = preserve
+  EOH
 end
