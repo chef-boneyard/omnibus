@@ -31,6 +31,7 @@ install_env['NO_GETTEXT'] = '1'
 
 case node['platform_family']
 when 'debian'
+  package 'gettext'
   package 'libcurl4-gnutls-dev'
   package 'libexpat1-dev'
   package 'libz-dev'
@@ -38,6 +39,7 @@ when 'debian'
 when 'freebsd'
   package 'curl'
   package 'expat2'
+  package 'gettext'
   package 'libzip'
   package 'perl5' do
     source 'ports'
@@ -48,9 +50,11 @@ when 'freebsd'
 when 'mac_os_x'
   package 'curl'
   package 'expat'
+  package 'gettext'
 when 'rhel'
   package 'curl-devel'
   package 'expat-devel'
+  package 'gettext-devel'
   package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('~> 6')
   package 'zlib-devel'
 end
@@ -59,8 +63,9 @@ remote_install 'git' do
   source 'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
   checksum 'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
   version '1.9.0'
-  build_command "#{make} prefix=/usr/local all"
-  install_command "#{make} prefix=/usr/local install"
+  build_command './configure --prefix=/usr/local --without-tcltk'
+  compile_command "#{make}"
+  install_command "#{make} install"
   environment install_env
   not_if { installed_at_version?('git', '1.9.0') }
 end

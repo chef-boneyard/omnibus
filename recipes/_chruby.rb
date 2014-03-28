@@ -37,7 +37,7 @@ file '/usr/local/bin/chruby-exec' do
     #
     # The version of `chruby-exec` that ships in `chruby` 0.3.8 does not work
     # under non-login shells as it assumes `/etc/profile.d/chruby.sh` loaded
-    # the `chruby` function. This file was taken from the following un-merged
+    # the `chruby` function. This file was inspired by the following un-merged
     # PR that fixes the issue:
     #
     # https://github.com/postmodern/chruby/pull/250/files
@@ -66,7 +66,7 @@ file '/usr/local/bin/chruby-exec' do
 
       if [[ "$arg" == "--" ]]; then break
       else                          argv+=($arg)
-      fi
+        fi
     done
 
     if (( $# == 0 )); then
@@ -74,13 +74,14 @@ file '/usr/local/bin/chruby-exec' do
       exit 1
     fi
 
-    chruby_sh="${0%/*}/../share/chruby/chruby.sh"
-    source_command="[[ -z \\"\\`type -t chruby\\`\\" ]] && source $chruby_sh"
+    if ! command -v chruby > /dev/null; then
+      command="source ${0%/*}/../share/chruby/chruby.sh && chruby $argv && $*"
+    else
+      command="chruby $argv && $*"
+    fi
 
-    command="$source_command; chruby $argv && $*"
-
-    if [[ -t 0 ]]; then exec "$SHELL" -i -l -c "$command"
-    else                exec "$SHELL"    -l -c "$command"
+    if [[ -t 0 ]]; then exec bash -i -l -c "$command"
+    else                exec bash    -l -c "$command"
     fi
   EOH
   mode '0755'
