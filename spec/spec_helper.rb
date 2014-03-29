@@ -4,6 +4,14 @@ require 'chefspec/berkshelf'
 ChefSpec::Coverage.start!
 
 RSpec.configure do |config|
+  config.before(:each) do
+    # We need to stub the build_user_home because ChefSpec isn't smart enough
+    # to realize that a resource has already been touched once the attribute
+    # changes. Global state is hard...
+    Chef::Recipe.any_instance.stub(:build_user_home)
+      .and_return('/home/omnibus')
+  end
+
   config.log_level = :fatal
 
   # Why aren't these the defaults?

@@ -24,4 +24,9 @@ describe 'omnibus::_chruby' do
       .with_version('0.3.8')
       .with_install_command('make install')
   end
+
+  it 'writes a custom chruby-exec' do
+    expect(chef_run).to create_file('/usr/local/bin/chruby-exec')
+      .with_mode('0755')
+  end
 end

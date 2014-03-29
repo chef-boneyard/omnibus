@@ -117,4 +117,10 @@ describe 'omnibus::_git' do
       .with_compile_command('make')
       .with_install_command('make install')
   end
+
+  it 'writes a sane git config' do
+    expect(chef_run).to create_file('/home/omnibus/.gitconfig')
+      .with_owner('omnibus')
+      .with_mode('0644')
+  end
 end
