@@ -3,7 +3,9 @@ require 'bundler/setup'
 namespace :style do
   require 'rubocop/rake_task'
   desc 'Run Ruby style checks'
-  Rubocop::RakeTask.new(:ruby)
+  Rubocop::RakeTask.new(:ruby) do |t|
+    t.options = ['--lint']
+  end
 end
 
 desc 'Run all style checks'
