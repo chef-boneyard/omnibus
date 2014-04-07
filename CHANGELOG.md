@@ -2,6 +2,24 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.0.0
+------
+## Improvement
+- Add support for Mac OS X
+- Update Rubocop
+- Update to Berkshelf 3
+- Reduce number of dependencies on community cookbooks
+- Packaged custom ChefSpec matchers
+- Added checksum verifications for installing remote packages
+- Support multiple rubies with `ruby-install` and `chruby`
+- Ensure a consistent version of bash everywhere by compiling from source
+- Improved test suite and coverage
+- Use a consistent version of git by compiling from source
+
+## Breaking
+- Dropped support for smartos
+- Dropped support for solaris2
+
 v1.2.4
 ------
 ## Improvement
@@ -13,7 +31,7 @@ v1.2.2
 ------
 ## Improvement
 - Change default Ruby to 1.9.3-p484 (addresses [CVE-2013-4164])
-- Refactor recipe to install Ruby on Windows. Main change is using 
+- Refactor recipe to install Ruby on Windows. Main change is using
   `*.7zip` package instead of `*.msi`.
 - Update .kitchen.yml for final 1.0 format.
 
