@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.0.2 (2014-04-07)
+-------------------
+- Fix memory leak in string concatenation
+
+
 v2.0.0
 ------
 ## Improvement
