@@ -77,7 +77,7 @@ class Chef
     # @return [true, false]
     #
     def installed?
-      look  = new_resource.name
+      look  = "#{new_resource.name}"
       look << " (#{new_resource.version})" if new_resource.version
 
       chruby("gem list | grep #{look}")
