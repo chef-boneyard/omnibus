@@ -45,7 +45,7 @@ EOH
     )
     f.write_file
   end
-  only_if { ::File.exists?(ssh_config_file) }
+  only_if { ::File.exist?(ssh_config_file) }
 end
 
 # Ensure SSH_AUTH_SOCK is honored under sudo
@@ -59,5 +59,5 @@ EOH
     )
     f.write_file
   end
-  only_if { ::File.exists?(sudoers_file) }
+  only_if { ::File.exist?(sudoers_file) }
 end

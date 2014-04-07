@@ -10,5 +10,7 @@ MethodLength:
   Max: 15
 SignalException:
   Enabled: false
+SingleSpaceBeforeFirstArg:
+  Enabled: false
 TrailingComma:
   EnforcedStyleForMultiline: comma
