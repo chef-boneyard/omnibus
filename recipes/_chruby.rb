@@ -88,3 +88,23 @@ file '/usr/local/bin/chruby-exec' do
   EOH
   mode '0755'
 end
+
+#
+# Automatically load our Ruby for the omnibus user.
+#
+file File.join(build_user_home, '.bashrc.d', 'chruby-default.sh') do
+  owner   node['omnibus']['build_user']
+  mode    '0755'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    # Load chruby
+    if ! command -v chruby > /dev/null; then
+      source /usr/local/share/chruby/chruby.sh
+    fi
+
+    # Automatically set the ruby version for the omnibus user
+    chruby #{node['omnibus']['ruby_version']}
+  EOH
+end
