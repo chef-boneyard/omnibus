@@ -17,17 +17,46 @@
 # limitations under the License.
 #
 
+include_recipe 'chef-sugar::default'
 include_recipe 'omnibus::_bash'
 
 user node['omnibus']['build_user'] do
   home     build_user_home
+  password node['omnibus']['build_user_password']
   shell    '/bin/bash'
   action   :create
 end
 
-directory build_user_home do
-  owner node['omnibus']['build_user']
-  mode '0755'
+# Ensure the build user's home directory exists
+if windows?
+  # Home directory creation on Windows is a mess. If a user's home is set to
+  # the default location (e.g C:\Users\<USER>) then Chef cannot create the
+  # directory because of permission issues (see CHEF-5264). The good news is
+  # Windows will automaticlally create the directory BUT only after the user
+  # has logged in the first time! We can force this behavior by executing a
+  # trival command as the build user.
+  if build_user_home.include?(windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Users'))
+    ruby_block 'create-build-user-home' do
+      block do
+        whoami = Mixlib::ShellOut.new("whoami.exe", user: node['omnibus']['build_user'], password: node['omnibus']['build_user_password'])
+        whoami.run_command
+      end
+      action :create
+      not_if { ::File.exist?(build_user_home) }
+    end
+  else
+    directory build_user_home do
+      owner node['omnibus']['build_user']
+      group node['omnibus']['build_user_group']
+      action :create
+    end
+  end
+else
+  directory build_user_home do
+    owner node['omnibus']['build_user']
+    mode '0755'
+    action :create
+  end
 end
 
 #

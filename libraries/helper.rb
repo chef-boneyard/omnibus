@@ -29,18 +29,19 @@ module Omnibus
     end
 
     def build_user_home
-      @build_user_home ||= begin
-        if node['omnibus']['build_user_home']
-          node['omnibus']['build_user_home']
-        elsif mac_os_x?
-          File.join('/Users', node['omnibus']['build_user'])
-        else
-          File.join('/home', node['omnibus']['build_user'])
-        end
+      if node['omnibus']['build_user_home']
+        node['omnibus']['build_user_home']
+      elsif mac_os_x?
+        File.join('/Users', node['omnibus']['build_user'])
+      elsif windows?
+        windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Users', node['omnibus']['build_user'])
+      else
+        File.join('/home', node['omnibus']['build_user'])
       end
     end
   end
 end
 
+Chef::Node.send(:include, Omnibus::Helper)
 Chef::Recipe.send(:include, Omnibus::Helper)
 Chef::Resource.send(:include, Omnibus::Helper)
