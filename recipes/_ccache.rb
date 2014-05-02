@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+return if platform_family?('windows')
+
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
