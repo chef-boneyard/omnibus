@@ -33,4 +33,7 @@ when 'rhel'
   package 'rpm-build'
   package 'ncurses-devel'
   package 'zlib-devel'
+when 'windows'
+  include_recipe '7-zip::default'
+  include_recipe 'wix::default'
 end
