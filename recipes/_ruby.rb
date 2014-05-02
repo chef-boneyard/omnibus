@@ -19,9 +19,7 @@
 
 include_recipe 'omnibus::_common'
 
-if windows?
-  include_recipe 'omnibus::_ruby_windows'
-else
+unless windows?
   include_recipe 'omnibus::_bash'
   include_recipe 'omnibus::_chruby'
   include_recipe 'omnibus::_compile'
@@ -38,12 +36,12 @@ else
     install_command 'make install'
     not_if { installed_at_version?('ruby-install', '0.4.1') }
   end
+end
 
-  # Install the version of Ruby we want into /usr/local
-  ruby_install node['omnibus']['ruby_version']
+# Install the version of Ruby we want into /usr/local
+ruby_install node['omnibus']['ruby_version']
 
-  # Install bundler (into the Ruby we just installed)
-  ruby_gem 'bundler' do
-    ruby node['omnibus']['ruby_version']
-  end
+# Install bundler (into the Ruby we just installed)
+ruby_gem 'bundler' do
+  ruby node['omnibus']['ruby_version']
 end
