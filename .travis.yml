@@ -13,6 +13,10 @@ script: bundle exec rake travis:ci
 
 notifications:
   hipchat:
+    on_change: true
+    on_failure: true
+    on_success: false
+    on_pull_requests: false
     rooms:
       # Build Statuses
       - secure: Hh+4hhTO67a1+TOxlq1x6WtKWSx7c47YFuQWtCNEEk8u0ouwqVfKqxoc7FtPIJbZDNH0UqQCMXBq4t86a+JLtrP47Lk8z1L1ohnxb+vlqdNRRo2z0Z27/ji3J/VEmE4fCJ5r5/nJVVkjv5lHklQCHHr29ZJKuGZbRvVv6AkVMWc=
