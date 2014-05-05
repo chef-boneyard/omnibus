@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-return if platform_family?('windows')
+include_recipe 'chef-sugar::default'
+return if windows?
 
 include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'

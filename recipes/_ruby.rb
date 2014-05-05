@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_common'
+include_recipe 'chef-sugar::default'
 
 unless windows?
   include_recipe 'omnibus::_bash'

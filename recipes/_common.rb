@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
-
 # Ensure the cache directory exists
 directory Chef::Config[:file_cache_path] do
   recursive true
