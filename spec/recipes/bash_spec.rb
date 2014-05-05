@@ -3,6 +3,10 @@ require 'spec_helper'
 describe 'omnibus::_bash' do
   let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
+  it 'includes chef-sugar' do
+    expect(chef_run).to include_recipe('chef-sugar::default')
+  end
+
   it 'includes _common' do
     expect(chef_run).to include_recipe('omnibus::_common')
   end
@@ -26,5 +30,25 @@ describe 'omnibus::_bash' do
   it 'links /bin/bash to our bash' do
     expect(chef_run).to create_link('/bin/bash')
       .with_to('/usr/local/bin/bash')
+  end
+
+  it 'creates the .bashrc.d' do
+    expect(chef_run).to create_directory('/home/omnibus/.bashrc.d')
+      .with_owner('omnibus')
+      .with_mode('0755')
+  end
+
+  it 'creates the .bash_profile' do
+    expect(chef_run).to create_file('/home/omnibus/.bash_profile')
+  end
+
+  it 'creates the .bashrc' do
+    expect(chef_run).to create_file('/home/omnibus/.bashrc')
+  end
+
+  it 'creates the .omnibus-path' do
+    expect(chef_run).to create_file('/home/omnibus/.bashrc.d/omnibus-path.sh')
+      .with_owner('omnibus')
+      .with_mode('0755')
   end
 end

@@ -3,6 +3,10 @@ require 'spec_helper'
 describe 'omnibus::_ruby' do
   let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
+  it 'includes chef-sugar' do
+    expect(chef_run).to include_recipe('chef-sugar::default')
+  end
+
   it 'includes _common' do
     expect(chef_run).to include_recipe('omnibus::_common')
   end

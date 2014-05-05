@@ -3,6 +3,10 @@ require 'spec_helper'
 describe 'omnibus::_chruby' do
   let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
+  it 'includes chef-sugar' do
+    expect(chef_run).to include_recipe('chef-sugar::default')
+  end
+
   it 'includes _bash' do
     expect(chef_run).to include_recipe('omnibus::_bash')
   end
@@ -27,6 +31,12 @@ describe 'omnibus::_chruby' do
 
   it 'writes a custom chruby-exec' do
     expect(chef_run).to create_file('/usr/local/bin/chruby-exec')
+      .with_mode('0755')
+  end
+
+  it 'creates the .chruby-default' do
+    expect(chef_run).to create_file('/home/omnibus/.bashrc.d/chruby-default.sh')
+      .with_owner('omnibus')
       .with_mode('0755')
   end
 end
