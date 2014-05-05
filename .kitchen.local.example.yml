@@ -23,11 +23,6 @@ platforms:
   #   https://github.com/opscode/bento
   #   https://github.com/misheska/basebox-packer
   #
-  - name: macosx-10.9
-    driver:
-      provider: vmware_fusion
-      box: macosx-10.9
-      box_url: <%= ENV['MAVERICKS_BOX_URL'] || raise('You must specify a URL to download the box!') %>
   - name: windows-7-professional
     provisioner:
       name: windows_chef_zero
