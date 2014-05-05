@@ -34,6 +34,7 @@ end
 
 %w(gcc g++ cc c++).each do |compiler|
   link "/usr/local/bin/#{compiler}" do
-    to '/usr/local/bin/ccache'
+    to "/usr/local/bin/ccache"
+    # This is a really long line. # This is a really long line. # This is a really long line. # This is a really long line. # This is a really long line.
   end
 end
