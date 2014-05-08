@@ -95,6 +95,7 @@ end
 #
 file File.join(build_user_home, '.bashrc.d', 'chruby-default.sh') do
   owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
   mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.

@@ -30,6 +30,7 @@ end
   directory dir do
     mode '0755'
     owner node['omnibus']['build_user']
+    group node['omnibus']['build_user_group']
     recursive true
   end
 end

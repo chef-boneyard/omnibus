@@ -19,11 +19,27 @@
 
 include_recipe 'chef-sugar::default'
 
+group node['omnibus']['build_user_group'] do
+  # The Window's group provider get's cranky if attempting to create a
+  # built-in group.
+  ignore_failure true if windows?
+end
+
 user node['omnibus']['build_user'] do
   home     build_user_home
+  supports manage_home: true
   password node['omnibus']['build_user_password']
-  shell    '/bin/bash'
+  unless windows?
+    shell '/bin/bash'
+    gid   node['omnibus']['build_user_group']
+  end
   action   :create
+end
+
+group node['omnibus']['build_user_group'] do
+  members node['omnibus']['build_user']
+  append true
+  action :modify
 end
 
 # Ensure the build user's home directory exists
@@ -53,6 +69,7 @@ if windows?
 else
   directory build_user_home do
     owner node['omnibus']['build_user']
+    group node['omnibus']['build_user_group']
     mode '0755'
     action :create
   end

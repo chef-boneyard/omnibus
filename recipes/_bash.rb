@@ -44,7 +44,8 @@ end
 #
 directory File.join(build_user_home, '.bashrc.d') do
   owner node['omnibus']['build_user']
-  mode '0755'
+  group node['omnibus']['build_user_group']
+  mode  '0755'
 end
 
 #
@@ -52,6 +53,7 @@ end
 #
 file File.join(build_user_home, '.bash_profile') do
   owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
   mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.
@@ -69,6 +71,7 @@ end
 #
 file File.join(build_user_home, '.bashrc') do
   owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
   mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.
@@ -95,6 +98,7 @@ end
 #
 file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
   owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
   mode    '0755'
   content <<-EOH.gsub(/^ {4}/, '')
     # This file is written by Chef for #{node['fqdn']}.
