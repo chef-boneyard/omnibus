@@ -11,6 +11,21 @@ else
   include Serverspec::Helper::DetectOS
 end
 
+home_dir = if RUBY_PLATFORM =~ /darwin/
+             '/Users/omnibus'
+           else
+             '/home/omnibus'
+           end
+
+describe group('omnibus') do
+  it { should exist }
+end
+
+describe user('omnibus') do
+  it { should exist }
+  it { should have_login_shell '/bin/bash' }
+end
+
 if RUBY_PLATFORM =~ /darwin/
   describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables') do
     it { should return_exit_status 0 }
@@ -60,7 +75,17 @@ describe '$PATH' do
   end
 end
 
-describe user('omnibus') do
-  it { should exist }
-  it { should have_login_shell '/bin/bash' }
+[
+  '.gitconfig',
+  '.bash_profile',
+  '.bashrc',
+  File.join('.bashrc.d', 'omnibus-path.sh'),
+  File.join('.bashrc.d', 'chruby-default.sh')
+].each do |dot_file|
+
+  describe file(File.join(home_dir, dot_file)) do
+    it { should be_owned_by 'omnibus' }
+    it { should be_grouped_into 'omnibus' }
+  end
+
 end
