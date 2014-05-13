@@ -34,5 +34,5 @@ end
 # will force our will on them!
 link '/bin/bash' do
   to '/usr/local/bin/bash'
-  only_if { File.exists?("/usr/local/bin/bash") }
+  only_if { File.exists?('/usr/local/bin/bash') }
 end
