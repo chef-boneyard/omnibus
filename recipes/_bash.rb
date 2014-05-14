@@ -27,12 +27,11 @@ remote_install 'bash' do
   build_command './configure'
   compile_command 'make'
   install_command 'make install'
-  not_if { installed_at_version?('bash', '4.3') }
+  not_if { installed_at_version?('/usr/local/bin/bash', '4.3') }
 end
 
 # Link /bin/bash to our bash, since some systems have their own bash, but we
 # will force our will on them!
 link '/bin/bash' do
   to '/usr/local/bin/bash'
-  only_if { File.exists?('/usr/local/bin/bash') }
 end
