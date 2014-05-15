@@ -50,7 +50,7 @@ describe 'omnibus::_ruby' do
     end
 
     it 'installs ruby' do
-      expect(chef_run).to install_ruby_install('2.1.1')
+      expect(chef_run).to install_ruby_install('2.1.2')
     end
 
     it 'installs bundler' do
