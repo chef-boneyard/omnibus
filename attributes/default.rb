@@ -18,6 +18,7 @@
 default['omnibus'].tap do |omnibus|
   omnibus['build_user']      = 'omnibus'
   omnibus['build_user_home'] = nil
+  omnibus['ruby_version']    = '2.1.2'
 
   if platform_family == 'windows'
     omnibus['build_user_group']  = 'Administrators'
