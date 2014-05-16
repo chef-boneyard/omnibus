@@ -2,16 +2,13 @@ require 'serverspec'
 require 'pathname'
 
 include Serverspec::Helper::Exec
+include Serverspec::Helper::DetectOS
 
 # serverspec's FreeBSD support is craptastic. We'll just make it think
 # it's executing on OS X.
-if RUBY_PLATFORM =~ /freebsd/
-  include Serverspec::Helper::Darwin
-else
-  include Serverspec::Helper::DetectOS
-end
+include Serverspec::Helper::Darwin if os[:family] == 'FreeBSD'
 
-home_dir = if RUBY_PLATFORM =~ /darwin/
+home_dir = if os[:family] == 'Darwin'
              '/Users/omnibus'
            else
              '/home/omnibus'
@@ -26,10 +23,8 @@ describe user('omnibus') do
   it { should have_login_shell '/bin/bash' }
 end
 
-if RUBY_PLATFORM =~ /darwin/
-  describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables') do
-    it { should return_exit_status 0 }
-  end
+describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'), if: os[:family] == 'Darwin' do
+  it { should return_exit_status 0 }
 end
 
 describe 'ccache' do
