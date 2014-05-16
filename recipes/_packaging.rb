@@ -36,4 +36,7 @@ when 'rhel'
 when 'windows'
   include_recipe '7-zip::default'
   include_recipe 'wix::default'
+
+  omnibus_env['PATH'] << node['wix']['home']
+  omnibus_env['PATH'] << node['7-zip']['home']
 end

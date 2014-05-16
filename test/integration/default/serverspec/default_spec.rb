@@ -66,26 +66,35 @@ describe 'git' do
   end
 end
 
-describe '$PATH' do
-  # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
-  # check the $PATH because ServerSpec doesn't execute a login shell
-  # automatically.
-  describe command("su - omnibus -c 'echo $PATH'") do
-    it { should return_stdout(%r{^/usr/local/bin(.+)}) }
+describe 'environment' do
+  describe '$PATH' do
+    # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
+    # check the $PATH because ServerSpec doesn't execute a login shell
+    # automatically.
+    describe command("su - omnibus -c 'echo $PATH'") do
+      it { should return_stdout(%r{^/usr/local/bin(.+)}) }
+    end
   end
-end
 
-[
-  '.gitconfig',
-  '.bash_profile',
-  '.bashrc',
-  File.join('.bashrc.d', 'omnibus-path.sh'),
-  File.join('.bashrc.d', 'chruby-default.sh')
-].each do |dot_file|
-
-  describe file(File.join(home_dir, dot_file)) do
+  describe file(File.join(home_dir, 'load-omnibus-toolchain.sh')) do
+    it { should be_file }
     it { should be_owned_by 'omnibus' }
     it { should be_grouped_into 'omnibus' }
   end
 
+  [
+    '.gitconfig',
+    '.bash_profile',
+    '.bashrc',
+    File.join('.bashrc.d', 'omnibus-path.sh'),
+    File.join('.bashrc.d', 'chruby-default.sh')
+  ].each do |dot_file|
+
+    describe file(File.join(home_dir, dot_file)) do
+      it { should be_file }
+      it { should be_owned_by 'omnibus' }
+      it { should be_grouped_into 'omnibus' }
+    end
+
+  end
 end

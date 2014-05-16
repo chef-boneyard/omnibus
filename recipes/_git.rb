@@ -30,7 +30,7 @@ if windows?
   # Git is installed to Program Files (x86) on 64-bit machines and
   # 'Program Files' on 32-bit machines
   program_files = ENV['ProgramFiles(x86)'] || ENV['ProgramFiles']
-  git_path = "#{ program_files }\\Git\\Cmd"
+  git_path      = windows_safe_path_join(program_files, 'Git', 'Cmd')
 
   # COOK-3482 - windows_path resource doesn't change the current process
   # environment variables. Therefore, git won't actually be on the PATH
@@ -47,6 +47,7 @@ if windows?
     notifies :create, 'ruby_block[add-git-to-current-path]', :immediately
   end
 
+  omnibus_env['PATH'] << git_path
 else
   include_recipe 'omnibus::_bash'
   include_recipe 'omnibus::_common'
