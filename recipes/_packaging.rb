@@ -39,6 +39,15 @@ when 'rhel'
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'
+
+  # This script makes unattended rpm signing possible!
+  cookbook_file ::File.join(build_user_home, 'sign-rpm') do
+    source 'sign-rpm'
+    mode '0755'
+    owner node['omnibus']['build_user']
+    group node['omnibus']['build_user_group']
+    mode '0755'
+  end
 when 'windows'
   include_recipe '7-zip::default'
   include_recipe 'wix::default'

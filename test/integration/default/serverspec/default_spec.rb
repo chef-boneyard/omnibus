@@ -100,4 +100,10 @@ describe 'environment' do
     end
 
   end
+
+  describe file(File.join(home_dir, 'sign-rpm')), if: os[:family] == 'redhat' do
+    it { should be_file }
+    it { should be_owned_by 'omnibus' }
+    it { should be_grouped_into 'omnibus' }
+  end
 end

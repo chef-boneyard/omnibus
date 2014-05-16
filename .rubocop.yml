@@ -16,6 +16,9 @@ Documentation:
   Enabled: false
 Encoding:
   Enabled: false
+FileName:
+  Exclude:
+    - files/**/*
 LineLength:
   Enabled: false
 MethodLength:
