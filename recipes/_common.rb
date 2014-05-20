@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
-
 # Ensure the cache directory exists
 directory Chef::Config[:file_cache_path] do
   recursive true
@@ -32,6 +30,7 @@ end
   directory dir do
     mode '0755'
     owner node['omnibus']['build_user']
+    group node['omnibus']['build_user_group']
     recursive true
   end
 end

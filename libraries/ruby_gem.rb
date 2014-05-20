@@ -33,13 +33,14 @@ class Chef
   class Provider::RubyGem < Provider::LWRPBase
     require 'chef/mixin/shell_out'
     include Mixin::ShellOut
+    include Omnibus::Helper
 
     action(:install) do
       if installed?
         Chef::Log.debug("#{new_resource} installed - skipping")
       else
         converge_by("Install #{new_resource}") do
-          chruby(install_command)
+          ruby_version_execute(install_command)
         end
       end
     end
@@ -47,7 +48,7 @@ class Chef
     action(:uninstall) do
       if installed?
         converge_by("Install #{new_resource}") do
-          chruby(uninstall_command)
+          ruby_version_execute(uninstall_command)
         end
       else
         Chef::Log.debug("#{new_resource} not installed - skipping")
@@ -57,7 +58,7 @@ class Chef
     private
 
     #
-    # Execute the command as chruby-exec.
+    # Execute the command in the context of a certain Ruby version.
     #
     # @raise [Mixlib::ShellOut::ShellCommandFailed]
     #
@@ -67,8 +68,13 @@ class Chef
     # @return [String]
     #   the stdout from the command
     #
-    def chruby(command)
-      shell_out!("chruby-exec #{new_resource.ruby} -- #{command}").stdout
+    def ruby_version_execute(command)
+      if windows?
+        prefixed_command = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'rubies', new_resource.ruby, 'bin', command)
+      else
+        prefixed_command = "chruby-exec #{new_resource.ruby} -- #{command}"
+      end
+      shell_out!(prefixed_command).stdout
     end
 
     #
@@ -78,9 +84,9 @@ class Chef
     #
     def installed?
       look  = "#{new_resource.name}"
-      look << " (#{new_resource.version})" if new_resource.version
+      look << " -v #{new_resource.version}" if new_resource.version
 
-      chruby("gem list | grep #{look}")
+      ruby_version_execute("gem list --installed #{look}")
       true
     rescue Mixlib::ShellOut::ShellCommandFailed
       false

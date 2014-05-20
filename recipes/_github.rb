@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-return if platform_family?('windows')
+include_recipe 'chef-sugar::default'
+return if windows?
 
 ssh_config_file = case node['platform_family']
                   when 'mac_os_x'

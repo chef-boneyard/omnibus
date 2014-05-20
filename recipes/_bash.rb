@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+include_recipe 'chef-sugar::default'
+return if windows?
+
 include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 
@@ -34,4 +37,75 @@ end
 # will force our will on them!
 link '/bin/bash' do
   to '/usr/local/bin/bash'
+end
+
+#
+# Create an .bashrc.d-style directory for arbitrary loading.
+#
+directory File.join(build_user_home, '.bashrc.d') do
+  owner node['omnibus']['build_user']
+  group node['omnibus']['build_user_group']
+  mode  '0755'
+end
+
+#
+# Write a .bash_profile that just loads .bashrc
+#
+file File.join(build_user_home, '.bash_profile') do
+  owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
+  mode    '0755'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    # Source our bashrc
+    if [ -f ~/.bashrc ]; then
+      source ~/.bashrc
+    fi
+  EOH
+end
+
+#
+# Load the regular profile
+#
+file File.join(build_user_home, '.bashrc') do
+  owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
+  mode    '0755'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    # Source the system /etc/bashrc
+    if [ -f /etc/bashrc ]; then
+      source /etc/bashrc
+    fi
+
+    # Source all our .d files
+    if [ -d ~/.bashrc.d ]; then
+      for rc in ~/.bashrc.d/*; do
+        test -f "$rc" || continue
+        test -x "$rc" || continue
+        source "$rc"
+      done
+    fi
+  EOH
+end
+
+#
+# We fully control the $PATH for the omnibus build user.
+#
+file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
+  owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
+  mode    '0755'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
+
+    # The omnibus cookbook is very opinionated and puts all of it's things in
+    # /usr/local/bin.
+    export PATH="/usr/local/bin:$PATH"
+  EOH
 end

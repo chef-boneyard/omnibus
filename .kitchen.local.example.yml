@@ -9,14 +9,31 @@ platforms:
     run_list: apt::default
   - name: freebsd-9.2
     run_list: freebsd::portsnap
-  - name: macosx-10.9
-    driver_config:
-      provider: vmware_fusion
-      box: opscode-macosx-10.9
-      box_url: <%= ENV['MAVERICKS_BOX_URL'] || raise('You must specify a URL to download the box!') %>
   - name: ubuntu-13.04
     run_list: apt::default
   - name: ubuntu-12.04
     run_list: apt::default
   - name: ubuntu-10.04
     run_list: apt::default
+  #
+  # The boxes below contain proprietary software and as such cannot be shared
+  # publically. You can generate your own boxes though. Take a look at the
+  # following repos for details:
+  #
+  #   https://github.com/opscode/bento
+  #   https://github.com/misheska/basebox-packer
+  #
+  - name: windows-7-professional
+    provisioner:
+      name: windows_chef_zero
+    driver:
+      provider: vmware_fusion
+      box: windows-7-professional
+      box_url: <%= ENV['WIN_7_BOX_URL'] || raise('You must specify a URL to download the box!') %>
+  - name: windows-8.1-professional
+    provisioner:
+      name: windows_chef_zero
+    driver:
+      provider: vmware_fusion
+      box: windows-8.1-professional
+      box_url: <%= ENV['WIN_81_BOX_URL'] || raise('You must specify a URL to download the box!') %>

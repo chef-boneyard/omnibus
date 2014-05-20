@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
+include_recipe 'omnibus::_user'
+include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_ccache'
-include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_chruby'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_git'
@@ -27,6 +28,6 @@ include_recipe 'omnibus::_github'
 include_recipe 'omnibus::_openssl'
 include_recipe 'omnibus::_packaging'
 include_recipe 'omnibus::_ruby'
-include_recipe 'omnibus::_user'
 include_recipe 'omnibus::_xml'
 include_recipe 'omnibus::_yaml'
+include_recipe 'omnibus::_environment'

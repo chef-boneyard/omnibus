@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+include_recipe 'chef-sugar::default'
+return if windows?
+
 #
 # This recipe is used to install additional packages/utilities that are not
 # included by default in the build-essential cookbook. In the long term, this
