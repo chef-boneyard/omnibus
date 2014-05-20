@@ -2,10 +2,19 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.1.0 (2014-05-20)
+-------------------
+## Feature
+- Platform-specific scripts to laod omnibus toolchain/environment
+- Deploy `sign-rpm` script on RHEL platform family
+
+## Improvement
+- Add proper support for Windows
+- Add a group for the build user
+
 v2.0.2 (2014-04-07)
 -------------------
 - Fix memory leak in string concatenation
-
 
 v2.0.0
 ------
