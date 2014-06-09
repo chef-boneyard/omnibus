@@ -17,9 +17,7 @@ describe 'omnibus::_ruby' do
         .converge(described_recipe)
     end
 
-    it 'includes _ruby_windows' do
-      pending 'bugs in chefspec with windows testing'
-    end
+    it 'includes _ruby_windows'
   end
 
   context 'on non-windows' do
