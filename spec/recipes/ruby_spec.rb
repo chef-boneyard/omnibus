@@ -19,6 +19,7 @@ describe 'omnibus::_ruby' do
 
     it 'includes _ruby_windows' do
       pending 'bugs in chefspec with windows testing'
+      fail
     end
   end
 
@@ -44,7 +45,7 @@ describe 'omnibus::_ruby' do
     end
 
     it 'installs ruby-install' do
-      Chef::Resource.any_instance.stub(:installed_at_version?)
+      allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
 
       expect(chef_run).to install_remote_install('ruby-install')
         .with_source('https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1')

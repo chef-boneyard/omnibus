@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'berkshelf',  '~> 3.0'
-gem 'chefspec',   '~> 3.2'
+gem 'chefspec',   '~> 4.0'
 gem 'chef-sugar', '~> 1.1'
 gem 'rake'
 

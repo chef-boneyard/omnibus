@@ -20,7 +20,7 @@ describe 'omnibus::_chruby' do
   end
 
   it 'installs chruby' do
-    Chef::Resource.any_instance.stub(:installed_at_version?)
+    allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
 
     expect(chef_run).to install_remote_install('chruby')
       .with_source('https://codeload.github.com/postmodern/chruby/tar.gz/v0.3.8')

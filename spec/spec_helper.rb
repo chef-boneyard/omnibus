@@ -8,14 +8,16 @@ RSpec.configure do |config|
     # We need to stub the build_user_home because ChefSpec isn't smart enough
     # to realize that a resource has already been touched once the attribute
     # changes. Global state is hard...
-    Chef::Recipe.any_instance.stub(:build_user_home)
+    allow_any_instance_of(Chef::Recipe).to receive(:build_user_home)
       .and_return('/home/omnibus')
   end
 
   config.log_level = :fatal
 
+  # Guard against people using deprecated RSpec syntax
+  config.raise_errors_for_deprecations!
+
   # Why aren't these the defaults?
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
 
