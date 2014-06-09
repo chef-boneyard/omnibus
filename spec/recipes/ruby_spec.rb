@@ -19,6 +19,7 @@ describe 'omnibus::_ruby' do
 
     it 'includes _ruby_windows' do
       pending 'bugs in chefspec with windows testing'
+      fail
     end
   end
 
