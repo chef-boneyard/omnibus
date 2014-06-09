@@ -16,7 +16,7 @@ describe 'omnibus::_bash' do
   end
 
   it 'remote_installs bash' do
-    Chef::Resource.any_instance.stub(:installed_at_version?)
+    allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
 
     expect(chef_run).to install_remote_install('bash')
       .with_source('http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz')
