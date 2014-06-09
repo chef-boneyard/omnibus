@@ -54,8 +54,8 @@ describe 'omnibus::_git' do
     end
 
     it 'uses GNU Make' do
-      allow_any_instance_of(Chef::Resource)
-        .to receive(:installed_at_version?).and_return(false)
+      allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
+        .and_return(false)
 
       expect(chef_run).to install_remote_install('git')
         .with_compile_command('gmake')
@@ -108,8 +108,8 @@ describe 'omnibus::_git' do
   end
 
   it 'installs git' do
-    allow_any_instance_of(Chef::Resource)
-      .to receive(:installed_at_version?).and_return(false)
+    allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
+      .and_return(false)
 
     expect(chef_run).to install_remote_install('git')
       .with_source('https://git-core.googlecode.com/files/git-1.9.0.tar.gz')
