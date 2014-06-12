@@ -2,6 +2,16 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.1.2 (2014-06-12)
+-------------------
+## Improvement
+- Upgrade to ChefSpec 4
+- Use the maximum number of builders when compiling from source
+
+## Bug fixes
+- Check `/usr/local/bin/bash` when checking if Bash is installed
+- Bump default Ruby version to 2.1.2 to fix readline issues
+
 v2.1.0 (2014-05-20)
 -------------------
 ## Feature
