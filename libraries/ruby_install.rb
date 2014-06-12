@@ -62,7 +62,7 @@ class Chef
     def install
       # Need to compile the command outside of the execute resource because
       # Ruby is bad at instance_eval
-      install_command = "ruby-install ruby #{version} -- #{compile_flags}"
+      install_command = "ruby-install --jobs=#{node.builders} ruby #{version} -- #{compile_flags}"
 
       execute = Resource::Execute.new("install ruby-#{version}", run_context)
       execute.command(install_command)

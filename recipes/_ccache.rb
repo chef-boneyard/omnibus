@@ -30,7 +30,7 @@ remote_install 'ccache' do
   version '3.1.9'
   checksum 'a2270654537e4b736e437975e0cb99871de0975164a509dee34cf91e36eeb447'
   build_command './configure'
-  compile_command 'make'
+  compile_command "make --jobs=#{node.builders}"
   install_command 'make install'
   not_if { installed_at_version?('ccache', '3.1.9') }
 end

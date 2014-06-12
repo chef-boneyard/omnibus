@@ -28,7 +28,7 @@ remote_install 'bash' do
   version '4.3'
   checksum 'afc687a28e0e24dc21b988fa159ff9dbcf6b7caa92ade8645cc6d5605cd024d4'
   build_command './configure'
-  compile_command 'make'
+  compile_command "make --jobs=#{node.builders}"
   install_command 'make install'
   not_if { installed_at_version?('/usr/local/bin/bash', '4.3') }
 end

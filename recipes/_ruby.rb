@@ -33,7 +33,7 @@ unless windows?
     source 'https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1'
     checksum '1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e'
     version '0.4.1'
-    install_command 'make install'
+    install_command "make --jobs=#{node.builders} install"
     not_if { installed_at_version?('ruby-install', '0.4.1') }
   end
 end

@@ -26,7 +26,7 @@ describe 'omnibus::_chruby' do
       .with_source('https://codeload.github.com/postmodern/chruby/tar.gz/v0.3.8')
       .with_checksum('d980872cf2cd047bc9dba78c4b72684c046e246c0fca5ea6509cae7b1ada63be')
       .with_version('0.3.8')
-      .with_install_command('make install')
+      .with_install_command('make --jobs=2 install')
   end
 
   it 'writes a custom chruby-exec' do
