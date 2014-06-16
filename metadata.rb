@@ -16,7 +16,7 @@ supports 'windows'
 
 depends '7-zip',           '~> 1.0'
 depends 'build-essential', '~> 2.0'
-depends 'chef-sugar',      '~> 1.1'
+depends 'chef-sugar',      '~> 2.0'
 depends 'homebrew',        '~> 1.5'
 depends 'windows',         '~> 1.30'
 depends 'wix',             '~> 1.1'
