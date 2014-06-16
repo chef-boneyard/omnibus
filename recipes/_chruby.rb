@@ -30,7 +30,7 @@ remote_install 'chruby' do
   checksum 'd980872cf2cd047bc9dba78c4b72684c046e246c0fca5ea6509cae7b1ada63be'
   version '0.3.8'
   install_command "make --jobs=#{node.builders} install"
-  not_if { installed_at_version?('chruby-exec', '0.3.8') }
+  not_if "cat /usr/local/share/chruby/chruby.sh | grep 'CHRUBY_VERSION=\"0.3.8\"'"
 end
 
 file '/usr/local/bin/chruby-exec' do
