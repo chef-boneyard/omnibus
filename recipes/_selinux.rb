@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: default
+# Recipe:: _selinux
 #
-# Copyright 2013-2014, Chef Software, Inc.
+# Copyright 2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_user'
-include_recipe 'omnibus::_common'
-include_recipe 'omnibus::_bash'
-include_recipe 'omnibus::_ccache'
-include_recipe 'omnibus::_chruby'
-include_recipe 'omnibus::_compile'
-include_recipe 'omnibus::_git'
-include_recipe 'omnibus::_github'
-include_recipe 'omnibus::_openssl'
-include_recipe 'omnibus::_packaging'
-include_recipe 'omnibus::_ruby'
-include_recipe 'omnibus::_selinux'
-include_recipe 'omnibus::_xml'
-include_recipe 'omnibus::_yaml'
-include_recipe 'omnibus::_environment'
+include_recipe 'chef-sugar::default'
+return unless rhel?
+
+# Omnibus requires SELinux be in a permissive state or rsync commands will fail
+execute 'selinux-permissive' do
+  command 'setenforce 0'
+  not_if  'getenforce | egrep -qx "Permissive|Disabled"'
+end
+
+file '/etc/selinux/config' do
+  content <<-EOH.gsub(/^ {4}/, '')
+    SELINUX=permissive
+    SELINUXTYPE=targeted
+  EOH
+end
