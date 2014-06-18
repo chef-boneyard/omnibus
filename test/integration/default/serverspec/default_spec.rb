@@ -41,11 +41,11 @@ end
 
 describe 'ruby' do
   describe command("su - omnibus -c 'source ~/.bashrc && which ruby'") do
-    it { should return_stdout('/opt/rubies/ruby-2.1.1/bin/ruby') }
+    it { should return_stdout('/opt/rubies/ruby-2.1.2/bin/ruby') }
   end
 
   describe command("su - omnibus -l -c 'source ~/.bashrc && ruby --version'") do
-    it { should return_stdout(/2\.1\.1/) }
+    it { should return_stdout(/2\.1\.2/) }
   end
 end
 
