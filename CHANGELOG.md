@@ -2,6 +2,14 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.2.0 (2014-06-19)
+-------------------
+## Improvement
+- Fix the idempotency check for chruby
+- Set SELinux to permissive
+- Install rsync
+- Update Chef Sugar to v2.0.0
+
 v2.1.2 (2014-06-12)
 -------------------
 ## Improvement
