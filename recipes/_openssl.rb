@@ -30,6 +30,7 @@ when 'freebsd'
 when 'mac_os_x'
   package 'openssl'
 when 'suse'
+  package 'zlib-devel' # zypper provider fails on openssl-devel without 
   package 'libopenssl-devel'
 
   # TODO: may need to force link.
