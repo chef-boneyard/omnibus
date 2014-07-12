@@ -29,6 +29,8 @@ when 'freebsd'
   package 'openssl'
 when 'mac_os_x'
   package 'openssl'
+when 'suse'
+  package 'libopenssl-devel'
 
   # TODO: may need to force link.
   # See: http://stackoverflow.com/questions/17477933
