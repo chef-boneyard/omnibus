@@ -85,6 +85,11 @@ else
     package 'gettext-devel'
     package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('~> 6')
     package 'zlib-devel'
+  when 'suse'
+    package 'libcurl-devel'
+    package 'libexpat-devel'
+    package 'gettext-runtime'
+    package 'zlib-devel'
   end
 
   remote_install 'git' do

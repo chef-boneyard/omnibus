@@ -106,6 +106,20 @@ describe 'omnibus::_git' do
     end
   end
 
+  context 'on suse 11' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'suse', version: '11.2')
+        .converge(described_recipe)
+    end
+
+    it 'installs the correct development packages' do
+      expect(chef_run).to install_package('libcurl-devel')
+      expect(chef_run).to install_package('libexpat-devel')
+      expect(chef_run).to install_package('gettext-runtime')
+      expect(chef_run).to install_package('zlib-devel')
+    end
+  end
+
   it 'installs git' do
     allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?).and_return(false)
 
