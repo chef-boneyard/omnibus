@@ -43,6 +43,7 @@ describe 'omnibus::_openssl' do
     end
 
     it 'installs the correct development packages' do
+      expect(chef_run).to install_package('zlib-devel')
       expect(chef_run).to install_package('libopenssl-devel')
     end
   end
@@ -54,7 +55,6 @@ describe 'omnibus::_openssl' do
     end
 
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('zlib-devel')
       expect(chef_run).to install_package('openssl-devel')
     end
   end
