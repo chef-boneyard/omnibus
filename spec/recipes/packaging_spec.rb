@@ -10,7 +10,9 @@ describe 'omnibus::_packaging' do
     end
 
     it 'installs the correct development packages' do
+      expect(chef_run).to install_package('devscripts')
       expect(chef_run).to install_package('dpkg-dev')
+      expect(chef_run).to install_package('fakeroot')
       expect(chef_run).to install_package('ncurses-dev')
       expect(chef_run).to install_package('zlib1g-dev')
     end

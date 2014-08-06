@@ -23,7 +23,9 @@
 
 case node['platform_family']
 when 'debian'
+  package 'devscripts'
   package 'dpkg-dev'
+  package 'fakeroot'
   package 'ncurses-dev'
   package 'zlib1g-dev'
 when 'freebsd'
