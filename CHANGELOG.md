@@ -2,6 +2,14 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.3.0 (2014-08-08)
+-------------------
+## Feature
+- SUSE support
+
+## Improvement
+- Install fakeroot and devscripts packages on Debian-based systems
+
 v2.2.0 (2014-06-19)
 -------------------
 ## Improvement
