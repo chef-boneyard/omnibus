@@ -1,8 +1,6 @@
 platforms:
   - name: centos-6.5
-    run_list: yum-epel::default
   - name: centos-5.10
-    run_list: yum-epel::default
   - name: debian-7.2.0
     run_list: apt::default
   - name: debian-6.0.8
