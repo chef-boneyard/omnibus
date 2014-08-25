@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
 
 if windows?
   windows_package 'Git version 1.9.0-preview20140217' do
@@ -50,7 +51,6 @@ if windows?
   omnibus_env['PATH'] << git_path
 else
   include_recipe 'omnibus::_bash'
-  include_recipe 'omnibus::_common'
   include_recipe 'omnibus::_compile'
   include_recipe 'omnibus::_openssl'
   include_recipe 'omnibus::_user'

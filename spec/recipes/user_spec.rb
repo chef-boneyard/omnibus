@@ -3,10 +3,6 @@ require 'spec_helper'
 describe 'omnibus::_user' do
   let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
-  it 'includes chef-sugar' do
-    expect(chef_run).to include_recipe('chef-sugar::default')
-  end
-
   it 'creates the omnibus user' do
     expect(chef_run).to create_user('omnibus')
   end

@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 #
 # This recipe is used to install the platform-specific development headers for
 # working with XML (aka the nokogiri gem).

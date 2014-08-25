@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 #
 # This recipe is used to install the platform-specific development headers for
 # working with openssl.
@@ -30,7 +33,7 @@ when 'freebsd'
 when 'mac_os_x'
   package 'openssl'
 when 'suse'
-  package 'zlib-devel' # zypper provider fails on openssl-devel without 
+  package 'zlib-devel' # zypper provider fails on openssl-devel without
   package 'libopenssl-devel'
 
   # TODO: may need to force link.

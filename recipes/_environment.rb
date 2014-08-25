@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
 
 if windows?
   file windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat') do

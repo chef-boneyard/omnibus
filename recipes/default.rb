@@ -17,12 +17,16 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_user'
+# Include the common recipe
 include_recipe 'omnibus::_common'
+
+# Include other recipes. Note: they may not be executed in this order, since
+# private recipes may depend on each other.
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_chruby'
 include_recipe 'omnibus::_compile'
+include_recipe 'omnibus::_environment'
 include_recipe 'omnibus::_git'
 include_recipe 'omnibus::_github'
 include_recipe 'omnibus::_openssl'
@@ -32,4 +36,4 @@ include_recipe 'omnibus::_ruby'
 include_recipe 'omnibus::_selinux'
 include_recipe 'omnibus::_xml'
 include_recipe 'omnibus::_yaml'
-include_recipe 'omnibus::_environment'
+include_recipe 'omnibus::_user'

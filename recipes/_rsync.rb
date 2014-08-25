@@ -17,10 +17,15 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+#
+# TODO: Remove in Omnibus 4 and encourage the use of the +sync+ command instead!
+#
+
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 return if windows?
 
-include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 
 remote_install 'rsync' do

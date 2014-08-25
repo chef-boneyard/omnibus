@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
 
 group node['omnibus']['build_user_group'] do
   # The Window's group provider get's cranky if attempting to create a

@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 return unless rhel?
 
 # Omnibus requires SELinux be in a permissive state or rsync commands will fail

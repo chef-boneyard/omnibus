@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 return if windows?
 
 #
@@ -27,7 +29,6 @@ return if windows?
 # more awesome.
 #
 
-include_recipe 'omnibus::_common'
 include_recipe 'build-essential::default'
 
 # Use homebrew as the default package manager on OSX. We cannot install homebrew

@@ -7,10 +7,6 @@ describe 'omnibus::_git' do
     expect(chef_run).to include_recipe('omnibus::_bash')
   end
 
-  it 'includes _common' do
-    expect(chef_run).to include_recipe('omnibus::_common')
-  end
-
   it 'includes _compile' do
     expect(chef_run).to include_recipe('omnibus::_compile')
   end

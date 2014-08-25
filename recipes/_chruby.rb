@@ -17,11 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 return if windows?
 
 include_recipe 'omnibus::_bash'
-include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 
 # Install chruby so we can easily manage rubies.

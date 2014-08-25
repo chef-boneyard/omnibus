@@ -17,6 +17,12 @@
 # limitations under the License.
 #
 
+# Include Chef Sugar here
+include_recipe 'chef-sugar::default'
+
+# Create the user
+include_recipe 'omnibus::_user'
+
 # Ensure the cache directory exists
 directory Chef::Config[:file_cache_path] do
   recursive true

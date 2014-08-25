@@ -17,11 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-sugar::default'
+# Include the common recipe
+include_recipe 'omnibus::_common'
+
 return if windows?
 
 include_recipe 'omnibus::_bash'
-include_recipe 'omnibus::_common'
 include_recipe 'omnibus::_compile'
 
 # Set up ccache, to speed up subsequent compilations.
