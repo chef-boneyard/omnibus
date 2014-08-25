@@ -21,4 +21,15 @@ describe 'omnibus::_common' do
       .with_owner('omnibus')
       .with_recursive(true)
   end
+
+  context 'on RHEL' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'redhat', version: '5.10')
+        .converge(described_recipe)
+    end
+
+    it 'includes yum-epel' do
+      expect(chef_run).to include_recipe('yum-epel::default')
+    end
+  end
 end

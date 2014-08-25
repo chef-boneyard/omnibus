@@ -34,3 +34,6 @@ end
     recursive true
   end
 end
+
+# Include EPEL for RedHat-based systems
+include_recipe 'yum-epel::default' if rhel?
