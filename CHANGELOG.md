@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.3.2 (2014-09-05)
+-------------------
+## Improvement
+- Install fakeroot and rpm-build packages on RHEL-based systems
+
 v2.3.0 (2014-08-08)
 -------------------
 ## Feature
