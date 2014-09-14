@@ -31,7 +31,11 @@ if windows?
   # Git is installed to Program Files (x86) on 64-bit machines and
   # 'Program Files' on 32-bit machines
   program_files = ENV['ProgramFiles(x86)'] || ENV['ProgramFiles']
-  git_path      = windows_safe_path_join(program_files, 'Git', 'Cmd')
+
+  git_paths  = []
+  git_paths << windows_safe_path_join(program_files, 'Git', 'Cmd')
+  git_paths << windows_safe_path_join(program_files, 'Git', 'libexec', 'git-core')
+  git_path   = git_paths.join(';')
 
   # COOK-3482 - windows_path resource doesn't change the current process
   # environment variables. Therefore, git won't actually be on the PATH
