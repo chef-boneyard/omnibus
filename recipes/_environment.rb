@@ -50,7 +50,16 @@ if windows?
       FOR /F "tokens=*" %%a in ('ruby --version') do SET RUBY_VERSION=%%a
       FOR /F "tokens=*" %%a in ('gem --version') do SET GEM_VERSION=%%a
       FOR /F "tokens=*" %%a in ('bundle --version 2^> nul') do SET BUNDLER_VERSION=%%a
-      FOR /F "tokens=*" %%a in ('7zip --version 2^> nul') do SET 7ZIP_VERSION=%%a
+      FOR /F "tokens=*" %%a in ('gcc --version') do (
+        SET GCC_VERSION=%%a
+        GOTO :next
+      )
+      :next
+      FOR /F "tokens=*" %%a in ('make --version') do (
+        SET MAKE_VERSION=%%a
+        GOTO :next
+      )
+      :next
       FOR /F "tokens=*" %%a in ('7z -h') do (
         SET SEVENZIP_VERSION=%%a
         GOTO :next
@@ -83,6 +92,8 @@ if windows?
       ECHO Ruby...........%RUBY_VERSION%
       ECHO RubyGems.......%GEM_VERSION%
       ECHO Bundler........%BUNDLER_VERSION%
+      ECHO GCC............%GCC_VERSION%
+      ECHO Make...........%MAKE_VERSION%
       ECHO 7-Zip..........%SEVENZIP_VERSION%
       ECHO WiX:Heat.......%WIX_HEAT_VERSION%
       ECHO WiX:Candle.....%WIX_CANDLE_VERSION%
