@@ -2,6 +2,15 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.3.4 (2014-09-15)
+-------------------
+## Bug fixes
+- Create environment scripts last.
+
+## Improvement
+- Add some additional elements to PATH on Windows systems.
+- Print `gcc` and `make` versions in `load-omnibus-toolchain.bat`.
+
 v2.3.2 (2014-09-05)
 -------------------
 ## Improvement
