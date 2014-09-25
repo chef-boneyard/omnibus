@@ -24,10 +24,12 @@ return if windows?
 
 include_recipe 'omnibus::_compile'
 
+# Use the snapshot of master from savannah.  This contains the 4.3 source release
+# plus patches 1-25.
 remote_install 'bash' do
-  source 'http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz'
-  version '4.3'
-  checksum 'afc687a28e0e24dc21b988fa159ff9dbcf6b7caa92ade8645cc6d5605cd024d4'
+  source 'http://git.savannah.gnu.org/cgit/bash.git/snapshot/bash-master.tar.gz'
+  version 'master'
+  checksum '328d4c38cfb87d024d7b0788d57ef31cdf196af6ed7c8de0944c2500842242ca'
   build_command './configure'
   compile_command "make --jobs=#{node.builders}"
   install_command 'make install'
