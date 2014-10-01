@@ -21,6 +21,6 @@ class Chef::Node
   # The number of builders to use for make. By default, this is the total
   # number of CPUs, with a minimum being 2.
   def builders
-    @builders ||= [node['cpu'] && node['cpu']['total'], 2].max
+    @builders ||= [node['cpu'] && node['cpu']['total'].to_i, 2].max
   end
 end
