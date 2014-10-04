@@ -17,7 +17,7 @@ describe 'omnibus::_ccache' do
       .with_version('3.1.9')
       .with_checksum('a2270654537e4b736e437975e0cb99871de0975164a509dee34cf91e36eeb447')
       .with_build_command('./configure')
-      .with_compile_command('make --jobs=2')
+      .with_compile_command('make -j 2')
       .with_install_command('make install')
   end
 

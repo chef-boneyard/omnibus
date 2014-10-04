@@ -33,7 +33,7 @@ remote_install 'rsync' do
   version '3.1.0'
   checksum '81ca23f77fc9b957eb9845a6024f41af0ff0c619b7f38576887c63fa38e2394e'
   build_command './configure'
-  compile_command "make --jobs=#{node.builders}"
+  compile_command "make -j #{node.builders}"
   install_command 'make install'
   not_if { installed_at_version?('/usr/local/bin/rsync', '3.1.0') }
 end

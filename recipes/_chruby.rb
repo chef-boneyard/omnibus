@@ -30,7 +30,7 @@ remote_install 'chruby' do
   source 'https://codeload.github.com/postmodern/chruby/tar.gz/v0.3.8'
   checksum 'd980872cf2cd047bc9dba78c4b72684c046e246c0fca5ea6509cae7b1ada63be'
   version '0.3.8'
-  install_command "make --jobs=#{node.builders} install"
+  install_command "make -j #{node.builders} install"
   not_if do
     File.exist?('/usr/local/share/chruby/chruby.sh') &&
     File.read('/usr/local/share/chruby/chruby.sh').include?('CHRUBY_VERSION="0.3.8"')

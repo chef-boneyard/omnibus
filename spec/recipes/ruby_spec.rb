@@ -40,7 +40,7 @@ describe 'omnibus::_ruby' do
         .with_source('https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1')
         .with_checksum('1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e')
         .with_version('0.4.1')
-        .with_install_command('make --jobs=2 install')
+        .with_install_command('make -j 2 install')
     end
 
     it 'installs ruby' do
