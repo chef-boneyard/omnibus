@@ -92,7 +92,7 @@ else
     package 'curl-devel'
     package 'expat-devel'
     package 'gettext-devel'
-    package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('~> 6')
+    package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('>= 6')
     package 'zlib-devel'
   when 'suse'
     package 'libcurl-devel'
