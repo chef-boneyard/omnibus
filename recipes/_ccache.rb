@@ -36,7 +36,14 @@ remote_install 'ccache' do
   not_if { installed_at_version?('ccache', '3.1.9') }
 end
 
-%w(gcc g++ cc c++).each do |compiler|
+# FreeBSD 10+ uses clang
+compilers = if freebsd? && node['platform_version'] =~ /10/
+              %w(cc c++)
+            else
+              %w(gcc g++ cc c++)
+            end
+
+compilers.each do |compiler|
   link "/usr/local/bin/#{compiler}" do
     to '/usr/local/bin/ccache'
   end

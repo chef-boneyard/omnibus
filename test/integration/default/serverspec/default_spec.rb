@@ -27,7 +27,14 @@ describe 'ccache' do
     its(:stdout) { should match /3\.1\.9/ }
   end
 
-  %w(gcc g++ cc c++).each do |compiler|
+  # FreeBSD 10+ uses clang
+  compilers = if (os[:family] == 'freebsd') && (os[:release] == 10)
+                %w(cc c++)
+              else
+                %w(gcc g++ cc c++)
+              end
+
+  compilers.each do |compiler|
     describe file("/usr/local/bin/#{compiler}") do
       it { should be_linked_to('/usr/local/bin/ccache') }
     end
