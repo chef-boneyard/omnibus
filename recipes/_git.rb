@@ -70,7 +70,12 @@ else
     package 'perl-modules'
   when 'freebsd'
     package 'curl'
-    package 'expat2'
+    # expat package name changed on FreeBSD 10
+    if node['platform_version'] =~ /10/
+      package 'expat'
+    else
+      package 'expat2'
+    end
     package 'gettext'
     package 'libzip'
     package 'perl5' do

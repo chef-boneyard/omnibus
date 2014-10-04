@@ -56,6 +56,18 @@ describe 'omnibus::_git' do
         .with_compile_command('gmake -j 2')
         .with_install_command('gmake install')
     end
+
+    context 'on freebsd 10+' do
+      let(:chef_run) do
+        ChefSpec::Runner.new(platform: 'freebsd', version: '10.0')
+          .converge(described_recipe)
+      end
+
+      it 'installs the correct development packages' do
+        expect(chef_run).to install_package('expat')
+      end
+
+    end
   end
 
   context 'on mac_os_x' do
