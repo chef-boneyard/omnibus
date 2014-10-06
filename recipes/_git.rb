@@ -70,7 +70,12 @@ else
     package 'perl-modules'
   when 'freebsd'
     package 'curl'
-    package 'expat2'
+    # expat package name changed on FreeBSD 10
+    if node['platform_version'] =~ /10/
+      package 'expat'
+    else
+      package 'expat2'
+    end
     package 'gettext'
     package 'libzip'
     package 'perl5' do
@@ -101,7 +106,7 @@ else
     checksum        'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
     version         '1.9.0'
     build_command   './configure --prefix=/usr/local --without-tcltk'
-    compile_command "#{make} --jobs=#{node.builders}"
+    compile_command "#{make} -j #{node.builders}"
     install_command "#{make} install"
     environment     'NO_GETTEXT' => '1'
     not_if { installed_at_version?('git', '1.9.0') }

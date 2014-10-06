@@ -53,8 +53,20 @@ describe 'omnibus::_git' do
       allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?).and_return(false)
 
       expect(chef_run).to install_remote_install('git')
-        .with_compile_command('gmake --jobs=2')
+        .with_compile_command('gmake -j 2')
         .with_install_command('gmake install')
+    end
+
+    context 'on freebsd 10+' do
+      let(:chef_run) do
+        ChefSpec::Runner.new(platform: 'freebsd', version: '10.0')
+          .converge(described_recipe)
+      end
+
+      it 'installs the correct development packages' do
+        expect(chef_run).to install_package('expat')
+      end
+
     end
   end
 
@@ -124,7 +136,7 @@ describe 'omnibus::_git' do
       .with_checksum('de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882')
       .with_version('1.9.0')
       .with_build_command('./configure --prefix=/usr/local --without-tcltk')
-      .with_compile_command('make --jobs=2')
+      .with_compile_command('make -j 2')
       .with_install_command('make install')
   end
 

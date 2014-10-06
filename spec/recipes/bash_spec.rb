@@ -15,7 +15,7 @@ describe 'omnibus::_bash' do
       .with_version('4.3')
       .with_checksum('afc687a28e0e24dc21b988fa159ff9dbcf6b7caa92ade8645cc6d5605cd024d4')
       .with_build_command('./configure')
-      .with_compile_command('make --jobs=2')
+      .with_compile_command('make -j 2')
       .with_install_command('make install')
   end
 

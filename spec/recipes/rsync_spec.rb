@@ -15,7 +15,7 @@ describe 'omnibus::_rsync' do
       .with_version('3.1.0')
       .with_checksum('81ca23f77fc9b957eb9845a6024f41af0ff0c619b7f38576887c63fa38e2394e')
       .with_build_command('./configure')
-      .with_compile_command('make --jobs=2')
+      .with_compile_command('make -j 2')
       .with_install_command('make install')
   end
 
