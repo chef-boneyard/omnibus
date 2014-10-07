@@ -2,6 +2,18 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.0 (2014-10-07)
+-------------------
+## Feature
+- FreeBSD 10 support
+- RHEL 7 support
+- Ubuntu 14.04 support
+
+## Improvement
+- Update integration tests to ServerSpec 2
+- Remove hard dependency on `yum-epel` cookbook
+- RPM signing is now managed from Omnibus
+
 v2.3.4 (2014-09-15)
 -------------------
 ## Bug fixes
