@@ -36,17 +36,11 @@ describe 'omnibus::_git' do
         .converge(described_recipe)
     end
 
-    before do
-      stub_command('perl -v | grep "perl 5"').and_return(false)
-    end
-
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('curl')
-      expect(chef_run).to install_package('expat2')
-      expect(chef_run).to install_package('gettext')
-      expect(chef_run).to install_package('libzip')
-      expect(chef_run).to install_package('perl5')
-        .with_source('ports')
+      expect(chef_run).to install_package('ftp/curl')
+      expect(chef_run).to install_package('textproc/expat2')
+      expect(chef_run).to install_package('devel/gettext')
+      expect(chef_run).to install_package('archivers/libzip')
     end
 
     it 'uses GNU Make' do
@@ -55,18 +49,6 @@ describe 'omnibus::_git' do
       expect(chef_run).to install_remote_install('git')
         .with_compile_command('gmake -j 2')
         .with_install_command('gmake install')
-    end
-
-    context 'on freebsd 10+' do
-      let(:chef_run) do
-        ChefSpec::ServerRunner.new(platform: 'freebsd', version: '10.0')
-          .converge(described_recipe)
-      end
-
-      it 'installs the correct development packages' do
-        expect(chef_run).to install_package('expat')
-      end
-
     end
   end
 

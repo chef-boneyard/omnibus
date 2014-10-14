@@ -21,7 +21,7 @@ describe 'omnibus::_yaml' do
     end
 
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('libyaml')
+      expect(chef_run).to install_package('textproc/libyaml')
     end
   end
 

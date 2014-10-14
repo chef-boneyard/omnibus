@@ -21,7 +21,7 @@ describe 'omnibus::_openssl' do
     end
 
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('openssl')
+      expect(chef_run).to install_package('security/openssl')
     end
   end
 

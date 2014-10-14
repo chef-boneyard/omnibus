@@ -25,7 +25,7 @@ describe 'omnibus::_packaging' do
     end
 
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('ncurses')
+      expect(chef_run).to install_package('devel/ncurses')
     end
   end
 

@@ -69,19 +69,10 @@ else
     package 'libz-dev'
     package 'perl-modules'
   when 'freebsd'
-    package 'curl'
-    # expat package name changed on FreeBSD 10
-    if node['platform_version'] =~ /10/
-      package 'expat'
-    else
-      package 'expat2'
-    end
-    package 'gettext'
-    package 'libzip'
-    package 'perl5' do
-      source 'ports'
-      not_if 'perl -v | grep "perl 5"'
-    end
+    package 'ftp/curl'
+    package 'textproc/expat2'
+    package 'devel/gettext'
+    package 'archivers/libzip'
     # FreeBSD requires gmake instead of make
     make = 'gmake'
   when 'mac_os_x'

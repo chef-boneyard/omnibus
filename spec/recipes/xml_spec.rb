@@ -24,9 +24,9 @@ describe 'omnibus::_xml' do
     end
 
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('libxml2')
-      expect(chef_run).to install_package('libxslt')
-      expect(chef_run).to install_package('ncurses')
+      expect(chef_run).to install_package('textproc/libxml2')
+      expect(chef_run).to install_package('textproc/libxslt')
+      expect(chef_run).to install_package('devel/ncurses')
     end
   end
 

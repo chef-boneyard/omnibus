@@ -29,7 +29,7 @@ case node['platform_family']
 when 'debian'
   package 'libssl-dev'
 when 'freebsd'
-  package 'openssl'
+  package 'security/openssl'
 when 'mac_os_x'
   package 'openssl'
 when 'suse'
