@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'omnibus::_ruby' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
 
   context 'on windows' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'windows', version: '2008R2')
+      ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2')
         .converge(described_recipe)
     end
 

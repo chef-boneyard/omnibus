@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::_git' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
 
   it 'includes _bash' do
     expect(chef_run).to include_recipe('omnibus::_bash')
@@ -17,7 +17,7 @@ describe 'omnibus::_git' do
 
   context 'on debian' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'debian', version: '7.4')
+      ChefSpec::ServerRunner.new(platform: 'debian', version: '7.4')
         .converge(described_recipe)
     end
 
@@ -32,7 +32,7 @@ describe 'omnibus::_git' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'freebsd', version: '9.1')
+      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '9.1')
         .converge(described_recipe)
     end
 
@@ -59,7 +59,7 @@ describe 'omnibus::_git' do
 
     context 'on freebsd 10+' do
       let(:chef_run) do
-        ChefSpec::Runner.new(platform: 'freebsd', version: '10.0')
+        ChefSpec::ServerRunner.new(platform: 'freebsd', version: '10.0')
           .converge(described_recipe)
       end
 
@@ -72,7 +72,7 @@ describe 'omnibus::_git' do
 
   context 'on mac_os_x' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'mac_os_x', version: '10.8.2')
+      ChefSpec::ServerRunner.new(platform: 'mac_os_x', version: '10.8.2')
         .converge(described_recipe)
     end
 
@@ -87,7 +87,7 @@ describe 'omnibus::_git' do
 
   context 'on rhel 5' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'redhat', version: '5.10')
+      ChefSpec::ServerRunner.new(platform: 'redhat', version: '5.10')
         .converge(described_recipe)
     end
 
@@ -101,7 +101,7 @@ describe 'omnibus::_git' do
 
   context 'on rhel 6' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'redhat', version: '6.5')
+      ChefSpec::ServerRunner.new(platform: 'redhat', version: '6.5')
         .converge(described_recipe)
     end
 
@@ -116,7 +116,7 @@ describe 'omnibus::_git' do
 
   context 'on suse 11' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'suse', version: '11.2')
+      ChefSpec::ServerRunner.new(platform: 'suse', version: '11.2')
         .converge(described_recipe)
     end
 
