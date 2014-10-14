@@ -24,7 +24,7 @@ end
 
 describe 'ccache' do
   describe command('/usr/local/bin/ccache --version') do
-    its(:stdout) { should match /3\.1\.9/ }
+    its(:stdout) { should match(/3\.1\.9/) }
   end
 
   # FreeBSD 10+ uses clang
@@ -47,25 +47,25 @@ describe 'ruby' do
   end
 
   describe command("su - omnibus -l -c 'source ~/.bashrc && ruby --version'") do
-    its(:stdout) { should match /2\.1\.2/ }
+    its(:stdout) { should match(/2\.1\.2/) }
   end
 end
 
 describe 'bash' do
   describe command('/usr/local/bin/bash --version') do
-    its(:stdout) { should match /4\.3/ }
+    its(:stdout) { should match(/4\.3/) }
   end
 end
 
 describe 'git' do
   describe command('/usr/local/bin/git --version') do
-    its(:stdout) { should match /1\.9\.0/ }
+    its(:stdout) { should match(/1\.9\.0/) }
   end
 end
 
 describe 'rsync' do
   describe command('/usr/local/bin/rsync --version') do
-    its(:stdout) { should match /3\.1\.0/ }
+    its(:stdout) { should match(/3\.1\.0/) }
   end
 end
 
@@ -90,7 +90,7 @@ describe 'environment' do
     '.bash_profile',
     '.bashrc',
     File.join('.bashrc.d', 'omnibus-path.sh'),
-    File.join('.bashrc.d', 'chruby-default.sh')
+    File.join('.bashrc.d', 'chruby-default.sh'),
   ].each do |dot_file|
 
     describe file(File.join(home_dir, dot_file)) do

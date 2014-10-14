@@ -106,9 +106,7 @@ EOH
 
       checksum = Digest::SHA256.file(cache_path).hexdigest
 
-      unless new_resource.checksum == checksum
-        raise ChecksumVerificationFailure.new(new_resource, checksum)
-      end
+      raise ChecksumVerificationFailure.new(new_resource, checksum) unless new_resource.checksum == checksum
     end
 
     def extract
