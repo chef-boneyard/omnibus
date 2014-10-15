@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.4 (2014-10-15)
+-------------------
+# Bug fixes
+- Disable DTrace integration when compiling Ruby
+
 v2.4.2 (2014-10-14)
 -------------------
 # Bug fixes
