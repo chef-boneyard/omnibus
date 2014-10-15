@@ -56,6 +56,7 @@ class Chef
         '--with-out-ext=tk',
         '--without-tcl',
         '--without-tk',
+        '--disable-dtrace',
       ].join(' ')
     end
 
