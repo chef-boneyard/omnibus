@@ -83,7 +83,7 @@ class Chef
     # @return [true, false]
     #
     def installed?
-      look  = "#{new_resource.name}"
+      look  = new_resource.name
       look << " -v #{new_resource.version}" if new_resource.version
 
       ruby_version_execute("gem list --installed #{look}")

@@ -219,11 +219,11 @@ end
 
 Chef::Platform.set(
   resource: :ruby_install,
-  provider: Chef::Provider::RubyInstallUnix
+  provider: Chef::Provider::RubyInstallUnix,
 )
 
 Chef::Platform.set(
   platform: :windows,
   resource: :ruby_install,
-  provider: Chef::Provider::RubyInstallWindows
+  provider: Chef::Provider::RubyInstallWindows,
 )

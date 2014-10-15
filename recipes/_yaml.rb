@@ -29,7 +29,7 @@ case node['platform_family']
 when 'debian'
   package 'libyaml-dev'
 when 'freebsd'
-  package 'libyaml'
+  package 'textproc/libyaml'
 when 'mac_os_x'
   package 'libyaml'
 when 'rhel'

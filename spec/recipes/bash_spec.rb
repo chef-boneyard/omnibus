@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::_bash' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
 
   it 'includes _compile' do
     expect(chef_run).to include_recipe('omnibus::_compile')

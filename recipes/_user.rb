@@ -54,7 +54,7 @@ if windows?
   if build_user_home.include?(windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Users'))
     ruby_block 'create-build-user-home' do
       block do
-        whoami = Mixlib::ShellOut.new("whoami.exe", user: node['omnibus']['build_user'], password: node['omnibus']['build_user_password'])
+        whoami = Mixlib::ShellOut.new('whoami.exe', user: node['omnibus']['build_user'], password: node['omnibus']['build_user_password'])
         whoami.run_command
       end
       action :create
