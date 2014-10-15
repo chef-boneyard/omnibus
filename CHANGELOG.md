@@ -2,6 +2,15 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.2 (2014-10-14)
+-------------------
+# Bug fixes
+- Use fully-qualified names when installing FreeBSD packages
+
+# Improvement
+- Add linting support (Foodcritic, Rubocop) to repo
+- Fix ChefSpec 4.1.x deprecation warnings
+
 v2.4.0 (2014-10-07)
 -------------------
 ## Feature
