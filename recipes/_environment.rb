@@ -29,7 +29,7 @@ if windows?
       REM # Load the base Omnibus environment
       REM ###############################################################
 
-      set PATH=#{omnibus_env['PATH'].join(';')};%PATH%
+      set PATH=#{omnibus_env['PATH'].join(File::PATH_SEPARATOR)};%PATH%
       set SSL_CERT_FILE=#{omnibus_env['SSL_CERT_FILE'].first}
       set HOMEDRIVE=#{ENV['SYSTEMDRIVE']}
       set HOMEPATH=#{build_user_home.split(':').last}
