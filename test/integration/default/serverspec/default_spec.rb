@@ -9,13 +9,13 @@ home_dir = if os[:family] == 'darwin'
              '/home/omnibus'
            end
 
-describe group('omnibus') do
+describe group('omnibus'), pending: (os[:family] == 'darwin') do
   it { should exist }
 end
 
 describe user('omnibus') do
   it { should exist }
-  it { should have_login_shell '/bin/bash' }
+  it('', pending: os[:family] == 'darwin') { should have_login_shell '/bin/bash' }
 end
 
 describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'), if: os[:family] == 'darwin' do
@@ -74,7 +74,7 @@ describe 'environment' do
     # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
     # check the $PATH because ServerSpec doesn't execute a login shell
     # automatically.
-    describe command("su - omnibus -c 'echo $PATH'") do
+    describe command("su - omnibus -l -c 'echo $PATH'") do
       its(:stdout) { should match %r{^/usr/local/bin(.+)} }
     end
   end
