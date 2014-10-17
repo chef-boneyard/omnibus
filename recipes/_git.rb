@@ -37,21 +37,6 @@ if windows?
   git_paths << windows_safe_path_join(program_files, 'Git', 'libexec', 'git-core')
   git_path   = git_paths.join(';')
 
-  # COOK-3482 - windows_path resource doesn't change the current process
-  # environment variables. Therefore, git won't actually be on the PATH
-  # until the next chef-client run
-  ruby_block 'add-git-to-current-path' do
-    block do
-      ENV['PATH'] << ";#{git_path}"
-    end
-    action :nothing
-  end
-
-  windows_path git_path do
-    action :add
-    notifies :create, 'ruby_block[add-git-to-current-path]', :immediately
-  end
-
   omnibus_env['PATH'] << git_path
 else
   include_recipe 'omnibus::_bash'
