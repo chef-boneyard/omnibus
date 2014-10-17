@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.6 (2014-10-17)
+-------------------
+# Bug fixes
+- Install ruby before git to ensure correct ownership of /usr/local/lib on OS X
+- Stop infinitively growing Windows PATH
+
 v2.4.4 (2014-10-15)
 -------------------
 # Bug fixes
