@@ -51,5 +51,5 @@ if windows?
   ruby_base_path = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'rubies', node['omnibus']['ruby_version'])
   omnibus_env['PATH'] << windows_safe_path_join(ruby_base_path, 'bin')
   omnibus_env['PATH'] << windows_safe_path_join(ruby_base_path, 'mingw', 'bin')
-  omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(ruby_base_path, 'ssl', 'certs', 'cacerts.pem')
+  omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(ruby_base_path, 'ssl', 'certs', 'cacert.pem')
 end
