@@ -44,7 +44,8 @@ else
   include_recipe 'omnibus::_openssl'
   include_recipe 'omnibus::_user'
 
-  make = 'make'
+  make           = 'make'
+  configure_args = '--prefix=/usr/local --without-tcltk'
 
   case node['platform_family']
   when 'debian'
@@ -60,6 +61,10 @@ else
     package 'archivers/libzip'
     # FreeBSD requires gmake instead of make
     make = 'gmake'
+    configure_args << ' --enable-pthreads=-pthread' \
+                      ' ac_cv_header_libcharset_h=no' \
+                      ' --with-curl=/usr/local' \
+                      ' --with-expat=/usr/local'
   when 'mac_os_x'
     package 'curl'
     package 'expat'
@@ -81,7 +86,7 @@ else
     source          'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
     checksum        'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
     version         '1.9.0'
-    build_command   './configure --prefix=/usr/local --without-tcltk'
+    build_command   "./configure #{configure_args}"
     compile_command "#{make} -j #{node.builders}"
     install_command "#{make} install"
     environment     'NO_GETTEXT' => '1'
