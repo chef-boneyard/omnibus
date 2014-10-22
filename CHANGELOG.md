@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.10 (2014-10-22)
+-------------------
+# Bug fixes
+- Ensure HTTPS remotes work in FreeBSD git install
+
 v2.4.8 (2014-10-17)
 -------------------
 # Bug fixes
