@@ -1,5 +1,6 @@
 require 'serverspec'
 require 'pathname'
+require 'tmpdir'
 
 set :backend, :exec
 
@@ -60,6 +61,14 @@ end
 describe 'git' do
   describe command('/usr/local/bin/git --version') do
     its(:stdout) { should match(/1\.9\.0/) }
+  end
+
+  # Ensure `https` remote functions correctly
+  Dir.mktmpdir('omnibus') do |tmpdir|
+    # Ensure HTTPS remote support works
+    describe command("git clone https://github.com/opscode-cookbooks/omnibus.git #{tmpdir}") do
+      its(:exit_status) { should eq 0 }
+    end
   end
 end
 
