@@ -29,7 +29,7 @@ case node['platform_family']
 when 'debian'
   package 'libssl-dev'
 when 'freebsd'
-  package 'security/openssl'
+  # OpenSSL development headers are part of the base install
 when 'mac_os_x'
   package 'openssl'
 when 'suse'
