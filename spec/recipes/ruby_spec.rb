@@ -33,6 +33,17 @@ describe 'omnibus::_ruby' do
       expect(chef_run).to include_recipe('omnibus::_yaml')
     end
 
+    context 'on rhel' do
+      let(:chef_run) do
+        ChefSpec::ServerRunner.new(platform: 'redhat', version: '7.0')
+        .converge(described_recipe)
+      end
+
+      it 'installs bzip2' do
+        expect(chef_run).to install_package('bzip2')
+      end
+    end
+
     it 'installs ruby-install' do
       allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
 
