@@ -13,4 +13,17 @@ describe 'omnibus::_compile' do
                      .converge(described_recipe)
     expect(osx_chef_run).to include_recipe('homebrew::default')
   end
+
+  context 'on freebsd' do
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '10.0')
+        .converge(described_recipe)
+    end
+
+    it 'Configures BSD Make for backward compat mode' do
+      allow(File).to receive(:exist?).and_call_original
+      allow(File).to receive(:exist?).with('/etc/make.conf').and_return(true)
+      expect(chef_run).to run_ruby_block('Configure BSD Make for backward compat mode')
+    end
+  end
 end
