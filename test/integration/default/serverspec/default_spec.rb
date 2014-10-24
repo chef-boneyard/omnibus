@@ -115,4 +115,9 @@ describe 'environment' do
     it { should be_owned_by 'omnibus' }
     it { should be_grouped_into 'omnibus' }
   end
+
+  describe file('/etc/make.conf'), if: os[:family] == 'freebsd' do
+    it { should be_file }
+    its(:content) { should match(/\.MAKEFLAGS: -B/) }
+  end
 end

@@ -34,3 +34,20 @@ include_recipe 'build-essential::default'
 # Use homebrew as the default package manager on OSX. We cannot install homebrew
 # until AFTER we have installed the XCode command line tools via build-essential
 include_recipe 'homebrew::default' if mac_os_x?
+
+if freebsd?
+  # Ensuring BSD Make is executed with the `-B` option (backward-compat mode)
+  # allows many pieces of software to compile without `gmake`. A full
+  # explanation of FreeBSD Make's various options can be found here:
+  #
+  #   https://www.freebsd.org/cgi/man.cgi?query=make(1)&sektion=
+  #
+  ruby_block 'Configure BSD Make for backward compat mode' do
+    block do
+      file = Chef::Util::FileEdit.new('/etc/make.conf')
+      file.insert_line_if_no_match(/\.MAKEFLAGS:/, '.MAKEFLAGS: -B')
+      file.write_file
+    end
+    only_if { File.exist?('/etc/make.conf') }
+  end
+end
