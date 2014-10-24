@@ -28,6 +28,9 @@ unless windows?
   include_recipe 'omnibus::_xml'
   include_recipe 'omnibus::_yaml'
 
+  # The RHEL 7 EC2 images do not include bzip2, which is a dep of ruby-install.
+  package 'bzip2' if rhel?
+
   # Install ruby-install so we can easily install and manage rubies. This is
   # needed by the +ruby_install+ HWRP which installs rubies for us.
   remote_install 'ruby-install' do
