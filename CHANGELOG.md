@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.14 (2014-11-06)
+--------------------
+# Bug fixes
+- Don’t allow `ruby-install` to install deps
+
 v2.4.12 (2014-10-24)
 -------------------
 # Bug fixes
