@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.16 (2014-11-11)
+--------------------
+# Bug fixes
+- Fix CA bundle location for omnibus env on windows
+- Upgrade Bash to 4.3.30 to fix [CVE-2014-6271] (Shellshock)
+
 v2.4.14 (2014-11-06)
 --------------------
 # Bug fixes
