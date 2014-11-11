@@ -25,13 +25,13 @@ return if windows?
 include_recipe 'omnibus::_compile'
 
 remote_install 'bash' do
-  source 'http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz'
-  version '4.3'
-  checksum 'afc687a28e0e24dc21b988fa159ff9dbcf6b7caa92ade8645cc6d5605cd024d4'
+  source 'http://ftp.gnu.org/gnu/bash/bash-4.3.30.tar.gz'
+  version '4.3.30'
+  checksum '317881019bbf2262fb814b7dd8e40632d13c3608d2f237800a8828fbb8a640dd'
   build_command './configure'
   compile_command "make -j #{node.builders}"
   install_command 'make install'
-  not_if { installed_at_version?('/usr/local/bin/bash', '4.3') }
+  not_if { installed_at_version?('/usr/local/bin/bash', '4.3.30') }
 end
 
 # Link /bin/bash to our bash, since some systems have their own bash, but we
