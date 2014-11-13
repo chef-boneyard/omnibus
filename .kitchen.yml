@@ -53,6 +53,10 @@ platforms:
   - name: macosx-10.10
     driver:
       box: chef/macosx-10.10 # private
+  - name: solaris-10.11
+    run_list:  pkgutil::default
+    driver:
+      box: chef/solaris-10.11 # private
   - name: windows-7-professional
     provisioner:
       name: windows_chef_zero
