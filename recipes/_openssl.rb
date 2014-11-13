@@ -40,4 +40,6 @@ when 'suse'
   # See: http://stackoverflow.com/questions/17477933
 when 'rhel'
   package 'openssl-devel'
+when 'solaris2'
+  package 'libssl_dev'
 end
