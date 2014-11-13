@@ -20,6 +20,9 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
+# Bloody solaris
+include_recipe 'omnibus::_solaris' if solaris2?
+
 # Include other recipes. Note: they may not be executed in this order, since
 # private recipes may depend on each other.
 include_recipe 'omnibus::_bash'
@@ -36,6 +39,7 @@ include_recipe 'omnibus::_openssl'
 include_recipe 'omnibus::_packaging'
 include_recipe 'omnibus::_rsync'
 include_recipe 'omnibus::_selinux'
+include_recipe 'omnibus::_solaris'
 include_recipe 'omnibus::_xml'
 include_recipe 'omnibus::_yaml'
 
