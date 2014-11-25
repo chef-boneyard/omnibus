@@ -48,9 +48,9 @@ describe 'omnibus::_ruby' do
       allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
 
       expect(chef_run).to install_remote_install('ruby-install')
-        .with_source('https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1')
-        .with_checksum('1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e')
-        .with_version('0.4.1')
+        .with_source('https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.3')
+        .with_checksum('0ec8c23699aad534dcab549c0f6543e066725a62f5b3d7e8dae311c61df1aef3')
+        .with_version('0.4.3')
         .with_install_command('make -j 2 install')
     end
 
