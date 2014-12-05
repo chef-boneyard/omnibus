@@ -44,7 +44,7 @@ unless windows?
 end
 
 # Install the version of Ruby we want into /usr/local
-if solaris?
+if node['platform_family'] == 'solaris2'
   solaris_compile_flags = [
     '--disable-install-rdoc',
     '--disable-install-ri',
