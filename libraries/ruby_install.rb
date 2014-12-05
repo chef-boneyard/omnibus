@@ -25,15 +25,16 @@ class Chef
     default_action :install
 
     attribute :version, kind_of: String, name_attribute: true
-    attribute :compile_flags, kind_of: String, default: [
-        '--disable-install-rdoc',
-        '--disable-install-ri',
-        '--with-out-ext=tcl',
-        '--with-out-ext=tk',
-        '--without-tcl',
-        '--without-tk',
-        '--disable-dtrace',
-      ].join(' ')
+    attribute :compile_flags, kind_of: String, default:
+    [
+      '--disable-install-rdoc',
+      '--disable-install-ri',
+      '--with-out-ext=tcl',
+      '--with-out-ext=tk',
+      '--without-tcl',
+      '--without-tk',
+      '--disable-dtrace',
+    ].join(' ')
   end
 
   class Provider::RubyInstallUnix < Provider::LWRPBase

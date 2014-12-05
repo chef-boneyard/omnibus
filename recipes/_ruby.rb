@@ -45,20 +45,22 @@ end
 
 # Install the version of Ruby we want into /usr/local
 if solaris?
+  solaris_compile_flags = [
+    '--disable-install-rdoc',
+    '--disable-install-ri',
+    '--with-out-ext=tcl',
+    '--with-out-ext=tk',
+    '--without-tcl',
+    '--without-tk',
+    '--disable-dtrace',
+    'GREP="ggrep"',
+    'CC="/usr/local/bin/gcc -m64"',
+    'CXX="/usr/local/bin/g++ -m64"',
+    'LD="/usr/local/bin/ld -64"',
+  ].join(' ')
+
   ruby_install node['omnibus']['ruby_version'] do
-    compile_flags = [
-      '--disable-install-rdoc',
-      '--disable-install-ri',
-      '--with-out-ext=tcl',
-      '--with-out-ext=tk',
-      '--without-tcl',
-      '--without-tk',
-      '--disable-dtrace',
-      'GREP="ggrep"',
-      'CC="/usr/local/bin/gcc -m64"',
-      'CXX="/usr/local/bin/g++ -m64"',
-      'LD="/usr/local/bin/ld -64"',
-    ].join(' ')
+    compile_flags solaris_compile_flags
   end
 else
   ruby_install node['omnibus']['ruby_version']
