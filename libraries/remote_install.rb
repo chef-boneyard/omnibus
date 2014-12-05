@@ -111,7 +111,16 @@ EOH
 
     def extract
       execute = Resource::Execute.new(label('extract'), run_context)
-      execute.command("tar -xzvf #{id}.tar.gz")
+      # favor gtar over tar, for platforms that ship with both (eg solaris)
+      if ::File.file?("gtar") && ::File.executable?("gtar")
+        tar_command = "gtar"
+      elsif ENV['PATH']
+        path = ENV['PATH'].split(::File::PATH_SEPARATOR).find do |path|
+          ::File.executable?(::File.join(path, "gtar"))
+        end
+        tar_command = path && ::File.expand_path("gtar", path)
+      end
+      execute.command("#{tar_command} -xzvf #{id}.tar.gz")
       execute.cwd(Config[:file_cache_path])
       execute.run_action(:run)
     end
