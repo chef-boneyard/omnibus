@@ -22,6 +22,7 @@ include_recipe 'omnibus::_common'
 
 unless windows?
   include_recipe 'omnibus::_bash'
+  include_recipe 'omnibus::_cacerts'
   include_recipe 'omnibus::_chruby'
   include_recipe 'omnibus::_compile'
   include_recipe 'omnibus::_openssl'
@@ -43,7 +44,25 @@ unless windows?
 end
 
 # Install the version of Ruby we want into /usr/local
-ruby_install node['omnibus']['ruby_version']
+if solaris?
+  ruby_install node['omnibus']['ruby_version'] do
+    compile_flags = [
+      '--disable-install-rdoc',
+      '--disable-install-ri',
+      '--with-out-ext=tcl',
+      '--with-out-ext=tk',
+      '--without-tcl',
+      '--without-tk',
+      '--disable-dtrace',
+      'GREP="ggrep"',
+      'CC="/usr/local/bin/gcc -m64"',
+      'CXX="/usr/local/bin/g++ -m64"',
+      'LD="/usr/local/bin/ld -64"',
+    ].join(' ')
+  end
+else
+  ruby_install node['omnibus']['ruby_version']
+end
 
 # Install bundler (into the Ruby we just installed)
 ruby_gem 'bundler' do

@@ -72,7 +72,7 @@ class Chef
       if windows?
         prefixed_command = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'rubies', new_resource.ruby, 'bin', command)
       else
-        prefixed_command = "chruby-exec #{new_resource.ruby} -- #{command}"
+        prefixed_command = "chruby-exec #{new_resource.ruby} -- \"#{command}\""
       end
       shell_out!(prefixed_command).stdout
     end
