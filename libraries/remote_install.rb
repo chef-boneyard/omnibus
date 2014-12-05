@@ -118,7 +118,7 @@ EOH
         path = ENV['PATH'].split(::File::PATH_SEPARATOR).find do |p|
           ::File.executable?(::File.join(p, 'gtar'))
         end
-        tar_command = p && ::File.expand_path('gtar', p)
+        tar_command = path && ::File.expand_path('gtar', path)
       end
       execute.command("#{tar_command} -xzvf #{id}.tar.gz")
       execute.cwd(Config[:file_cache_path])
