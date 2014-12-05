@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.4.18 (2014-12-04)
+--------------------
+# Bug fixes
+- Ensure FreeBSD Ruby install points at valid root CA cert
+
 v2.4.16 (2014-11-11)
 --------------------
 # Bug fixes
