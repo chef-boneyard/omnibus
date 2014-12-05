@@ -29,10 +29,10 @@ if windows?
       REM # Load the base Omnibus environment
       REM ###############################################################
 
-      set PATH=#{omnibus_env['PATH'].join(File::PATH_SEPARATOR)};%PATH%
-      set SSL_CERT_FILE=#{omnibus_env['SSL_CERT_FILE'].first}
       set HOMEDRIVE=#{ENV['SYSTEMDRIVE']}
       set HOMEPATH=#{build_user_home.split(':').last}
+      set PATH=#{omnibus_env.delete('PATH').join(File::PATH_SEPARATOR)};%PATH%
+      #{omnibus_env.map { |k, v| "set #{k}=#{v.first}" }.join("\n")}
 
       ECHO(
       ECHO ========================================
@@ -116,6 +116,7 @@ else
       # Load the base Omnibus environment
       ###################################################################
       export PATH="/usr/local/bin:$PATH"
+      #{omnibus_env.map { |k, v| "export #{k}=#{v.first}" }.join("\n")}
 
       # Load chruby
       if ! command -v chruby > /dev/null; then

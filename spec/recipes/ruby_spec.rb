@@ -17,6 +17,10 @@ describe 'omnibus::_ruby' do
       expect(chef_run).to include_recipe('omnibus::_bash')
     end
 
+    it 'includes _cacerts' do
+      expect(chef_run).to include_recipe('omnibus::_cacerts')
+    end
+
     it 'includes _compile' do
       expect(chef_run).to include_recipe('omnibus::_compile')
     end

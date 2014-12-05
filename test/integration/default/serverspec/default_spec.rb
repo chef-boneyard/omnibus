@@ -88,6 +88,12 @@ describe 'environment' do
     end
   end
 
+  describe '$SSL_CERT_FILE', if: os[:family] == 'freebsd' do
+    describe command("su - omnibus -l -c 'echo $SSL_CERT_FILE'") do
+      its(:stdout) { should match %r{^/usr/local/share/certs/ca-root-nss.crt} }
+    end
+  end
+
   describe file(File.join(home_dir, 'load-omnibus-toolchain.sh')) do
     it { should be_file }
     # it { should be_owned_by 'omnibus' }
