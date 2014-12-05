@@ -23,6 +23,7 @@ include_recipe 'omnibus::_common'
 # Include other recipes. Note: they may not be executed in this order, since
 # private recipes may depend on each other.
 include_recipe 'omnibus::_bash'
+include_recipe 'omnibus::_cacerts'
 include_recipe 'omnibus::_ccache'
 include_recipe 'omnibus::_chruby'
 include_recipe 'omnibus::_compile'

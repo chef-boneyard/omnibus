@@ -22,6 +22,7 @@ include_recipe 'omnibus::_common'
 
 unless windows?
   include_recipe 'omnibus::_bash'
+  include_recipe 'omnibus::_cacerts'
   include_recipe 'omnibus::_chruby'
   include_recipe 'omnibus::_compile'
   include_recipe 'omnibus::_openssl'
