@@ -139,9 +139,9 @@ end
 # we need to add /usr/local/lib to the library path (permanently) so later builds have the needed libraries
 bash 'update_crle_local_lib' do
   code <<-EOH
-  crle -64 -u -l /usr/local/lib
+  crle -64 -u -l /usr/local/lib/amd64
   EOH
-  not_if 'crle -64 | grep /usr/local/lib'
+  not_if 'crle -64 | grep /usr/local/lib/amd64'
 end
 # also /usr/sfw/lib
 bash 'update_crle_sfw' do
@@ -151,16 +151,37 @@ bash 'update_crle_sfw' do
   not_if 'crle -64 | grep /usr/sfw/lib/amd64'
 end
 
-remote_file '/etc/sfw/openssl/cert.pem' do
-  source 'http://curl.haxx.se/ca/cacert.pem'
-end
-
-ruby_block 'grep' do
+ruby_block 'set_environment' do
   block do
     ENV['GREP'] = 'ggrep'
     ENV['CC'] = '/usr/local/bin/gcc -m64'
     ENV['CXX'] = '/usr/local/bin/g++ -m64'
     ENV['LD'] = 'ld -64'
-    ENV['SSL_CERT_FILE'] = '/etc/sfw/openssl/cert.pem'
   end
+end
+
+new_toolchain_env =
+{ 'GREP' => 'ggrep',
+  'CC' => '/usr/local/bin/gcc -m64',
+  'CXX' => '/usr/local/bin/g++ -m64',
+  'LD' => '/usr/local/bin/ld -64',
+  'LD_LIBRARY_PATH' => '/usr/local/lib/amd64:/usr/local/lib:/usr/sfw/lib/amd64:/usr/sfw/lib',
+}
+
+# openssl is pretty damn old... we need to update it.
+remote_install 'openssl' do
+  source 'https://www.openssl.org/source/openssl-0.9.8zc.tar.gz'
+  checksum '461cc694f29e72f59c22e7ea61bf44671a5fc2f8b3fc2eeac89714b7be915881'
+  version '0.9.8zc'
+  build_command './Configure --prefix=/usr/local solaris64-x86_64-gcc shared'
+  compile_command 'make'
+  install_command 'make install'
+  environment new_toolchain_env
+  not_if do
+    File.exist?('/usr/local/bin/openssl')
+  end
+end
+
+remote_file '/usr/local/ssl/cert.pem' do
+  source 'http://curl.haxx.se/ca/cacert.pem'
 end
