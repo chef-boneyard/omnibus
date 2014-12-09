@@ -3,15 +3,6 @@ require 'spec_helper'
 describe 'omnibus::_ruby' do
   let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
 
-  context 'on windows' do
-    let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2')
-        .converge(described_recipe)
-    end
-
-    it 'includes _ruby_windows'
-  end
-
   context 'on non-windows' do
     it 'includes _bash' do
       expect(chef_run).to include_recipe('omnibus::_bash')
@@ -59,7 +50,7 @@ describe 'omnibus::_ruby' do
     end
 
     it 'installs ruby' do
-      expect(chef_run).to install_ruby_install('2.1.2')
+      expect(chef_run).to install_ruby_install('2.1.5')
     end
 
     it 'installs bundler' do
