@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.5.0 (2014-12-10)
+--------------------
+# Improvements
+- Bump Ruby version to 2.1.5
+
 v2.4.18 (2014-12-04)
 --------------------
 # Bug fixes
