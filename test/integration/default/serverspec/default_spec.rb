@@ -44,11 +44,11 @@ end
 
 describe 'ruby' do
   describe command("su - omnibus -c 'source ~/.bashrc && which ruby'") do
-    its(:stdout) { should match '/opt/rubies/ruby-2.1.2/bin/ruby' }
+    its(:stdout) { should match '/opt/rubies/ruby-2.1.5/bin/ruby' }
   end
 
   describe command("su - omnibus -l -c 'source ~/.bashrc && ruby --version'") do
-    its(:stdout) { should match(/2\.1\.2/) }
+    its(:stdout) { should match(/2\.1\.5/) }
   end
 end
 

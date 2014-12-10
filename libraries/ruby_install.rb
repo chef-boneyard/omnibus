@@ -113,13 +113,13 @@ class Chef
       windows_safe_path_join(Chef::Config[:file_cache_path], ::File.basename(installer_url))
     end
 
-    # Determines the proper version of the DevKit based on Ruby versionl.
+    # Determines the proper version of the DevKit based on Ruby version.
     def devkit_url
       # 2.0 64-bit
-      if version =~ /^2\.0\.0.*x64$/
+      if version =~ /^2\.\d\.\d.*x64$/
         'http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe'
       # 2.0 32-bit
-      elsif version =~ /^2\.0\.0.*i386$/
+      elsif version =~ /^2\.\d\.\d.*$/
         'http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe'
       # Ruby 1.8.7 and 1.9.3
       else
