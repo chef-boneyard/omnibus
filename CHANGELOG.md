@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.5.1 (2014-12-11)
+--------------------
+# Improvements
+- Create `/etc/ssl/cert.pem` symlink on FreeBSD
+
 v2.5.0 (2014-12-10)
 --------------------
 # Improvements
