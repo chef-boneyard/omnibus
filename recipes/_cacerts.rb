@@ -43,4 +43,8 @@ if freebsd?
 
     EOH
   end
+
+  link '/etc/ssl/cert.pem' do
+    to '/usr/local/share/certs/ca-root-nss.crt'
+  end
 end
