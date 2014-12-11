@@ -126,4 +126,8 @@ describe 'environment' do
     it { should be_file }
     its(:content) { should match(/\.MAKEFLAGS: -B/) }
   end
+
+  describe file('/etc/ssl/cert.pem'), if: os[:family] == 'freebsd' do
+    it { should be_symlink }
+  end
 end
