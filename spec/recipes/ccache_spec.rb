@@ -13,7 +13,7 @@ describe 'omnibus::_ccache' do
 
   it 'remote_installs ccache' do
     expect(chef_run).to install_remote_install('ccache')
-      .with_source('http://samba.org/ftp/ccache/ccache-3.1.9.tar.gz')
+      .with_source('https://samba.org/ftp/ccache/ccache-3.1.9.tar.gz')
       .with_version('3.1.9')
       .with_checksum('a2270654537e4b736e437975e0cb99871de0975164a509dee34cf91e36eeb447')
       .with_build_command('./configure')
