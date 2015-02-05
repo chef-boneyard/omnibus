@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.5.2 (2015-02-05)
+--------------------
+# Improvements
+- Update the url for ccache/rsync
+
 v2.5.1 (2014-12-11)
 --------------------
 # Improvements
