@@ -29,7 +29,7 @@ return if windows?
 include_recipe 'omnibus::_compile'
 
 remote_install 'rsync' do
-  source 'http://rsync.samba.org/ftp/rsync/src/rsync-3.1.0.tar.gz'
+  source 'ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/rsync-3.1.0.tar.gz'
   version '3.1.0'
   checksum '81ca23f77fc9b957eb9845a6024f41af0ff0c619b7f38576887c63fa38e2394e'
   build_command './configure'

@@ -11,7 +11,7 @@ describe 'omnibus::_rsync' do
     allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
 
     expect(chef_run).to install_remote_install('rsync')
-      .with_source('http://rsync.samba.org/ftp/rsync/src/rsync-3.1.0.tar.gz')
+      .with_source('ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/rsync-3.1.0.tar.gz')
       .with_version('3.1.0')
       .with_checksum('81ca23f77fc9b957eb9845a6024f41af0ff0c619b7f38576887c63fa38e2394e')
       .with_build_command('./configure')
