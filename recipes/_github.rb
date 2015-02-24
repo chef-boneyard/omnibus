@@ -22,15 +22,13 @@ include_recipe 'omnibus::_common'
 
 return if windows?
 
-ssh_config_file = case node['platform_family']
-                  when 'mac_os_x'
+ssh_config_file = if mac_os_x?
                     '/etc/ssh_config'
                   else
                     '/etc/ssh/ssh_config'
                   end
 
-sudoers_file = case node['platform_family']
-               when 'freebsd'
+sudoers_file = if freebsd?
                  '/usr/local/etc/sudoers'
                else
                  '/etc/sudoers'

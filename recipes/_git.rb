@@ -48,14 +48,13 @@ else
   configure_args = '--prefix=/usr/local --without-tcltk'
   git_environment    = { 'NO_GETTEXT' => '1' }
 
-  case node['platform_family']
-  when 'debian'
+  if debian?
     package 'gettext'
     package 'libcurl4-gnutls-dev'
     package 'libexpat1-dev'
     package 'libz-dev'
     package 'perl-modules'
-  when 'freebsd'
+  elsif freebsd?
     package 'ftp/curl'
     package 'textproc/expat2'
     package 'devel/gettext'
@@ -66,22 +65,22 @@ else
                       ' ac_cv_header_libcharset_h=no' \
                       ' --with-curl=/usr/local' \
                       ' --with-expat=/usr/local'
-  when 'mac_os_x'
+  elsif mac_os_x?
     package 'curl'
     package 'expat'
     package 'gettext'
-  when 'rhel'
+  elsif rhel?
     package 'curl-devel'
     package 'expat-devel'
     package 'gettext-devel'
     package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('>= 6')
     package 'zlib-devel'
-  when 'suse'
+  elsif suse?
     package 'libcurl-devel'
     package 'libexpat-devel'
     package 'gettext-runtime'
     package 'zlib-devel'
-  when 'solaris2'
+  elsif solaris?
     make = 'gmake'
     git_environment['CC'] = 'gcc'
   end
