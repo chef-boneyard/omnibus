@@ -19,6 +19,7 @@
 
 # Include Chef Sugar here
 include_recipe 'chef-sugar::default'
+require 'chef/sugar/core_extensions'
 
 # Create the user
 include_recipe 'omnibus::_user'
@@ -26,6 +27,14 @@ include_recipe 'omnibus::_user'
 # Ensure the cache directory exists
 directory Chef::Config[:file_cache_path] do
   recursive true
+end
+
+# If we are on Solaris 11, we need to update some paths to favor the gnu utils
+if solaris? && node['platform_version'].satisfies?('>=  5.11')
+  unless ENV['PATH'].include? '/usr/gnu/bin'
+    Chef::Log.debug 'Adding /usr/gnu/bin to path'
+    ENV['PATH'] = '/usr/gnu/bin:' + ENV['PATH']
+  end
 end
 
 # Create the omnibus directories

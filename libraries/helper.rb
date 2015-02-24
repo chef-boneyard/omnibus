@@ -35,6 +35,8 @@ module Omnibus
         File.join('/Users', node['omnibus']['build_user'])
       elsif windows?
         windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Users', node['omnibus']['build_user'])
+      elsif solaris?
+        File.join('/export/home', node['omnibus']['build_user'])
       else
         File.join('/home', node['omnibus']['build_user'])
       end

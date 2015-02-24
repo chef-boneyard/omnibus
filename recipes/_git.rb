@@ -46,6 +46,7 @@ else
 
   make           = 'make'
   configure_args = '--prefix=/usr/local --without-tcltk'
+  git_environment    = { 'NO_GETTEXT' => '1' }
 
   case node['platform_family']
   when 'debian'
@@ -80,6 +81,9 @@ else
     package 'libexpat-devel'
     package 'gettext-runtime'
     package 'zlib-devel'
+  when 'solaris2'
+    make = 'gmake'
+    git_environment['CC'] = 'gcc'
   end
 
   remote_install 'git' do
@@ -89,7 +93,7 @@ else
     build_command   "./configure #{configure_args}"
     compile_command "#{make} -j #{node.builders}"
     install_command "#{make} install"
-    environment     'NO_GETTEXT' => '1'
+    environment     git_environment
     not_if { installed_at_version?('git', '1.9.0') }
   end
 
