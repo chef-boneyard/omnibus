@@ -25,20 +25,19 @@ include_recipe 'omnibus::_common'
 # working with XML (aka the nokogiri gem).
 #
 
-case node['platform_family']
-when 'debian'
+if debian?
   package 'libxml2-dev'
   package 'libxslt-dev'
   package 'ncurses-dev'
   package 'zlib1g-dev'
-when 'freebsd'
+elsif freebsd?
   package 'textproc/libxml2'
   package 'textproc/libxslt'
   package 'devel/ncurses'
-when 'mac_os_x'
+elsif mac_os_x?
   package 'libxml2'
   package 'libxslt'
-when 'rhel'
+elsif rhel?
   package 'libxml2-devel'
   package 'libxslt-devel'
   package 'ncurses-devel'

@@ -25,13 +25,12 @@ include_recipe 'omnibus::_common'
 # working with YAML (aka the native ruby bindings for YAML).
 #
 
-case node['platform_family']
-when 'debian'
+if debian?
   package 'libyaml-dev'
-when 'freebsd'
+elsif freebsd?
   package 'textproc/libyaml'
-when 'mac_os_x'
+elsif mac_os_x?
   package 'libyaml'
-when 'rhel'
+elsif rhel?
   Chef::Log.debug 'No yaml packages for rhel'
 end

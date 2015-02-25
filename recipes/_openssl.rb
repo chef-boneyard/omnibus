@@ -25,19 +25,18 @@ include_recipe 'omnibus::_common'
 # working with openssl.
 #
 
-case node['platform_family']
-when 'debian'
+if debian?
   package 'libssl-dev'
-when 'freebsd'
+elsif freebsd?
   # OpenSSL development headers are part of the base install
-when 'mac_os_x'
+elsif mac_os_x?
   package 'openssl'
-when 'suse'
+elsif suse?
   package 'zlib-devel' # zypper provider fails on openssl-devel without
   package 'libopenssl-devel'
 
   # TODO: may need to force link.
   # See: http://stackoverflow.com/questions/17477933
-when 'rhel'
+elsif rhel?
   package 'openssl-devel'
 end

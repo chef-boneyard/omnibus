@@ -24,17 +24,15 @@ include_recipe 'omnibus::_common'
 # This recipe is used to install the "packaging" compontents.
 #
 
-case node['platform_family']
-when 'debian'
+if debian?
   package 'devscripts'
   package 'dpkg-dev'
   package 'fakeroot'
   package 'ncurses-dev'
   package 'zlib1g-dev'
-when 'freebsd'
+elsif freebsd?
   package 'devel/ncurses'
-when 'mac_os_x'
-when 'rhel'
+elsif rhel?
   package 'fakeroot'
   package 'ncurses-devel'
   package 'rpm-build'
@@ -48,7 +46,7 @@ when 'rhel'
     group node['omnibus']['build_user_group']
     mode '0755'
   end
-when 'windows'
+elsif windows?
   include_recipe '7-zip::default'
   include_recipe 'wix::default'
 
