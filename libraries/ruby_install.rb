@@ -155,7 +155,7 @@ class Chef
       ruby_installer.backup(false)
       ruby_installer.run_action(:create)
 
-      install_command = %Q|#{installer_download_path} /verysilent /dir="#{ruby_install_path}" /tasks="assocfiles,modpath"|
+      install_command = %Q|#{installer_download_path} /verysilent /dir="#{ruby_install_path}" /tasks="assocfiles"|
 
       execute = Resource::Execute.new("install ruby-#{version}", run_context)
       execute.command(install_command)
