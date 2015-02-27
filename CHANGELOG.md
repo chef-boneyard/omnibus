@@ -2,6 +2,14 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.5.3 (2015-02-27)
+--------------------
+# Improvements
+- Solaris 11 support
+
+# Bug fixes
+-  Ruby install should not modify the PATH on Win systems
+
 v2.5.2 (2015-02-05)
 --------------------
 # Improvements
