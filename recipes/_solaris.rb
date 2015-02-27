@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: _openssl
+# Recipe:: _solaris
 #
 # Copyright 2014, Chef Software, Inc.
 #
@@ -20,25 +20,22 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-#
-# This recipe is used to install the platform-specific development headers for
-# working with openssl.
-#
-
-if debian?
-  package 'libssl-dev'
-elsif freebsd?
-  # OpenSSL development headers are part of the base install
-elsif mac_os_x?
-  package 'openssl'
-elsif suse?
-  package 'zlib-devel' # zypper provider fails on openssl-devel without
-  package 'libopenssl-devel'
-
-  # TODO: may need to force link.
-  # See: http://stackoverflow.com/questions/17477933
-elsif rhel?
-  package 'openssl-devel'
-when 'solaris2'
-  package 'libssl_dev'
+# link make to gmake
+link '/opt/csw/bin/make' do
+  to '/opt/csw/bin/gmake-noguile'
 end
+
+# link tar to gtar
+link '/opt/csw/bin/tar' do
+  to '/opt/csw/bin/gtar'
+end
+
+# link cc to gcc
+link '/opt/csw/bin/cc' do
+  to '/opt/csw/bin/gcc'
+end
+
+# @TODO:  library or provider to manage setting paths.
+# This will keep appending to the path on subsequent runs of the chef-client.
+# Needed to pick up ar.
+ENV['PATH'] = "#{ENV['PATH']}:/usr/ccs/bin"
