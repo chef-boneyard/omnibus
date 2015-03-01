@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.5.4 (2015-03-01)
+--------------------
+# Bug fixes
+- Don’t configure `SSL_CERT_FILE` globally on Windows
+
 v2.5.3 (2015-02-27)
 --------------------
 # Improvements
