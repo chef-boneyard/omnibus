@@ -201,12 +201,6 @@ class Chef
       cacerts.source(cacerts_url)
       cacerts.backup(false)
       cacerts.run_action(:create)
-
-      ENV['SSL_CERT_FILE'] = cacert_file
-
-      ssl_env = Resource::Env.new('SSL_CERT_FILE', run_context)
-      ssl_env.value(cacert_file)
-      ssl_env.run_action(:create)
     end
 
     # Check if the given Ruby is installed by directory.
