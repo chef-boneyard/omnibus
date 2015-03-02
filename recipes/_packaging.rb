@@ -37,6 +37,8 @@ elsif rhel?
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'
+  # EL 7 split rpm-sign into its own package:  http://cholla.mmto.org/computers/linux/rpm/signing.html
+  package 'rpm-sign' if node['platform_version'].satisfies?('>= 7')
 
   # This script makes unattended rpm signing possible!
   cookbook_file ::File.join(build_user_home, 'sign-rpm') do
