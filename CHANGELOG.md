@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.5.5 (2015-03-02)
+--------------------
+# Bug fixes
+- Package signing on EL7 requires the rpm-sign package.
+
 v2.5.4 (2015-03-01)
 --------------------
 # Bug fixes
