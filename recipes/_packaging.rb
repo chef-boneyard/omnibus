@@ -21,7 +21,7 @@
 include_recipe 'omnibus::_common'
 
 #
-# This recipe is used to install the "packaging" compontents.
+# This recipe is used to install the "packaging" components.
 #
 
 if debian?
@@ -39,6 +39,9 @@ elsif rhel?
   package 'zlib-devel'
   # EL 7 split rpm-sign into its own package:  http://cholla.mmto.org/computers/linux/rpm/signing.html
   package 'rpm-sign' if node['platform_version'].satisfies?('>= 7')
+  # EL 6 and later consider glibc-static optional: https://access.redhat.com/solutions/33868
+  # The libhugetlbfs build (analytics) requires it.
+  package 'glibc-static' if node['platform_version'].satisfies?('>= 6')
 
   # This script makes unattended rpm signing possible!
   cookbook_file ::File.join(build_user_home, 'sign-rpm') do
