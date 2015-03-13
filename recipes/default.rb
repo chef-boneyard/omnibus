@@ -20,6 +20,11 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
+# solaris is a little different, we need to build some toolchains from source
+if node['platform_family'] == 'solaris2'
+  include_recipe 'omnibus::_solaris_build'
+end
+
 # Include other recipes. Note: they may not be executed in this order, since
 # private recipes may depend on each other.
 include_recipe 'omnibus::_bash'

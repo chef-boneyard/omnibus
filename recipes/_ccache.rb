@@ -21,6 +21,7 @@
 include_recipe 'omnibus::_common'
 
 return if windows?
+return if solaris2?
 
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_compile'
