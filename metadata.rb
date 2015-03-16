@@ -14,6 +14,7 @@ supports 'mac_os_x'
 supports 'suse'
 supports 'ubuntu'
 supports 'windows'
+supports 'solaris2'
 
 depends '7-zip',           '~> 1.0'
 depends 'build-essential', '~> 2.0'
