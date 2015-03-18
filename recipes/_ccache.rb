@@ -21,6 +21,8 @@
 include_recipe 'omnibus::_common'
 
 return if windows?
+# Not used on Sol 10 - causes issues with GCC
+return if solaris_10?
 
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_compile'

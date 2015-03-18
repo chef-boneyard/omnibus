@@ -21,6 +21,8 @@
 include_recipe 'omnibus::_common'
 
 return if windows?
+# Provided by the omnibus-build-essential project on Sol 10
+return if solaris_10?
 
 include_recipe 'omnibus::_compile'
 

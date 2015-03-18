@@ -20,6 +20,9 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
+# Provided by the omnibus-build-essential project on Sol 10
+return if solaris_10?
+
 if windows?
   windows_package 'Git version 1.9.0-preview20140217' do
     source 'https://github.com/msysgit/msysgit/releases/download/Git-1.9.0-preview20140217/Git-1.9.0-preview20140217.exe'
