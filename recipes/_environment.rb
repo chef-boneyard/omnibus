@@ -139,7 +139,6 @@ else
       ###################################################################
       # Load the base Omnibus environment
       ###################################################################
-      export PATH="/usr/local/bin:$PATH"
       export PATH="#{omnibus_env.delete('PATH').join(File::PATH_SEPARATOR)}:$PATH"
       #{omnibus_env.map { |k, v| "export #{k}=#{v.first}" }.join("\n")}
 
