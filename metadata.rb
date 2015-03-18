@@ -18,7 +18,7 @@ supports 'solaris2'
 
 depends '7-zip',           '~> 1.0'
 depends 'build-essential', '~> 2.0'
-depends 'chef-sugar',      '~> 2.0'
+depends 'chef-sugar',      '~> 3.0'
 depends 'homebrew',        '~> 1.9'
 depends 'windows',         '~> 1.30'
 depends 'wix',             '~> 1.1'

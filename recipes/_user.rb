@@ -26,7 +26,7 @@ directory '/export/home' do
   owner 'root'
   group 'root'
   action :create
-  only_if solaris_10?
+  only_if { solaris_10? }
 end
 
 group node['omnibus']['build_user_group'] do
