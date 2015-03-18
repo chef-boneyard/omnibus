@@ -20,6 +20,15 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
+# If this is a fresh solaris 10 system, there will not be an /export/home
+# directory, and useradd doesn't do recursive create with -m
+directory '/export/home' do
+  owner 'root'
+  group 'root'
+  action :create
+  only_if { solaris_10? }
+end
+
 group node['omnibus']['build_user_group'] do
   # The Window's group provider get's cranky if attempting to create a
   # built-in group.

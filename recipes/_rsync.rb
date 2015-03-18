@@ -25,6 +25,8 @@
 include_recipe 'omnibus::_common'
 
 return if windows?
+# Not needed on Sol 10
+return if solaris_10?
 
 include_recipe 'omnibus::_compile'
 

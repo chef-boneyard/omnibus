@@ -20,6 +20,9 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
+# Provided by the omnibus-build-essential project on Sol 10
+return if solaris_10?
+
 unless windows?
   include_recipe 'omnibus::_bash'
   include_recipe 'omnibus::_cacerts'

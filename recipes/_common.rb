@@ -30,7 +30,7 @@ directory Chef::Config[:file_cache_path] do
 end
 
 # If we are on Solaris 11, we need to update some paths to favor the gnu utils
-if solaris? && node['platform_version'].satisfies?('>=  5.11')
+if solaris_11?
   unless ENV['PATH'].include? '/usr/gnu/bin'
     Chef::Log.debug 'Adding /usr/gnu/bin to path'
     ENV['PATH'] = '/usr/gnu/bin:' + ENV['PATH']
