@@ -111,6 +111,7 @@ else
   if solaris_10?
     omnibus_env['PATH'] << '/opt/build-essential/embedded/bin'
     omnibus_env['PATH'] << '/usr/ccs/bin'
+    omnibus_env['PATH'] << '/usr/sfw/bin'
     omnibus_env['PATH'] << '/usr/local/bin'
     # The correct Ruby ships with the build-essential package and will
     # be properly loaded from $PATH.
