@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.0 (2015-03-19)
+--------------------
+# Improvements
+- Install glibc-static on EL6+
+- Updated Solaris 10 build toolchain
+
 v2.5.5 (2015-03-02)
 --------------------
 # Bug fixes
