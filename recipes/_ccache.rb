@@ -29,7 +29,7 @@ include_recipe 'omnibus::_compile'
 
 # Set up ccache, to speed up subsequent compilations.
 remote_install 'ccache' do
-  source 'ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/ccache-3.1.9.tar.gz'
+  source "https://www.samba.org/ftp/ccache/ccache-3.1.9.tar.gz"
   version '3.1.9'
   checksum 'a2270654537e4b736e437975e0cb99871de0975164a509dee34cf91e36eeb447'
   build_command './configure'
