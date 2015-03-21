@@ -116,6 +116,8 @@ else
     # The correct Ruby ships with the build-essential package and will
     # be properly loaded from $PATH.
     load_ruby = ''
+    # Point at our Omnibussed GCC by default
+    omnibus_env['CC'] << '/opt/build-essential/embedded/bin/gcc'
     # Solaris 10 supported make is gmake
     make = 'gmake'
   else
