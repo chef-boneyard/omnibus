@@ -110,9 +110,9 @@ if windows?
 else
   if solaris_10?
     omnibus_env['PATH'] << '/opt/build-essential/embedded/bin'
+    omnibus_env['PATH'] << '/usr/local/bin'
     omnibus_env['PATH'] << '/usr/ccs/bin'
     omnibus_env['PATH'] << '/usr/sfw/bin'
-    omnibus_env['PATH'] << '/usr/local/bin'
     # Point at our Omnibussed GCC by default
     omnibus_env['CC'] << '/opt/build-essential/embedded/bin/gcc'
     # Solaris 10 supported make is gmake
