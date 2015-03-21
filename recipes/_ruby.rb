@@ -46,8 +46,27 @@ unless windows?
   end
 end
 
+build_env = {}
+
+#
+# Taken from the omnibus-software/ruby
+#
+#   https://github.com/chef/omnibus-software/blob/18c8fdaa982d18af73d49fc94bb0d436801c6a4c/config/software/ruby.rb#L75-L83
+#
+if solaris_11?
+  build_env['CC']   =  '/usr/sfw/bin/gcc'
+  build_env['MAKE'] = 'gmake'
+
+  if sparc?
+    build_env['CFLAGS']  = '-O0 -g -pipe -mcpu=v9'
+    build_env['LDFLAGS'] = '-mcpu=v9'
+  end
+end
+
 # Install the version of Ruby we want into /usr/local
-ruby_install node['omnibus']['ruby_version']
+ruby_install node['omnibus']['ruby_version'] do
+  environment build_env
+end
 
 # Install bundler (into the Ruby we just installed)
 ruby_gem 'bundler' do
