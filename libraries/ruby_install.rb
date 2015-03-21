@@ -25,6 +25,7 @@ class Chef
     default_action :install
 
     attribute :version, kind_of: String, name_attribute: true
+    attribute :environment, kind_of: Hash, default: {}
   end
 
   class Provider::RubyInstallUnix < Provider::LWRPBase
@@ -67,6 +68,7 @@ class Chef
 
       execute = Resource::Execute.new("install ruby-#{version}", run_context)
       execute.command(install_command)
+      execute.environment(new_resource.environment)
       execute.run_action(:run)
     end
 
