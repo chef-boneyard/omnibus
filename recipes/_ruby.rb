@@ -47,11 +47,12 @@ unless windows?
 end
 
 build_env = {}
+patches   = []
 
 #
 # Taken from the omnibus-software/ruby
 #
-#   https://github.com/chef/omnibus-software/blob/18c8fdaa982d18af73d49fc94bb0d436801c6a4c/config/software/ruby.rb#L75-L83
+#   https://github.com/chef/omnibus-software/blob/38e8befd5ecd14b7ad32c4bd3118fe4caf79ee92/config/software/ruby.rb
 #
 if solaris_11?
   build_env['CC']   =  '/usr/sfw/bin/gcc'
@@ -61,11 +62,14 @@ if solaris_11?
     build_env['CFLAGS']  = '-O0 -g -pipe -mcpu=v9'
     build_env['LDFLAGS'] = '-mcpu=v9'
   end
+
+  patches << 'https://raw.githubusercontent.com/chef/omnibus-software/38e8befd5ecd14b7ad32c4bd3118fe4caf79ee92/config/patches/ruby/ruby-solaris-linux-socket-compat.patch'
 end
 
 # Install the version of Ruby we want into /usr/local
 ruby_install node['omnibus']['ruby_version'] do
   environment build_env
+  patches     patches
 end
 
 # Install bundler (into the Ruby we just installed)

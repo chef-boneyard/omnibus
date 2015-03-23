@@ -24,8 +24,13 @@ class Chef
     actions :install
     default_action :install
 
-    attribute :version, kind_of: String, name_attribute: true
+    attribute :version,     kind_of: String, name_attribute: true
     attribute :environment, kind_of: Hash, default: {}
+    attribute :patches,     kind_of: Array, default: []
+
+    def patch(patch)
+      @patches << patch
+    end
   end
 
   class Provider::RubyInstallUnix < Provider::LWRPBase
@@ -64,7 +69,13 @@ class Chef
     def install
       # Need to compile the command outside of the execute resource because
       # Ruby is bad at instance_eval
-      install_command = "ruby-install --no-install-deps ruby #{version} -- #{compile_flags}"
+      install_command = 'ruby-install --no-install-deps'
+
+      new_resource.patches.each do |p|
+        install_command << " --patch #{p}"
+      end
+
+      install_command << " ruby #{version} -- #{compile_flags}"
 
       execute = Resource::Execute.new("install ruby-#{version}", run_context)
       execute.command(install_command)
