@@ -110,18 +110,19 @@ if windows?
 else
   if solaris_10?
     omnibus_env['PATH'] << '/opt/build-essential/embedded/bin'
+    omnibus_env['PATH'] << '/usr/local/bin'
     omnibus_env['PATH'] << '/usr/ccs/bin'
     omnibus_env['PATH'] << '/usr/sfw/bin'
-    omnibus_env['PATH'] << '/usr/local/bin'
-    # The correct Ruby ships with the build-essential package and will
-    # be properly loaded from $PATH.
-    load_ruby = ''
+    # Point at our Omnibussed GCC by default
+    omnibus_env['CC'] << '/opt/build-essential/embedded/bin/gcc'
     # Solaris 10 supported make is gmake
-    make = 'gmake'
+    additional_config = <<-EOH.gsub(/^ {6}/, '')
+      alias make='gmake'
+    EOH
   else
     omnibus_env['PATH'] << '/usr/local/bin'
 
-    load_ruby = <<-EOH.gsub(/^ {6}/, '')
+    additional_config = <<-EOH.gsub(/^ {6}/, '')
       # Load chruby
       if ! command -v chruby > /dev/null; then
         source /usr/local/share/chruby/chruby.sh
@@ -130,7 +131,6 @@ else
       # Automatically set the ruby version for the omnibus user
       chruby #{node['omnibus']['ruby_version']}
     EOH
-    make = 'make'
   end
 
   file ::File.join(build_user_home, 'load-omnibus-toolchain.sh') do
@@ -143,7 +143,7 @@ else
       export PATH="#{omnibus_env.delete('PATH').join(File::PATH_SEPARATOR)}:$PATH"
       #{omnibus_env.map { |k, v| "export #{k}=#{v.first}" }.join("\n")}
 
-      #{load_ruby}
+      #{additional_config}
 
       echo ""
       echo "========================================"
@@ -169,7 +169,7 @@ else
       echo "RubyGems.....$(gem --version | head -1)"
       echo "Bundler......$(bundle --version | head -1)"
       echo "GCC..........$(gcc --version | head -1)"
-      echo "Make.........$(#{make} --version | head -1)"
+      echo "Make.........$(make --version | head -1)"
       echo "Bash.........$(bash --version | head -1)"
 
       echo ""

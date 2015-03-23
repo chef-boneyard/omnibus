@@ -50,4 +50,11 @@ if freebsd?
     end
     only_if { File.exist?('/etc/make.conf') }
   end
+elsif solaris_10?
+  # This is ugly but we can't gurantee all tooling will respect the
+  # `MAKE` enviroment variable.
+  link '/usr/local/bin/make' do
+    to '/usr/sfw/bin/gmake'
+    only_if { File.exist?('/usr/sfw/bin/gmake') }
+  end
 end
