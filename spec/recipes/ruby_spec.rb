@@ -56,6 +56,11 @@ describe 'omnibus::_ruby' do
           )
       end
 
+      it 'applies a patch to the Ruby source' do
+        expect(chef_run).to install_ruby_install('2.1.5')
+          .with_patches(%w(https://raw.githubusercontent.com/chef/omnibus-software/38e8befd5ecd14b7ad32c4bd3118fe4caf79ee92/config/patches/ruby/ruby-solaris-linux-socket-compat.patch))
+      end
+
       context 'on SPARC' do
         let(:arch) { 'sun4u' }
 
