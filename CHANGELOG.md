@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.1 (2015-03-23)
+--------------------
+# Improvements
+- Add patch support to `ruby_install` resource
+- Apply patch to Ruby source on Solaris 11 - this allows us to install Ruby 2.1.x.
+
 v2.6.0 (2015-03-19)
 --------------------
 # Improvements
