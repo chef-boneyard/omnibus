@@ -26,6 +26,7 @@ class Chef
 
     attribute :source,            kind_of: String, required: true
     attribute :source_type,       kind_of: String, default: "gzip", :equal_to => ["tar", "gzip", "bz2"]
+    attribute :relative_path,     kind_of: String
     attribute :version,           kind_of: String, required: true
     attribute :checksum,          kind_of: String, required: true
     attribute :patches,           kind_of: Array
@@ -81,7 +82,7 @@ EOH
     def tarball_name
       @tarball_name ||= begin
         if (tarball_extension = new_resource.source.match(/\.tar\.bz2|\.tgz|\.tar\.gz|\.tar$/))
-          @tarball_extension = tarball_extension.to_s
+          @tarball_extension = tarball_extension.to_s[1..-1]
           ::File.basename(new_resource.source, tarball_extension.to_s)
         else
           @tarball_extension = default_extension
@@ -111,7 +112,7 @@ EOH
     end
 
     def extract_path
-      @extract_path ||= ::File.join(Config[:file_cache_path], tarball_name)
+      @extract_path ||= ::File.join(Config[:file_cache_path], new_resource.relative_path || tarball_name)
     end
 
     def download
