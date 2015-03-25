@@ -27,6 +27,7 @@ class Chef
     attribute :source,            kind_of: String, required: true
     attribute :version,           kind_of: String, required: true
     attribute :checksum,          kind_of: String, required: true
+    attribute :patches,           kind_of: Array
     attribute :build_command,     kind_of: String
     attribute :compile_command,   kind_of: String
     attribute :install_command,   kind_of: String, required: true
@@ -59,6 +60,7 @@ EOH
         download
         verify
         extract
+        patch
         build
         compile
         install
@@ -114,6 +116,18 @@ EOH
       execute.command("tar -xzvf #{id}.tar.gz")
       execute.cwd(Config[:file_cache_path])
       execute.run_action(:run)
+    end
+
+    def patch
+      if new_resource.patches && !new_resource.patches.empty?
+        execute = Resource::Execute.new(label('patch'), run_context)
+        patch_cmds = new_resource.patches.map do |patch_file|
+          "patch -p1 < #{patch_file}"
+        end
+        execute.command(patch_cmds.join(' && '))
+        execute.cwd(::File.join(Config[:file_cache_path], id))
+        execute.run_action(:run)
+      end
     end
 
     %w(build compile install).each do |stage|
