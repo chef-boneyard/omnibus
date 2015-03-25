@@ -33,7 +33,11 @@ if debian?
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
-  package 'fakeroot'
+  if node['platform_version'].satisfies?('>= 7') && (node["kernel"]["machine"] == "ppc64le" || node["kernel"]["machine"] == "ppc64")
+    include_recipe 'omnibus::_fakeroot'
+  else
+    package 'fakeroot'
+  end
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'
