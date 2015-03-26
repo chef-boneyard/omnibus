@@ -67,6 +67,21 @@ describe 'omnibus::_git' do
     end
   end
 
+  context 'on Solaris 10' do
+    let(:chef_run) do
+      # Make Solaris 11 look like Solaris 10 as Fauxhai doesn't yet contain
+      # data for the latter.
+      ChefSpec::ServerRunner.new(platform: 'solaris2', version: '5.11') do |node|
+        node.automatic['platform_version'] = '5.10'
+      end.converge(described_recipe)
+    end
+
+    it "properly configures git's cacert" do
+      expect(chef_run).to run_execute('git config --global http.sslCAinfo /opt/build-essential/embedded/ssl/certs/cacert.pem')
+        .with_user('omnibus')
+    end
+  end
+
   context 'on rhel 5' do
     let(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'redhat', version: '5.10')

@@ -52,9 +52,25 @@ file File.join(build_user_home, '.gitconfig') do
 end
 
 # Provided by the omnibus-build-essential project on Sol 10
-return if solaris_10?
+if solaris_10?
 
-if windows?
+  # We need to configure the omnibus-build-essential's embedded git to use
+  # ca bundle that ships in the package. This can most likely be fixed by
+  # a well placed `./configure` option when compiling git. Follow this
+  # issue for more details:
+  #
+  #  https://github.com/chef/omnibus-build-essential/issues/7
+  #
+  execute 'git config --global http.sslCAinfo /opt/build-essential/embedded/ssl/certs/cacert.pem' do
+    environment(
+      'PATH' => '/opt/build-essential/embedded/bin',
+      'HOME' => build_user_home,
+    )
+    user node['omnibus']['build_user']
+  end
+
+  return
+elsif windows?
   windows_package 'Git version 1.9.0-preview20140217' do
     source 'https://github.com/msysgit/msysgit/releases/download/Git-1.9.0-preview20140217/Git-1.9.0-preview20140217.exe'
     checksum '22d2d3f43c8a3eb59820c50da81022e98d4df92c333dffaae1ae88aefbceedfc'
