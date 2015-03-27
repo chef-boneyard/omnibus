@@ -29,6 +29,8 @@ include_recipe 'omnibus::_common'
 
 include_recipe 'omnibus::_compile'
 
+chef_gem "pkg-config"
+
 # libffi.pc is installed at below path and its not default
 # search paths for pkg-config
 ENV['PKG_CONFIG_PATH'] = '/usr/local/lib/pkgconfig/'
@@ -41,5 +43,5 @@ remote_install 'libffi' do
   build_command './configure'
   compile_command "make -j #{node.builders}"
   install_command 'make install'
-  not_if { installed_at_version?('pkg-config', '3.2.1', '--modversion') }
+  not_if {  PKGConfig.check_version?('libffi', 3,2,1) }
 end
