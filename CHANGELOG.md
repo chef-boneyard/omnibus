@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.2 (2015-03-27)
+--------------------
+# Improvements
+- Ensure all platforms have a sane `.gitconfig`
+- Properly set Git’s CA bundle on Solaris 10
+
 v2.6.1 (2015-03-23)
 --------------------
 # Improvements
