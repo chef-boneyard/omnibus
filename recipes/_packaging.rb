@@ -62,3 +62,7 @@ elsif windows?
   omnibus_env['PATH'] << node['wix']['home']
   omnibus_env['PATH'] << node['7-zip']['home']
 end
+
+if node["kernel"]["machine"] == "ppc64le" || node["kernel"]["machine"] == "ppc64"
+  include_recipe 'omnibus::_libffi'
+end
