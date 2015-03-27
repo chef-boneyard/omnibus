@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: _rsync
+# Recipe:: _fakeroot
 #
 # Copyright 2015, Chef Software, Inc.
 #
