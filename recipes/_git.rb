@@ -20,10 +20,57 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-# Provided by the omnibus-build-essential project on Sol 10
-return if solaris_10?
+# Ensure every platform has a sane .gitconfig
+file File.join(build_user_home, '.gitconfig') do
+  owner   node['omnibus']['build_user']
+  group   node['omnibus']['build_user_group']
+  mode    '0644'
+  content <<-EOH.gsub(/^ {4}/, '')
+    # This file is written by Chef for #{node['fqdn']}.
+    # Do NOT modify this file by hand.
 
-if windows?
+    [user]
+      ; Set a sane user name and email. This makes git happy and prevents
+      ; spammy output on each git command.
+      name  = Omnibus
+      email = omnibus@getchef.com
+    [color]
+      ; Since this is a build machine, we do not want colored output.
+      ui = false
+    [core]
+      editor = $EDITOR
+      whitespace = fix
+    [apply]
+      whitespace = fix
+    [push]
+      default = tracking
+    [branch]
+      autosetuprebase = always
+    [pull]
+      rebase = preserve
+  EOH
+end
+
+# Provided by the omnibus-build-essential project on Sol 10
+if solaris_10?
+
+  # We need to configure the omnibus-build-essential's embedded git to use
+  # ca bundle that ships in the package. This can most likely be fixed by
+  # a well placed `./configure` option when compiling git. Follow this
+  # issue for more details:
+  #
+  #  https://github.com/chef/omnibus-build-essential/issues/7
+  #
+  execute 'git config --global http.sslCAinfo /opt/build-essential/embedded/ssl/certs/cacert.pem' do
+    environment(
+      'PATH' => '/opt/build-essential/embedded/bin',
+      'HOME' => build_user_home,
+    )
+    user node['omnibus']['build_user']
+  end
+
+  return
+elsif windows?
   windows_package 'Git version 1.9.0-preview20140217' do
     source 'https://github.com/msysgit/msysgit/releases/download/Git-1.9.0-preview20140217/Git-1.9.0-preview20140217.exe'
     checksum '22d2d3f43c8a3eb59820c50da81022e98d4df92c333dffaae1ae88aefbceedfc'
@@ -99,34 +146,4 @@ else
     not_if { installed_at_version?('git', '1.9.0') }
   end
 
-end
-
-file File.join(build_user_home, '.gitconfig') do
-  owner   node['omnibus']['build_user']
-  group   node['omnibus']['build_user_group']
-  mode    '0644'
-  content <<-EOH.gsub(/^ {4}/, '')
-    # This file is written by Chef for #{node['fqdn']}.
-    # Do NOT modify this file by hand.
-
-    [user]
-      ; Set a sane user name and email. This makes git happy and prevents
-      ; spammy output on each git command.
-      name  = Omnibus
-      email = omnibus@getchef.com
-    [color]
-      ; Since this is a build machine, we do not want colored output.
-      ui = false
-    [core]
-      editor = $EDITOR
-      whitespace = fix
-    [apply]
-      whitespace = fix
-    [push]
-      default = tracking
-    [branch]
-      autosetuprebase = always
-    [pull]
-      rebase = preserve
-  EOH
 end
