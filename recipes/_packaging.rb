@@ -64,4 +64,3 @@ elsif windows?
 end
 
 include_recipe 'omnibus::_libffi' if ppc64? || ppc64le?
-
