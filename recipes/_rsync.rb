@@ -30,7 +30,7 @@ return if solaris_10?
 
 include_recipe 'omnibus::_compile'
 
-rsync_patch_file = File.expand_path("../../files/default/rsync.3.1.0.config.patch", __FILE__)
+rsync_patch_file = File.expand_path('../../files/default/rsync.3.1.0.config.patch', __FILE__)
 
 remote_install 'rsync' do
   source 'ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/rsync-3.1.0.tar.gz'
