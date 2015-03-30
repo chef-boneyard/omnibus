@@ -107,13 +107,11 @@ describe 'environment' do
     File.join('.bashrc.d', 'omnibus-path.sh'),
     File.join('.bashrc.d', 'chruby-default.sh'),
   ].each do |dot_file|
-
     describe file(File.join(home_dir, dot_file)) do
       it { should be_file }
       # it { should be_owned_by 'omnibus' }
       # it { should be_grouped_into 'omnibus' }
     end
-
   end
 
   describe file(File.join(home_dir, 'sign-rpm')), if: os[:family] == 'redhat' do

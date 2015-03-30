@@ -35,7 +35,7 @@ remote_install 'chruby' do
   install_command "make -j #{node.builders} install"
   not_if do
     File.exist?('/usr/local/share/chruby/chruby.sh') &&
-    File.read('/usr/local/share/chruby/chruby.sh').include?('CHRUBY_VERSION="0.3.8"')
+      File.read('/usr/local/share/chruby/chruby.sh').include?('CHRUBY_VERSION="0.3.8"')
   end
 end
 
