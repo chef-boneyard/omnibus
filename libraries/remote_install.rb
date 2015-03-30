@@ -25,7 +25,7 @@ class Chef
     default_action :install
 
     attribute :source,            kind_of: String, required: true
-    attribute :source_type,       kind_of: String, default: "gzip", :equal_to => ["tar", "gzip", "bz2"]
+    attribute :source_type,       kind_of: String, default: 'gzip', :equal_to => %w(tar, gzip, bz2)
     attribute :relative_path,     kind_of: String
     attribute :version,           kind_of: String, required: true
     attribute :checksum,          kind_of: String, required: true
@@ -94,11 +94,11 @@ EOH
     def default_extension
       case new_resource.source_type
       when 'tar'
-        "tar"
+        'tar'
       when 'gzip'
-        "tar.gz"
+        'tar.gz'
       when 'bz2'
-        "tar.bz2"
+        'tar.bz2'
       end
     end
 
@@ -134,11 +134,11 @@ EOH
     def extract_command
       case new_resource.source_type
       when 'tar'
-        "tar -xvf"
+        'tar -xvf'
       when 'gzip'
-        "tar -zxvf"
+        'tar -zxvf'
       when 'bz2'
-        "tar -jxvf"
+        'tar -jxvf'
       end
     end
 
