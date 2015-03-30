@@ -43,7 +43,7 @@ module Omnibus
     end
 
     def omnibus_env
-      node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] }
+      node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
     end
   end
 end
