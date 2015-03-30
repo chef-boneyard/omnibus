@@ -25,7 +25,7 @@ class Chef
     default_action :install
 
     attribute :source,            kind_of: String, required: true
-    attribute :source_type,       kind_of: String, default: 'gzip', :equal_to => %w(tar, gzip, bz2)
+    attribute :source_type,       kind_of: String, default: 'gzip', equal_to: %w(tar, gzip, bz2)
     attribute :relative_path,     kind_of: String
     attribute :version,           kind_of: String, required: true
     attribute :checksum,          kind_of: String, required: true
@@ -150,15 +150,14 @@ EOH
     end
 
     def patch
-      if new_resource.patches && !new_resource.patches.empty?
-        execute = Resource::Execute.new(label('patch'), run_context)
-        patch_cmds = new_resource.patches.map do |patch_file|
-          "patch -p1 < #{patch_file}"
-        end
-        execute.command(patch_cmds.join(' && '))
-        execute.cwd(::File.join(Config[:file_cache_path], id))
-        execute.run_action(:run)
+      return if new_resource.patches.nil? || new_resource.patches.empty?
+      execute = Resource::Execute.new(label('patch'), run_context)
+      patch_cmds = new_resource.patches.map do |patch_file|
+        "patch -p1 < #{patch_file}"
       end
+      execute.command(patch_cmds.join(' && '))
+      execute.cwd(::File.join(Config[:file_cache_path], id))
+      execute.run_action(:run)
     end
 
     %w(build compile install).each do |stage|

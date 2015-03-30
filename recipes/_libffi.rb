@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-
 # We need libffi 3.2.1 on ppc64/ppc64le systems in order
 # for ruby ffi gem to get installed. Someday when ruby ffi
 # updates embedded libffi 3.2.1 and fixes its extension
@@ -46,6 +45,6 @@ remote_install 'libffi' do
   build_command './configure'
   compile_command "make -j #{node.builders}"
   install_command 'make install'
-  not_if {  ::PKGConfig.check_version?('libffi', 3, 2, 1) }
+  not_if { ::PKGConfig.check_version?('libffi', 3, 2, 1) }
 end
 
