@@ -34,13 +34,15 @@ require 'pkg-config'
 
 # libffi.pc is installed at below path and its not default
 # search paths for pkg-config
-ENV['PKG_CONFIG_PATH'] = '/usr/local/lib/pkgconfig/'
+build_env = {}
+build_env['PKG_CONFIG_PATH'] = '/usr/local/lib/pkgconfig/'
 
 remote_install 'libffi' do
   # source code is maintained on debian ftp
   source 'ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz'
   version '3.2.1'
   checksum 'd06ebb8e1d9a22d19e38d63fdb83954253f39bedc5d46232a05645685722ca37'
+  environment build_env
   build_command './configure'
   compile_command "make -j #{node.builders}"
   install_command 'make install'
