@@ -168,7 +168,7 @@ class Chef
       ruby_installer.backup(false)
       ruby_installer.run_action(:create)
 
-      install_command = %Q|#{installer_download_path} /verysilent /dir="#{ruby_install_path}" /tasks="assocfiles"|
+      install_command = %(#{installer_download_path} /verysilent /dir="#{ruby_install_path}" /tasks="assocfiles")
 
       execute = Resource::Execute.new("install ruby-#{version}", run_context)
       execute.command(install_command)
@@ -189,7 +189,7 @@ class Chef
       config_yml.content([ruby_install_path].to_yaml)
       config_yml.run_action(:create)
 
-      install_command = %Q|#{devkit_download_path} -y -o"#{ruby_install_path}" & "#{ruby_bin}" dk.rb install|
+      install_command = %(#{devkit_download_path} -y -o"#{ruby_install_path}" & "#{ruby_bin}" dk.rb install)
 
       execute = Resource::Execute.new("install devkit for ruby-#{version}", run_context)
       execute.command(install_command)

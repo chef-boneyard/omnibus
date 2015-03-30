@@ -31,7 +31,7 @@ describe 'omnibus::_ruby' do
     context 'on rhel' do
       let(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'redhat', version: '7.0')
-        .converge(described_recipe)
+          .converge(described_recipe)
       end
 
       it 'installs bzip2' do

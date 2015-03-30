@@ -1,11 +1,10 @@
 AllCops:
   Exclude:
-    - 'bin/**/*'
-    - 'script/**/*'
+    - 'files/**/*'
     - 'vendor/**/*'
 
-BarePercentLiterals:
-  Enabled: false
+AbcSize:
+  Max: 50
 ClassAndModuleChildren:
   Enabled: false
 ClassLength:
@@ -16,14 +15,13 @@ Documentation:
   Enabled: false
 Encoding:
   Enabled: false
-FileName:
-  Exclude:
-    - files/**/*
 LineLength:
   Enabled: false
 MethodLength:
   Enabled: false
-PercentLiteralDelimiters:
+PerceivedComplexity:
+  Max: 10
+RaiseArgs:
   Enabled: false
 SignalException:
   Enabled: false
