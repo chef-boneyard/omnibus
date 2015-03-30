@@ -33,7 +33,7 @@ if debian?
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
-  if node['platform_version'].satisfies?('>= 7') && (node["kernel"]["machine"] == "ppc64le" || node["kernel"]["machine"] == "ppc64")
+  if node['platform_version'].satisfies?('>= 7') && (ppc64? || ppc64le?)
     include_recipe 'omnibus::_fakeroot'
   else
     package 'fakeroot'
@@ -63,6 +63,7 @@ elsif windows?
   omnibus_env['PATH'] << node['7-zip']['home']
 end
 
-if node["kernel"]["machine"] == "ppc64le" || node["kernel"]["machine"] == "ppc64"
+if ppc64? || ppc64le?
   include_recipe 'omnibus::_libffi'
 end
+
