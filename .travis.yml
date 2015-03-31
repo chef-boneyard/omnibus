@@ -1,10 +1,11 @@
 # Use Travis's cointainer based infrastructure
 sudo: false
 addons:
-  apt_sources:
-    - chef-stable-precise
-  apt_packages:
-    - chefdk
+  apt:
+    sources:
+      - chef-stable-precise
+    packages:
+      - chefdk
 
 branches:
   only:
