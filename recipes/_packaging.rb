@@ -33,7 +33,11 @@ if debian?
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
-  package 'fakeroot'
+  if node['platform_version'].satisfies?('>= 7') && (ppc64? || ppc64le?)
+    include_recipe 'omnibus::_fakeroot'
+  else
+    package 'fakeroot'
+  end
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'
@@ -58,3 +62,5 @@ elsif windows?
   omnibus_env['PATH'] << node['wix']['home']
   omnibus_env['PATH'] << node['7-zip']['home']
 end
+
+include_recipe 'omnibus::_libffi' if ppc64? || ppc64le?

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: omnibus
-# Recipe:: _rsync
+# Recipe:: _fakeroot
 #
-# Copyright 2014, Chef Software, Inc.
+# Copyright 2015, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,34 +17,22 @@
 # limitations under the License.
 #
 
-#
-# TODO: Remove in Omnibus 4 and encourage the use of the +sync+ command instead!
-#
-
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-return if windows?
-# Not needed on Sol 10
-return if solaris_10?
-
 include_recipe 'omnibus::_compile'
 
-rsync_patch_file = File.expand_path('../../files/default/rsync.3.1.0.config.patch', __FILE__)
+package 'libcap-devel' # required to build fakeroot
 
-remote_install 'rsync' do
-  source 'ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/rsync-3.1.0.tar.gz'
-  version '3.1.0'
-  checksum '81ca23f77fc9b957eb9845a6024f41af0ff0c619b7f38576887c63fa38e2394e'
-  patches [rsync_patch_file] if ppc64le?
+remote_install 'fakeroot' do
+  # source code is maintained on debian ftp
+  source 'ftp://ftp.debian.org/debian/pool/main/f/fakeroot/fakeroot_1.20.2.orig.tar.bz2'
+  source_type 'bz2'
+  relative_path 'fakeroot-1.20.2'
+  version '1.20.2'
+  checksum '7c0a164d19db3efa9e802e0fc7cdfeff70ec6d26cdbdc4338c9c2823c5ea230c'
   build_command './configure'
   compile_command "make -j #{node.builders}"
   install_command 'make install'
-  not_if { installed_at_version?('/usr/local/bin/rsync', '3.1.0') }
-end
-
-# Link /bin/rsync to our rsync, since some systems have their own rsync, but we
-# will force our will on them!
-link '/bin/rsync' do
-  to '/usr/local/bin/rsync'
+  not_if { installed_at_version?('/usr/bin/fakeroot', '1.20.2') }
 end
