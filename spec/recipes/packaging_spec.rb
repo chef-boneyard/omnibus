@@ -10,11 +10,9 @@ describe 'omnibus::_packaging' do
     end
 
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('devscripts')
-      expect(chef_run).to install_package('dpkg-dev')
-      expect(chef_run).to install_package('fakeroot')
-      expect(chef_run).to install_package('ncurses-dev')
-      expect(chef_run).to install_package('zlib1g-dev')
+      %w(devscripts dpkg-dev fakeroot ncurses-dev zlib1g-dev).each do |pkg|
+        expect(chef_run).to install_package(pkg)
+      end
     end
   end
 
@@ -29,12 +27,11 @@ describe 'omnibus::_packaging' do
     end
   end
 
-  shared_examples 'installs common packages on rhel' do
+  shared_examples 'on rhel' do
     it 'installs the correct development packages' do
-      expect(chef_run).to install_package('fakeroot')
-      expect(chef_run).to install_package('rpm-build')
-      expect(chef_run).to install_package('ncurses-devel')
-      expect(chef_run).to install_package('zlib-devel')
+      %w(fakeroot rpm-build ncurses-devel zlib-devel).each do |pkg|
+        expect(chef_run).to install_package(pkg)
+      end
     end
   end
 
@@ -44,7 +41,7 @@ describe 'omnibus::_packaging' do
         .converge(described_recipe)
     end
 
-    it_behaves_like 'installs common packages on rhel'
+    it_behaves_like 'on rhel'
 
     it 'should not enable epel' do
       expect(chef_run).to_not include_recipe('yum-epel')
@@ -55,13 +52,13 @@ describe 'omnibus::_packaging' do
     end
   end
 
-  context 'on rhel 7.1' do
+  context 'on rhel 7.0' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'redhat', version: '7.1')
+      ChefSpec::ServerRunner.new(platform: 'redhat', version: '7.0')
         .converge(described_recipe)
     end
 
-    it_behaves_like 'installs common packages on rhel'
+    it_behaves_like 'on rhel'
 
     it 'should enable epel' do
       expect(chef_run).to include_recipe('yum-epel')
