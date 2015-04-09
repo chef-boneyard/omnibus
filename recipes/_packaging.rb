@@ -45,7 +45,7 @@ elsif rhel?
   package 'rpm-sign' if node['platform_version'].satisfies?('>= 7')
   # EL 6 and later consider glibc-static optional: https://access.redhat.com/solutions/33868
   # The libhugetlbfs build (analytics) requires it.
-  package 'glibc-static' if node['platform_version'].satisfies?('>= 6')
+  package 'glibc-static' if node['platform_version'].satisfies?('>= 6', '<= 7')
 
   # This script makes unattended rpm signing possible!
   cookbook_file ::File.join(build_user_home, 'sign-rpm') do
