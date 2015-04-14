@@ -10,7 +10,6 @@
 .kitchen.local.yml
 .rspec
 Berksfile.lock
-Gemfile.lock
 
 .bundle/
 .cache/
