@@ -20,8 +20,9 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-# Provided by the omnibus-build-essential project on Sol 10
-return if solaris_10?
+# Provided by the omnibus-toolchain package
+return if omnibus_toolchain_enabled?
+
 #
 # This recipe is used to install the platform-specific development headers for
 # working with openssl.
