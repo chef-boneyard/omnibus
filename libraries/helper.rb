@@ -45,6 +45,11 @@ module Omnibus
     def omnibus_env
       node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
     end
+
+    def omnibus_toolchain_enabled?
+      # Currenlty we only build the Omnibus Toolchain for Solaris 10
+      solaris_10?
+    end
   end
 end
 
