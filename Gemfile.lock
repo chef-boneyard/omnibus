@@ -1,15 +1,4 @@
 GIT
-  remote: git://github.com/test-kitchen/test-kitchen.git
-  revision: 30c0ba58fdda7609ae97091ac1ea80939e790e1a
-  specs:
-    test-kitchen (1.4.0.dev)
-      mixlib-shellout (>= 1.2, < 3.0)
-      net-scp (~> 1.1)
-      net-ssh (~> 2.7)
-      safe_yaml (~> 1.0)
-      thor (~> 0.18)
-
-GIT
   remote: git@github.com:scotthain/kitchen-zone.git
   revision: 5e9092e9363cea4051b9bd8528c00c63c2b8e955
   specs:
@@ -70,8 +59,8 @@ GEM
     hitimes (1.2.2)
     httpclient (2.6.0.1)
     json (1.8.2)
-    kitchen-vagrant (0.16.0)
-      test-kitchen (~> 1.0)
+    kitchen-vagrant (0.17.0.rc.1)
+      test-kitchen (~> 1.4.0.rc.1)
     little-plugger (1.1.3)
     logging (1.8.2)
       little-plugger (>= 1.1.3)
@@ -119,6 +108,12 @@ GEM
     solve (1.2.1)
       dep_selector (~> 1.0)
       semverse (~> 1.1)
+    test-kitchen (1.4.0.rc.1)
+      mixlib-shellout (>= 1.2, < 3.0)
+      net-scp (~> 1.1)
+      net-ssh (~> 2.7)
+      safe_yaml (~> 1.0)
+      thor (~> 0.18)
     thor (0.19.1)
     timers (4.0.1)
       hitimes
@@ -145,7 +140,7 @@ PLATFORMS
 
 DEPENDENCIES
   berkshelf (~> 3.0)
-  kitchen-vagrant (~> 0.16)
+  kitchen-vagrant (~> 0.17.0.rc.1)
   kitchen-zone!
-  test-kitchen!
+  test-kitchen (~> 1.4.0.rc.1)
   winrm-transport (~> 1.0)
