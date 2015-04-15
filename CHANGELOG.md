@@ -2,6 +2,16 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.3 (2015-04-15)
+--------------------
+# Improvements
+- Install the omnibus toolchain package if supported
+- Don’t compile tools that ship in the omnibus-toolchain package
+- Update to the latest TK with first-class Windows support!
+- Add Solaris support to the `.kitchen.yml`
+- Use ChefDK for all Travis testing
+- Fix all Rubocop 0.28.0 style errors
+
 v2.6.2 (2015-03-27)
 --------------------
 # Improvements
