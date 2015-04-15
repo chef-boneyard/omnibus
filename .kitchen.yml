@@ -6,7 +6,7 @@ driver:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 12.1.0
+  require_chef_omnibus: 12.0.3
 
 platforms:
   - name: centos-7.0
@@ -33,14 +33,50 @@ platforms:
     run_list: apt::default
   - name: ubuntu-10.04
     run_list: apt::default
-  # The following boxes are shared via VagrantCloud. Until kitchen-vagrant
-  # is updated you'll need to add the box manually:
+  # Talk to the OCIV team if you need access to the Solaris development infra.
+<%
+{
+  'solaris-11-i86pc' => {
+    global_zone_hostname: 'virtsol01.chef.co',
+    master_zone_ip:       '172.31.9.84',
+    test_zone_ip:         '172.31.9.86',
+  },
+  'solaris-10-i86pc' => {
+    global_zone_hostname: 'virtsol02.chef.co',
+    master_zone_ip:       '172.31.9.36',
+    test_zone_ip:         '172.31.9.38',
+  },
+  'solaris-11-sun4v' => {
+    global_zone_hostname: 'virtsol03.chef.co',
+    master_zone_ip:       '172.31.9.60',
+    test_zone_ip:         '172.31.9.62',
+  },
+  'solaris-10-sun4v' => {
+    global_zone_hostname: 'virtsol04.chef.co',
+    master_zone_ip:       '172.31.9.12',
+    test_zone_ip:         '172.31.9.14',
+  },
+}.each_pair do |platform_name, options| %>
+  - name: <%= platform_name %>
+    provisioner:
+      sudo_command: <%= platform_name =~ /solaris-10/ ? '/usr/local/bin/sudo -E' : 'sudo -E' %>
+    verifier:
+      sudo_command: <%= platform_name =~ /solaris-10/ ? '/usr/local/bin/sudo -E' : 'sudo -E' %>
+    driver:
+      name: zone
+      global_zone_hostname: <%= options[:global_zone_hostname] %>
+      global_zone_password: <%= ENV['KITCHEN_ZONE_GLOBAL_ZONE_PASSWORD'] %>
+      master_zone_name: kitchen-master
+      master_zone_ip: <%= options[:master_zone_ip] %>
+      # TODO: Assign ipaddresses automatically
+      test_zone_ip: <%= options[:test_zone_ip] %>
+<% end %>
   #
-  #   vagrant box add chef/windows-8.1-professional
+  # The following (private) boxes are shared via Atlas. Please note this
+  # requires adding your Atlans account to the `Chef` org and will
+  # require a `vagrant login`.
   #
-  # Please note this may require a `vagrant login` if the box is private.
-  #
-  # The following boxes are VMware only also. You can enable VMware Fusion
+  # The Mac OS X boxes are VMware only also. You can enable VMware Fusion
   # as the default provider by copying `.kitchen.local.yml.vmware.example`
   # over to `.kitchen.local.yml`.
   #
@@ -54,21 +90,12 @@ platforms:
     driver:
       box: chef/macosx-10.10 # private
   - name: windows-7-professional
-    provisioner:
-      name: windows_chef_zero
-      require_chef_omnibus: 11.12.4
     driver:
       box: chef/windows-7-professional # private
   - name: windows-8.1-professional
-    provisioner:
-      name: windows_chef_zero
-      require_chef_omnibus: 11.12.4
     driver:
       box: chef/windows-8.1-professional # private
   - name: windows-2008r2-standard
-    provisioner:
-      name: windows_chef_zero
-      require_chef_omnibus: 11.12.4
     driver:
       box: chef/windows-server-2008r2-standard # private
 

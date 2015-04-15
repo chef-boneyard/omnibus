@@ -51,8 +51,8 @@ file File.join(build_user_home, '.gitconfig') do
   EOH
 end
 
-# Provided by the omnibus-build-essential project on Sol 10
-if solaris_10?
+# Provided by the omnibus-toolchain package
+if omnibus_toolchain_enabled?
 
   # We need to configure the omnibus-build-essential's embedded git to use
   # ca bundle that ships in the package. This can most likely be fixed by
@@ -61,9 +61,9 @@ if solaris_10?
   #
   #  https://github.com/chef/omnibus-build-essential/issues/7
   #
-  execute 'git config --global http.sslCAinfo /opt/build-essential/embedded/ssl/certs/cacert.pem' do
+  execute 'git config --global http.sslCAinfo /opt/omnibus-toolchain/embedded/ssl/certs/cacert.pem' do
     environment(
-      'PATH' => '/opt/build-essential/embedded/bin',
+      'PATH' => '/opt/omnibus-toolchain/embedded/bin',
       'HOME' => build_user_home,
     )
     user node['omnibus']['build_user']

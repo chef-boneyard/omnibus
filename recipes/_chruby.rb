@@ -21,8 +21,8 @@
 include_recipe 'omnibus::_common'
 
 return if windows?
-# Not used on Sol 10
-return if solaris_10?
+# chruby is not needed with the omnibus-toolchain package
+return if omnibus_toolchain_enabled?
 
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_compile'

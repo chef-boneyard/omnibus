@@ -108,17 +108,9 @@ if windows?
     group node['omnibus']['build_user_group']
   end
 else
-  if solaris_10?
-    omnibus_env['PATH'] << '/opt/build-essential/embedded/bin'
+  if omnibus_toolchain_enabled?
+    omnibus_env['PATH'] << '/opt/omnibus-toolchain/embedded/bin'
     omnibus_env['PATH'] << '/usr/local/bin'
-    omnibus_env['PATH'] << '/usr/ccs/bin'
-    omnibus_env['PATH'] << '/usr/sfw/bin'
-    # Point at our Omnibussed GCC by default
-    omnibus_env['CC'] << '/opt/build-essential/embedded/bin/gcc'
-    # Solaris 10 supported make is gmake
-    additional_config = <<-EOH.gsub(/^ {6}/, '')
-      alias make='gmake'
-    EOH
   else
     omnibus_env['PATH'] << '/usr/local/bin'
 
@@ -131,6 +123,11 @@ else
       # Automatically set the ruby version for the omnibus user
       chruby #{node['omnibus']['ruby_version']}
     EOH
+  end
+
+  if solaris_10?
+    omnibus_env['PATH'] << '/usr/sfw/bin'
+    omnibus_env['PATH'] << '/usr/ccs/bin'
   end
 
   file ::File.join(build_user_home, 'load-omnibus-toolchain.sh') do

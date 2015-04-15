@@ -7,6 +7,9 @@ addons:
     packages:
       - chefdk
 
+# Don't `bundle install`
+install: echo "skip bundle install"
+
 branches:
   only:
     - master
