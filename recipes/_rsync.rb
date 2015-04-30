@@ -30,13 +30,10 @@ return if omnibus_toolchain_enabled?
 
 include_recipe 'omnibus::_compile'
 
-rsync_patch_file = File.expand_path('../../files/default/rsync.3.1.0.config.patch', __FILE__)
-
 remote_install 'rsync' do
   source 'ftp://ftp.netbsd.org/pub/pkgsrc/distfiles/rsync-3.1.0.tar.gz'
   version '3.1.0'
   checksum '81ca23f77fc9b957eb9845a6024f41af0ff0c619b7f38576887c63fa38e2394e'
-  patches [rsync_patch_file] if ppc64le?
   build_command './configure'
   compile_command "make -j #{node.builders}"
   install_command 'make install'
