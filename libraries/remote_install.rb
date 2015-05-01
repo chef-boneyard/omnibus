@@ -25,8 +25,6 @@ class Chef
     default_action :install
 
     attribute :source,            kind_of: String, required: true
-    attribute :source_type,       kind_of: String, default: 'gzip', equal_to: %w(tar gzip bz2)
-    attribute :relative_path,     kind_of: String
     attribute :version,           kind_of: String, required: true
     attribute :checksum,          kind_of: String, required: true
     attribute :build_command,     kind_of: String
@@ -77,40 +75,22 @@ EOH
       @label ||= "#{name}[#{id}]"
     end
 
-    def tarball_name
-      @tarball_name ||= begin
+    def tarball_extension
+      @tarball_extension ||= begin
         if (tarball_extension = new_resource.source.match(/\.tar\.bz2|\.tgz|\.tar\.gz|\.tar$/))
-          @tarball_extension = tarball_extension.to_s[1..-1]
-          ::File.basename(new_resource.source, tarball_extension.to_s)
+          tarball_extension.to_s
         else
-          @tarball_extension = default_extension
-          id
+          '.tar.gz'
         end
       end
     end
 
-    def default_extension
-      case new_resource.source_type
-      when 'tar'
-        'tar'
-      when 'gzip'
-        'tar.gz'
-      when 'bz2'
-        'tar.bz2'
-      end
-    end
-
-    def tarball_extension
-      tarball_name
-      @tarball_extension
-    end
-
     def cache_path
-      @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}.#{tarball_extension}")
+      @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}#{tarball_extension}")
     end
 
     def extract_path
-      @extract_path ||= ::File.join(Config[:file_cache_path], new_resource.relative_path || tarball_name)
+      @extract_path ||= ::File.join(Config[:file_cache_path], id)
     end
 
     def download
@@ -129,20 +109,13 @@ EOH
       raise ChecksumVerificationFailure.new(new_resource, checksum) unless new_resource.checksum == checksum
     end
 
-    def extract_command
-      case new_resource.source_type
-      when 'tar'
-        'tar -xvf'
-      when 'gzip'
-        'tar -zxvf'
-      when 'bz2'
-        'tar -jxvf'
-      end
-    end
-
     def extract
+      extract_command = 'tar -xv'
+      extract_command << 'z' if new_resource.source =~ /\.gz/
+      extract_command << 'j' if new_resource.source =~ /\.bz2/
+
       execute = Resource::Execute.new(label('extract'), run_context)
-      execute.command("#{extract_command} #{cache_path}")
+      execute.command("#{extract_command} -f #{cache_path}")
       execute.cwd(Config[:file_cache_path])
       execute.run_action(:run)
     end

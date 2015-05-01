@@ -27,7 +27,6 @@ package 'libcap-devel' # required to build fakeroot
 remote_install 'fakeroot' do
   # source code is maintained on debian ftp
   source 'ftp://ftp.debian.org/debian/pool/main/f/fakeroot/fakeroot_1.20.2.orig.tar.bz2'
-  source_type 'bz2'
   relative_path 'fakeroot-1.20.2'
   version '1.20.2'
   checksum '7c0a164d19db3efa9e802e0fc7cdfeff70ec6d26cdbdc4338c9c2823c5ea230c'
