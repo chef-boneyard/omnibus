@@ -75,22 +75,22 @@ EOH
       @label ||= "#{name}[#{id}]"
     end
 
-    def tarball_name
-      @tarball_name ||= begin
-        if (tarball_extension = new_resource.source.match(/\.tgz|\.tar\.gz$/))
-          ::File.basename(new_resource.source, tarball_extension.to_s)
+    def tarball_extension
+      @tarball_extension ||= begin
+        if (tarball_extension = new_resource.source.match(/\.tar\.bz2|\.tgz|\.tar\.gz|\.tar$/))
+          tarball_extension.to_s
         else
-          id
+          '.tar.gz'
         end
       end
     end
 
     def cache_path
-      @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}.tar.gz")
+      @cache_path ||= ::File.join(Config[:file_cache_path], "#{id}#{tarball_extension}")
     end
 
     def extract_path
-      @extract_path ||= ::File.join(Config[:file_cache_path], tarball_name)
+      @extract_path ||= ::File.join(Config[:file_cache_path], id)
     end
 
     def download
@@ -110,8 +110,12 @@ EOH
     end
 
     def extract
+      extract_command = 'tar -xv'
+      extract_command << 'z' if new_resource.source =~ /\.gz/
+      extract_command << 'j' if new_resource.source =~ /\.bz2/
+
       execute = Resource::Execute.new(label('extract'), run_context)
-      execute.command("tar -xzvf #{id}.tar.gz")
+      execute.command("#{extract_command} -f #{cache_path}")
       execute.cwd(Config[:file_cache_path])
       execute.run_action(:run)
     end
