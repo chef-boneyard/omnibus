@@ -36,13 +36,13 @@ include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_ruby'
 include_recipe 'omnibus::_git'
 include_recipe 'omnibus::_github'
+include_recipe 'omnibus::_libffi'
 include_recipe 'omnibus::_openssl'
 include_recipe 'omnibus::_packaging'
-include_recipe 'omnibus::_rsync' unless ppc64? || ppc64le?
+include_recipe 'omnibus::_rsync'
 include_recipe 'omnibus::_selinux'
 include_recipe 'omnibus::_xml'
 include_recipe 'omnibus::_yaml'
-include_recipe 'omnibus::_libffi' if ppc64? || ppc64le?
 
 # Create environment loading scripts last
 include_recipe 'omnibus::_environment'

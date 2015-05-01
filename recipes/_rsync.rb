@@ -25,6 +25,7 @@
 include_recipe 'omnibus::_common'
 
 return if windows?
+return if ppc64? || ppc64le?
 # Provided by the omnibus-toolchain package
 return if omnibus_toolchain_enabled?
 
