@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.4 (2015-05-01)
+--------------------
+# Improvements
+- Updates to support RHEL/Ubuntu ppc64/le
+
 v2.6.3 (2015-04-15)
 --------------------
 # Improvements
