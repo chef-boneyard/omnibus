@@ -38,3 +38,5 @@ notifications:
       - secure: Hh+4hhTO67a1+TOxlq1x6WtKWSx7c47YFuQWtCNEEk8u0ouwqVfKqxoc7FtPIJbZDNH0UqQCMXBq4t86a+JLtrP47Lk8z1L1ohnxb+vlqdNRRo2z0Z27/ji3J/VEmE4fCJ5r5/nJVVkjv5lHklQCHHr29ZJKuGZbRvVv6AkVMWc=
       # Release Engineering
       - secure: nMkt6FPinXoxHIZruEqbL3NHexhrP1ih9yKYDKiX4+koQkF9vAUmnuzYXO90XHhIQqOdgsS6WpES/rtoeDevH122YDnZr5oenJcjgDZZQ6+6J+J1refTdkTwp/bC5NkquY8e1ACO98PUdM32CYIdtD5g+M4MODcdr/3SjL+1QlU=
+      # Omnibus
+      - secure: mPj4uN1Px0X5P8VbLWNkilqkKzVjMAL8+mIR8UPxENTqGHxVCqwR6qM1G54MTWG/v8t11OyP5sUF+mItA41YnP2htjvDBhZHMlBMD1lvPc8OSZzs0uir718EN9+CgvK7GeaucuubO6TA3i29j9oEvruaGPSdQ58A8IaaCN6KT0E=
