@@ -145,7 +145,7 @@ class Chef
     end
 
     def cacerts_url
-      'http://curl.haxx.se/ca/cacert.pem'
+      'https://opscode-omnibus-cache.s3.amazonaws.com/cacerts-2014.08.20-c9f4f7f4d6a5ef6633e893577a09865e'
     end
 
     def cacerts_download_path
