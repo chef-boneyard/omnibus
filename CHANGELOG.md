@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.5 (2015-06-01)
+--------------------
+# Improvements
+- [ruby-windows] install a cacerts bundle that works with the S3 root cert
+
 v2.6.4 (2015-05-01)
 --------------------
 # Improvements
