@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.7 (2015-06-03)
+--------------------
+# Bug fixes
+- Update Perl path in FreeBSD git configure args
+
 v2.6.6 (2015-06-03)
 --------------------
 # Bug fixes
