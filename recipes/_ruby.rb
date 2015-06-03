@@ -74,7 +74,8 @@ end
 
 # Install bundler (into the Ruby we just installed)
 ruby_gem 'bundler' do
-  ruby node['omnibus']['ruby_version']
+  ruby    node['omnibus']['ruby_version']
+  version '1.9.9'
 end
 
 if windows?
