@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.6 (2015-06-03)
+--------------------
+# Bug fixes
+- Install a known working version of Bundler
+
 v2.6.5 (2015-06-01)
 --------------------
 # Improvements
