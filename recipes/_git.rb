@@ -114,7 +114,8 @@ else
     configure_args << ' --enable-pthreads=-pthread' \
                       ' ac_cv_header_libcharset_h=no' \
                       ' --with-curl=/usr/local' \
-                      ' --with-expat=/usr/local'
+                      ' --with-expat=/usr/local' \
+                      ' --with-perl=/usr/local/bin/perl'
   elsif mac_os_x?
     package 'curl'
     package 'expat'
