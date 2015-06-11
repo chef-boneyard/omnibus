@@ -16,11 +16,11 @@
 #
 
 default['omnibus'].tap do |omnibus|
-  omnibus['build_user']      = 'omnibus'
-  omnibus['build_user_home'] = nil
-  omnibus['ruby_version']    = '2.1.5'
-  omnibus['toolchain_name'] = 'omnibus-toolchain'
-  omnibus['toolchain_version'] = '0.0.1'
+  omnibus['build_user']         = 'omnibus'
+  omnibus['build_user_home']    = nil
+  omnibus['ruby_version']       = '2.1.5'
+  omnibus['toolchain_name']     = 'omnibus-toolchain'
+  omnibus['toolchain_version']  = '0.0.1'
 
   if platform_family == 'windows'
     omnibus['build_user_group']  = 'Administrators'
