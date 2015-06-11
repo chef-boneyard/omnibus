@@ -109,7 +109,7 @@ if windows?
   end
 else
   if omnibus_toolchain_enabled?
-    omnibus_env['PATH'] << '/opt/omnibus-toolchain/embedded/bin'
+    omnibus_env['PATH'] << '/opt/#{node['omnibus']['toolchain_package']}/embedded/bin'
     omnibus_env['PATH'] << '/usr/local/bin'
   else
     omnibus_env['PATH'] << '/usr/local/bin'
