@@ -77,7 +77,7 @@ describe 'omnibus::_git' do
     end
 
     it "properly configures git's cacert" do
-      expect(chef_run).to run_execute("git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_package']}/embedded/ssl/certs/cacert.pem")
+      expect(chef_run).to run_execute("git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem")
         .with_user('omnibus')
     end
   end
