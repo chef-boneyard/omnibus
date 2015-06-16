@@ -39,7 +39,7 @@ end
 # On windows alter the security policy to allow poor passwords
 #
 if windows?
-  fix_pw_file = "c:\\users\\vagrant\\fixpwpol.cmd"
+  fix_pw_file = 'c:\users\vagrant\fixpwpol.cmd'
 
   file fix_pw_file do
     action :create
@@ -51,7 +51,7 @@ signature="$CHICAGO$"
 EOC
   end
 
-  execute "FixSecurityPolicy" do
+  execute 'FixSecurityPolicy' do
     command "secedit /configure /db C:\\Windows\\security\\new.sdb /cfg #{fix_pw_file} /areas SECURITYPOLICY"
   end
 end
