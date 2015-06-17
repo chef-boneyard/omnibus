@@ -61,4 +61,6 @@ elsif windows?
 
   omnibus_env['PATH'] << node['wix']['home']
   omnibus_env['PATH'] << node['7-zip']['home']
+  # This works around 7-zip apparently not respecting its install dir, and installing to Program Files instead.
+  omnibus_env['PATH'] << windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Program Files', '7-zip')
 end
