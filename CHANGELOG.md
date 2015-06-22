@@ -2,6 +2,15 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.8 (2015-06-22)
+--------------------
+# Bug fixes
+- Install glibc-static on non-Power platforms running el-6 or higher
+
+# Improvements
+- Add path for 7-zip
+- Added logic for installing variants of the omnibus toolchain
+
 v2.6.7 (2015-06-03)
 --------------------
 # Bug fixes
