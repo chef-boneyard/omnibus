@@ -61,9 +61,9 @@ if omnibus_toolchain_enabled?
   #
   #  https://github.com/chef/omnibus-build-essential/issues/7
   #
-  execute 'git config --global http.sslCAinfo /opt/omnibus-toolchain/embedded/ssl/certs/cacert.pem' do
+  execute "git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
     environment(
-      'PATH' => '/opt/omnibus-toolchain/embedded/bin',
+      'PATH' => "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin",
       'HOME' => build_user_home,
     )
     user node['omnibus']['build_user']

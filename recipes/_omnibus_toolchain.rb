@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+# These are sort of 'global' variables, independent of platform
+toolchain_name = node['omnibus']['toolchain_name']
+toolchain_version = node['omnibus']['toolchain_version']
+
 if solaris_10?
   # create a nocheck file for automated install
   file '/var/sadm/install/admin/auto-install' do
@@ -39,10 +43,10 @@ if solaris_10?
 
   case node['kernel']['machine']
   when 'i86pc'
-    package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{node['omnibus']['toolchain_package']}-0.0.1-1.i86pc.solaris"
+    package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.i86pc.solaris"
     package_checksum = 'eed0d5cc82c76dffd0052899a85ec96e3dc6915bdabc8d7c5c209028155744ea'
   when 'sun4v', 'sun4u'
-    package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{node['omnibus']['toolchain_package']}-0.0.1-1.sun4v.solaris"
+    package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
     package_checksum = '3e4c676c1b3ba63b937ab37c04a1dba73c01ae27a0f60cf037d585dc5c329533'
   end
 
@@ -53,7 +57,7 @@ if solaris_10?
     checksum package_checksum
   end
 
-  package "#{node['omnibus']['toolchain_package']}" do
+  package "#{node['omnibus']['toolchain_name']}" do
     source "#{Chef::Config[:file_cache_path]}/#{package_name}"
     options '-a auto-install'
   end
