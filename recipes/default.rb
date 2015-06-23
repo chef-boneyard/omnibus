@@ -43,7 +43,6 @@ include_recipe 'omnibus::_rsync'
 include_recipe 'omnibus::_selinux'
 include_recipe 'omnibus::_xml'
 include_recipe 'omnibus::_yaml'
-include_recipe 'omnibus::_winsdk'
 
 # Create environment loading scripts last
 include_recipe 'omnibus::_environment'
