@@ -48,14 +48,15 @@ if solaris_10?
     package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
   end
 
-  package_name = File.basename(package_url)
+  package_path = File.join(Chef::Config[:file_cache_path], File.basename(package_url))
 
-  remote_file "#{Chef::Config[:file_cache_path]}/#{package_name}" do
+  remote_file package_path do
     source package_url
+    action :create_if_missing
   end
 
-  package "#{node['omnibus']['toolchain_name']}" do
-    source "#{Chef::Config[:file_cache_path]}/#{package_name}"
+  package node['omnibus']['toolchain_name'] do
+    source package_path
     options '-a auto-install'
   end
 end
