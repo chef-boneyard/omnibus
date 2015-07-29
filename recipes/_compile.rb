@@ -23,6 +23,11 @@ include_recipe 'omnibus::_common'
 return if windows?
 
 #
+# This recipe allows for custom yum repos to be specified on EL based platforms
+#
+include_recipe 'omnibus::_yum_repos' if rhel?
+
+#
 # This recipe is used to install additional packages/utilities that are not
 # included by default in the build-essential cookbook. In the long term, this
 # recipe should just "go away" and the build-essential cookbook should become
