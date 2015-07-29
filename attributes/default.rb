@@ -38,5 +38,20 @@ default['omnibus'].tap do |omnibus|
     # hashed using the MD5-based BSD password algorithm 1. The plain text version
     # is 'getonthebus'.
     omnibus['build_user_password'] = '$1$4/uIC5oO$Q/Ggd/DztxWAew8/MKr9j0'
+    #
+    # Allows extra yum repos in the format:
+    # {
+    #   'repo01' => {
+    #     description: 'My Test Repo',
+    #     baseurl: 'http://my-repo-url/el/7/products/x86_64/',
+    #     gpgcheck: true, # optional
+    #     gpgkey: 'http://my-repo-url/RPM-GPG-KEY-my-repo',
+    #   },
+    #   'repo02' => {
+    #     <other repo config>
+    #   }
+    # }
+    #
+    omnibus['yum_repos'] = {} if platform_family == 'rhel'
   end
 end
