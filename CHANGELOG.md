@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.11 (2015-08-19)
+--------------------
+# Improvements
+- Fix all rubocop errors
+
 v2.6.10 (2015-08-19)
 --------------------
 # Bug fixes
