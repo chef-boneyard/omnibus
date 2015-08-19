@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.10 (2015-08-19)
+--------------------
+# Bug fixes
+- Fix fakeroot recipe to remove obsolete resource attributes
+
 v2.6.9 (2015-07-03)
 --------------------
 # Bug fixes
