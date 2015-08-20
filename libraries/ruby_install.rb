@@ -144,10 +144,6 @@ class Chef
       windows_safe_path_join(Chef::Config[:file_cache_path], ::File.basename(devkit_url))
     end
 
-    def cacerts_url
-      'https://opscode-omnibus-cache.s3.amazonaws.com/cacerts-2014.08.20-c9f4f7f4d6a5ef6633e893577a09865e'
-    end
-
     def cacerts_download_path
       windows_safe_path_join(Chef::Config[:file_cache_path], ::File.basename(devkit_url))
     end
@@ -209,9 +205,10 @@ class Chef
       certs_dir.recursive(true)
       certs_dir.run_action(:create)
 
-      cacerts = Resource::RemoteFile.new("install cacerts bundle for ruby-#{version}", run_context)
+      cacerts = Resource::CookbookFile.new("install cacerts bundle for ruby-#{version}", run_context)
       cacerts.path(cacert_file)
-      cacerts.source(cacerts_url)
+      cacerts.source('cacert.pem')
+      cacerts.cookbook('omnibus')
       cacerts.backup(false)
       cacerts.run_action(:create)
     end
