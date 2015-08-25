@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.12 (2015-08-25)
+--------------------
+# Improvements
+- Ship our own version of cacerts
+
 v2.6.11 (2015-08-19)
 --------------------
 # Improvements
