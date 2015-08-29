@@ -33,6 +33,8 @@ if debian?
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
+  # RH Bug 840779, fakeroot package dropped in EL7
+  include_recipe 'yum-epel' if node['platform_version'].satisfies?('>= 7')
   if node['platform_version'].satisfies?('>= 7') && (ppc64? || ppc64le?)
     include_recipe 'omnibus::_fakeroot'
   else
