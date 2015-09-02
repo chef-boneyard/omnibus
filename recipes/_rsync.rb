@@ -43,6 +43,8 @@ end
 
 # Link /bin/rsync to our rsync, since some systems have their own rsync, but we
 # will force our will on them!
-link '/bin/rsync' do
-  to '/usr/local/bin/rsync'
+unless mac_os_x? && node['platform_version'].satisfies?('>= 10.11')
+  link '/bin/rsync' do
+    to '/usr/local/bin/rsync'
+  end
 end
