@@ -36,13 +36,6 @@ remote_install 'bash' do
   not_if { installed_at_version?('/usr/local/bin/bash', '4.3.30') }
 end
 
-# Link /bin/bash to our bash, since some systems have their own bash, but we
-# will force our will on them!
-unless mac_os_x? && node['platform_version'].satisfies?('>= 10.11')
-  link '/bin/bash' do
-    to '/usr/local/bin/bash'
-  end
-end
 #
 # Create an .bashrc.d-style directory for arbitrary loading.
 #

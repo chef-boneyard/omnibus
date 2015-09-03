@@ -40,11 +40,3 @@ remote_install 'rsync' do
   install_command 'make install'
   not_if { installed_at_version?('/usr/local/bin/rsync', '3.1.0') }
 end
-
-# Link /bin/rsync to our rsync, since some systems have their own rsync, but we
-# will force our will on them!
-unless mac_os_x? && node['platform_version'].satisfies?('>= 10.11')
-  link '/bin/rsync' do
-    to '/usr/local/bin/rsync'
-  end
-end
