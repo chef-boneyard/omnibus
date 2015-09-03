@@ -40,11 +40,7 @@ user node['omnibus']['build_user'] do
   supports manage_home: true
   password node['omnibus']['build_user_password']
   unless windows?
-    if mac_os_x? && node['platform_version'].satisfies?('>= 10.11')
-      shell '/usr/local/bin/bash' if mac_os_x? && node['platform_version'].satisfies?('>= 10.11')
-    else
-      shell '/bin/bash'
-    end
+    shell '/usr/local/bin/bash'
     gid   node['omnibus']['build_user_group']
   end
   action   :create

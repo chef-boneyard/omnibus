@@ -18,9 +18,4 @@ describe 'omnibus::_rsync' do
       .with_compile_command('make -j 2')
       .with_install_command('make install')
   end
-
-  it 'links /bin/rsync to our rsync' do
-    expect(chef_run).to create_link('/bin/rsync')
-      .with_to('/usr/local/bin/rsync')
-  end
 end

@@ -19,11 +19,6 @@ describe 'omnibus::_bash' do
       .with_install_command('make install')
   end
 
-  it 'links /bin/bash to our bash' do
-    expect(chef_run).to create_link('/bin/bash')
-      .with_to('/usr/local/bin/bash')
-  end
-
   it 'creates the .bashrc.d' do
     expect(chef_run).to create_directory('/home/omnibus/.bashrc.d')
       .with_owner('omnibus')
