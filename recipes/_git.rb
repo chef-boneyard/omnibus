@@ -120,6 +120,7 @@ else
     package 'curl'
     package 'expat'
     package 'gettext'
+    git_environment['CPPFLAGS'] = '-I/usr/local/opt/openssl/include' if node['platform_version'].satisfies?('>= 10.11')
   elsif rhel?
     package 'curl-devel'
     package 'expat-devel'

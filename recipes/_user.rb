@@ -40,7 +40,7 @@ user node['omnibus']['build_user'] do
   supports manage_home: true
   password node['omnibus']['build_user_password']
   unless windows?
-    shell '/bin/bash'
+    shell '/usr/local/bin/bash'
     gid   node['omnibus']['build_user_group']
   end
   action   :create

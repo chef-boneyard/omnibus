@@ -33,7 +33,7 @@ platforms:
     run_list: apt::default
   - name: ubuntu-10.04
     run_list: apt::default
-  # Talk to the OCIV team if you need access to the Solaris development infra.
+  # Talk to the Engineering Services team if you need access to the Solaris development infra.
 <%
 {
   'solaris-11-i86pc' => {
@@ -73,7 +73,7 @@ platforms:
 <% end %>
   #
   # The following (private) boxes are shared via Atlas. Please note this
-  # requires adding your Atlans account to the `Chef` org and will
+  # requires adding your Atlas account to the `Chef` org and will
   # require a `vagrant login`.
   #
   # The Mac OS X boxes are VMware only also. You can enable VMware Fusion
@@ -89,6 +89,9 @@ platforms:
   - name: macosx-10.10
     driver:
       box: chef/macosx-10.10 # private
+  - name: macosx-10.11
+    driver:
+      box: chef/macosx-10.11 # private
   - name: windows-7-professional
     driver:
       box: chef/windows-7-professional # private
