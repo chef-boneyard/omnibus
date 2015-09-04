@@ -2,6 +2,15 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.6.13 (2015-09-04)
+--------------------
+# Bug fixes
+- `File::ALT_SEPARATOR` can be nil
+
+# Improvements
+- Stop creating symlinks in /usr/bin - We can use load-omnibus-toolchain.sh to set the `PATH` correctly
+- Use bash built by this cookbook for login shell
+
 v2.6.12 (2015-08-25)
 --------------------
 # Improvements
