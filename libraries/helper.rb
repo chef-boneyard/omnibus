@@ -21,11 +21,11 @@ module Omnibus
   # Recipe Helpers
   module Helper
     def windows_safe_path_join(*args)
-      ::File.join(args).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR)
+      ::File.join(args).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR || File::SEPARATOR)
     end
 
     def windows_safe_path_expand(arg)
-      ::File.expand_path(arg).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR)
+      ::File.expand_path(arg).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR || File::SEPARATOR)
     end
 
     def build_user_home
