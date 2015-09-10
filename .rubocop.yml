@@ -1,7 +1,7 @@
 AllCops:
   Exclude:
-    - 'files/**/*'
-    - 'vendor/**/*'
+    - files/**/*
+    - vendor/**/*
 
 AbcSize:
   Max: 50
