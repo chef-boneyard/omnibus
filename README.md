@@ -1,8 +1,8 @@
 omnibus Cookbook
 ================
-[![Build Status](http://img.shields.io/travis/opscode-cookbooks/omnibus.svg)][travis]
 
-[travis]: http://travis-ci.org/opscode-cookbooks/omnibus
+[![Build Status](https://travis-ci.org/chef-cookbooks/omnibus.svg?branch=master)](http://travis-ci.org/chef-cookbooks/omnibus)
+[![Cookbook Version](https://img.shields.io/cookbook/v/omnibus.svg)](https://supermarket.chef.io/cookbooks/omnibus)
 
 Prepares a machine to be an Omnibus builder.
 
@@ -57,12 +57,12 @@ rake travis:ci    # Run tests on Travis
 License & Authors
 -----------------
 - Author: Seth Vargo (<sethvargo@gmail.com>)
-- Author: Yvonne Lam (<yvonne@getchef.com>)
-- Author: Seth Chisamore (<schisamo@getchef.com>)
-- Author: Stephen Delano (<stephen@getchef.com>)
+- Author: Yvonne Lam (<yvonne@chef.io>)
+- Author: Seth Chisamore (<schisamo@chef.io>)
+- Author: Stephen Delano (<stephen@chef.io>)
 
 ```text
-Copyright 2012-2014, Chef Software, Inc. (<legal@getchef.com>)
+Copyright 2012-2015, Chef Software, Inc. (<legal@getchef.com>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
