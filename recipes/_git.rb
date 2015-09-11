@@ -33,7 +33,7 @@ file File.join(build_user_home, '.gitconfig') do
       ; Set a sane user name and email. This makes git happy and prevents
       ; spammy output on each git command.
       name  = Omnibus
-      email = omnibus@getchef.com
+      email = omnibus@chef.io
     [color]
       ; Since this is a build machine, we do not want colored output.
       ui = false

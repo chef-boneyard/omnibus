@@ -66,7 +66,7 @@ describe 'git' do
   # Ensure `https` remote functions correctly
   Dir.mktmpdir('omnibus') do |tmpdir|
     # Ensure HTTPS remote support works
-    describe command("git clone https://github.com/opscode-cookbooks/omnibus.git #{tmpdir}") do
+    describe command("git clone https://github.com/chef-cookbooks/omnibus.git #{tmpdir}") do
       its(:exit_status) { should eq 0 }
     end
   end
