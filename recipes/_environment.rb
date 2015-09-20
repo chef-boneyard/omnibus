@@ -21,7 +21,8 @@
 include_recipe 'omnibus::_common'
 
 if windows?
-  file windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat') do
+  batch_file = windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')
+  file batch_file do
     content <<-EOH.gsub(/^ {6}/, '')
       @ECHO OFF
 
@@ -106,6 +107,24 @@ if windows?
     EOH
     owner node['omnibus']['build_user']
     group node['omnibus']['build_user_group']
+  end
+
+  powershell_script 'Add environment to powershell profile' do
+    code <<-EOH
+      mkdir (Split-Path -Path $PROFILE -Parent)
+      Remove-Item $PROFILE -ErrorAction SilentlyContinue
+
+      "`$tempFile = [IO.Path]::GetTempFileName()" >> $profile
+      "cmd /c `" ```"#{batch_file}```" && set > ```"`$tempFile```" `"" >> $PROFILE
+      "Get-Content `$tempFile | Foreach-Object {" >> $profile
+      "    if(`$_ -match `"^(.*?)=(.*)$`")" >> $profile
+      "    {" >> $profile
+      "        Set-Content `"env:\\`$(`$matches[1])`" `$matches[2]" >> $profile
+      "    }" >> $profile
+      "}" >> $profile
+
+      "Remove-Item `$tempFile" >> $profile
+    EOH
   end
 else
   if omnibus_toolchain_enabled?
