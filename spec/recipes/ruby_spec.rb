@@ -52,7 +52,7 @@ describe 'omnibus::_ruby' do
         expect(chef_run).to install_ruby_install('2.1.5')
           .with_environment(
             'CC'      => '/usr/sfw/bin/gcc',
-            'MAKE'    => 'gmake',
+            'MAKE'    => 'gmake'
           )
       end
 
@@ -70,7 +70,7 @@ describe 'omnibus::_ruby' do
               'CC'      => '/usr/sfw/bin/gcc',
               'MAKE'    => 'gmake',
               'CFLAGS'  => '-O0 -g -pipe -mcpu=v9',
-              'LDFLAGS' => '-mcpu=v9',
+              'LDFLAGS' => '-mcpu=v9'
             )
         end
       end

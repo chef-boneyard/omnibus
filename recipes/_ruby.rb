@@ -55,7 +55,7 @@ patches   = []
 #   https://github.com/chef/omnibus-software/blob/38e8befd5ecd14b7ad32c4bd3118fe4caf79ee92/config/software/ruby.rb
 #
 if solaris_11?
-  build_env['CC']   =  '/usr/sfw/bin/gcc'
+  build_env['CC']   = '/usr/sfw/bin/gcc'
   build_env['MAKE'] = 'gmake'
 
   if sparc?

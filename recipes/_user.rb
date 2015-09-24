@@ -43,7 +43,7 @@ user node['omnibus']['build_user'] do
     shell '/usr/local/bin/bash'
     gid   node['omnibus']['build_user_group']
   end
-  action   :create
+  action :create
 end
 
 group node['omnibus']['build_user_group'] do

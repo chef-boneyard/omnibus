@@ -64,7 +64,7 @@ if omnibus_toolchain_enabled?
   execute "git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
     environment(
       'PATH' => "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin",
-      'HOME' => build_user_home,
+      'HOME' => build_user_home
     )
     user node['omnibus']['build_user']
   end
@@ -82,10 +82,10 @@ elsif windows?
   # 'Program Files' on 32-bit machines
   program_files = ENV['ProgramFiles(x86)'] || ENV['ProgramFiles']
 
-  git_paths  = []
+  git_paths = []
   git_paths << windows_safe_path_join(program_files, 'Git', 'Cmd')
   git_paths << windows_safe_path_join(program_files, 'Git', 'libexec', 'git-core')
-  git_path   = git_paths.join(File::PATH_SEPARATOR)
+  git_path = git_paths.join(File::PATH_SEPARATOR)
 
   omnibus_env['PATH'] << git_path
 else
@@ -96,7 +96,7 @@ else
 
   make           = 'make'
   configure_args = '--prefix=/usr/local --without-tcltk'
-  git_environment    = { 'NO_GETTEXT' => '1' }
+  git_environment = { 'NO_GETTEXT' => '1' }
 
   if debian?
     package 'gettext'

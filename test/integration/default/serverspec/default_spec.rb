@@ -105,7 +105,7 @@ describe 'environment' do
     '.bash_profile',
     '.bashrc',
     File.join('.bashrc.d', 'omnibus-path.sh'),
-    File.join('.bashrc.d', 'chruby-default.sh'),
+    File.join('.bashrc.d', 'chruby-default.sh')
   ].each do |dot_file|
     describe file(File.join(home_dir, dot_file)) do
       it { should be_file }

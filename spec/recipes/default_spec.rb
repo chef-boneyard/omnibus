@@ -14,14 +14,14 @@ describe 'omnibus::default' do
   it 'creates the omnibus install_dir' do
     expect(chef_run).to create_directory('/opt/omnibus').with(
       mode: '0755',
-      user: 'omnibus',
+      user: 'omnibus'
     )
   end
 
   it 'creates the omnibus cache_dir' do
     expect(chef_run).to create_directory('/var/cache/omnibus').with(
       mode: '0755',
-      user: 'omnibus',
+      user: 'omnibus'
     )
   end
 end
