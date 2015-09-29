@@ -5,6 +5,11 @@
     "path": ".delivery/build-cookbook"
   },
   "delivery-truck": {
+    "lint": {
+      "foodcritic": {
+        "excludes": ["spec", "test"]
+      }
+    },
     "publish": {
       "github": "chef-cookbooks/omnibus"
     }
