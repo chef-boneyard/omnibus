@@ -21,6 +21,7 @@
 include_recipe 'omnibus::_common'
 
 if windows?
+  omnibus_path = omnibus_env.delete('PATH')
   batch_file = windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')
   file batch_file do
     content <<-EOH.gsub(/^ {6}/, '')
@@ -32,7 +33,7 @@ if windows?
 
       set HOMEDRIVE=#{ENV['SYSTEMDRIVE']}
       set HOMEPATH=#{build_user_home.split(':').last}
-      set PATH=#{omnibus_env.delete('PATH').join(File::PATH_SEPARATOR)};%PATH%
+      set PATH=#{omnibus_path.join(File::PATH_SEPARATOR)};%PATH%
       #{omnibus_env.map { |k, v| "set #{k}=#{v.first}" }.join("\n")}
 
       ECHO(
@@ -111,16 +112,54 @@ if windows?
 
   file windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.ps1') do
     content <<-EOH.gsub(/^ {6}/, '')
-      $tempFile = [IO.Path]::GetTempFileName()
-      cmd /c " `"#{batch_file}`" && set > `"$tempFile`" "
-      Get-Content $tempFile | Foreach-Object {
-        if($_ -match "^(.*?)=(.*)$")
-        {
-          Set-Content "env:\\$($matches[1])" $matches[2]
-        }
-      }
 
-      Remove-Item $tempFile
+      ###############################################################
+      # Load the base Omnibus environment
+      ###############################################################
+
+      $env:HOMEDRIVE="#{ENV['SYSTEMDRIVE']}"
+      $env:HOMEPATH="#{build_user_home.split(':').last}"
+      $env:PATH="#{omnibus_path.join(File::PATH_SEPARATOR)};$env:PATH"
+      #{omnibus_env.map { |k, v| "$env:#{k}='#{v.first}'" }.join("\n")}
+
+      Write-Host " ========================================"
+      Write-Host " = Environment"
+      Write-Host " ========================================"
+
+      Get-ChildItem env:
+
+      ###############################################################
+      # Query tool versions
+      ###############################################################
+
+      $env:GIT_VERSION=git --version
+      $env:RUBY_VERSION=ruby --version
+      $env:GEM_VERSION=gem --version
+      $env:BUNDLER_VERSION=bundle --version
+      $env:GCC_VERSION=(gcc --version)[0]
+      $env:MAKE_VERSION=(make --version)[0]
+      $env:SEVENZIP_VERSION=(7z -h)[1]
+      $env:WIX_HEAT_VERSION=(heat -help)[0]
+      $env:WIX_CANDLE_VERSION=(candle -help)[0]
+      $env:WIX_LIGHT_VERSION=(light -help)[0]
+
+      Write-Host " ========================================"
+      Write-Host " = Tool Versions"
+      Write-Host " ========================================"
+
+      Write-Host " Git............$env:GIT_VERSION"
+      Write-Host " Ruby...........$env:RUBY_VERSION"
+      Write-Host " RubyGems.......$env:GEM_VERSION"
+      Write-Host " Bundler........$env:BUNDLER_VERSION"
+      Write-Host " GCC............$env:GCC_VERSION"
+      Write-Host " Make...........$env:MAKE_VERSION"
+      Write-Host " 7-Zip..........$env:SEVENZIP_VERSION"
+      Write-Host " WiX:Heat.......$env:WIX_HEAT_VERSION"
+      Write-Host " WiX:Candle.....$env:WIX_CANDLE_VERSION"
+      Write-Host " WiX:Light......$env:WIX_LIGHT_VERSION"
+
+      Write-Host " ========================================"
+
     EOH
     owner node['omnibus']['build_user']
     group node['omnibus']['build_user_group']
