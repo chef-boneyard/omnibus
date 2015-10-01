@@ -109,8 +109,7 @@ if windows?
     group node['omnibus']['build_user_group']
   end
 
-  powershell_file = batch_file.gsub('.bat', '.ps1')
-  file powershell_file do
+  file windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.ps1') do
     content <<-EOH.gsub(/^ {6}/, '')
       $tempFile = [IO.Path]::GetTempFileName()
       cmd /c " `"#{batch_file}`" && set > `"$tempFile`" "
