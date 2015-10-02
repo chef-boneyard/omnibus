@@ -1,7 +1,6 @@
 omnibus Cookbook
 ================
 
-[![Build Status](https://travis-ci.org/chef-cookbooks/omnibus.svg?branch=master)](http://travis-ci.org/chef-cookbooks/omnibus)
 [![Cookbook Version](https://img.shields.io/cookbook/v/omnibus.svg)](https://supermarket.chef.io/cookbooks/omnibus)
 
 Prepares a machine to be an Omnibus builder.
