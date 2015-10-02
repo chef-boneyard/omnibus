@@ -3,6 +3,9 @@ require 'chefspec/berkshelf'
 
 ChefSpec::Coverage.start!
 
+# load all libraries for testing
+Dir['libraries/*.rb'].each { |f| require_relative "../#{f}" }
+
 RSpec.configure do |config|
   config.before(:each) do
     # We need to stub the build_user_home because ChefSpec isn't smart enough

@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.7.0(2015-10-02)
+--------------------
+# Feature
+- Added `omnibus_build` resource
+
 v2.6.13 (2015-09-04)
 --------------------
 # Bug fixes
