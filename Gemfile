@@ -12,7 +12,8 @@ group :unit do
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 1.4'
+  gem 'test-kitchen',    '~> 1.4'
+  gem 'winrm-transport', '~> 1.0'
 end
 
 group :kitchen_vagrant do
@@ -22,4 +23,5 @@ end
 group :kitchen_cloud do
   gem 'kitchen-digitalocean'
   gem 'kitchen-ec2'
+  gem 'kitchen-zone', git: 'git@github.com:scotthain/kitchen-zone.git'
 end

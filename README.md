@@ -36,6 +36,40 @@ Attributes
 | `cache_dir`   | `/var/cache/omnibus` | The cache directory for Omnibus       |
 
 
+Resources
+---------
+
+### omnibus_build
+
+This resource is used to execute a build of an Omnibus project.
+
+#### Attributes
+
+| Attribute          | Default                                               | Description                           |
+|--------------------|-------------------------------------------------------|---------------------------------------|
+| `project_name`     |                                                       | The name of the Omnibus project to build |
+| `project_dir`      |                                                       | The directory to install Omnibus |
+| `install_dir`      | `/opt/<PROJECT>`                                      | The installation of the project being built |
+| `omnibus_base_dir` | Windows: 'C:/omnibus-ruby' *nix: '/var/cache/omnibus' | The cache directory for Omnibus |
+| `log_level`        | `:internal`                                           | Log level used during the build. Valid values include: `:internal, :debug, :info, :warn, :error, :fatal` |
+| `config_file`      | `<PROJECT_DIR>/omnibus.rb`                            | Omnibus configuration file used for the build. |
+| `config_overrides` | `{}`                                                  | Overrides for one or more Omnibus config options |
+| `expire_cache`     | `false`                                               | Indiciates the Omnibus cache (including git cache) should be wiped before building.  |
+| `build_user`       | `node['omnibus']['build_user']`                       | The user to execute the Omnibus build as. |
+| `environment`      | `{}`                                                  | Environment variables to set in the underlying build process. |
+
+#### Example Usage
+
+```ruby
+omnibus_build 'harmony' do
+  project\_dir 'https://github.com/chef/omnibus-harmony.git'
+  log_level :internal
+  config_override(
+    append_timestamp: true
+  )
+end
+```
+
 Usage
 -----
 Include the `omnibus::default` recipe in your node's run list and override the cookbook's default attributes as desired. At the very least you will want to override `node['omnibus']['install_dir']` to match the installation directory of your Omnibus project.
