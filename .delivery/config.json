@@ -11,6 +11,7 @@
       }
     },
     "publish": {
+      "chef_server": true,
       "github": "chef-cookbooks/omnibus"
     }
   },
