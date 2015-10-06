@@ -15,7 +15,9 @@ if delivery_environment == 'delivered'
   require 'uri'
   include_recipe 'chef-sugar::default'
 
-  supermarket_creds = encrypted_data_bag_item_for_environment('creds', 'supermarket')
+  with_server_config do
+    supermarket_creds = encrypted_data_bag_item_for_environment('creds', 'supermarket')
+  end
 
   supermarket_site = 'https://supermarket.chef.io'
   supermarket_user = supermarket_creds['username']
