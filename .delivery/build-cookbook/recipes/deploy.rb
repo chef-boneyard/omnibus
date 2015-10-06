@@ -13,6 +13,7 @@ include_recipe 'delivery-truck::deploy'
 #
 if delivery_environment == 'delivered'
   require 'uri'
+  include_recipe 'chef-sugar::default'
 
   supermarket_creds = encrypted_data_bag_item_for_environment('creds', 'supermarket')
 
