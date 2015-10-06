@@ -2,7 +2,15 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
-v2.7.0(2015-10-02)
+v2.7.2 (2015-10-05)
+--------------------
+- Properly include chef-sugar in the `build-cookbook::deploy`.
+
+v2.7.1 (2015-10-04)
+--------------------
+- Publish updates to the chef-server.delivery.chef.co
+
+v2.7.0 (2015-10-02)
 --------------------
 # Feature
 - Added `omnibus_build` resource
