@@ -15,7 +15,7 @@ if delivery_environment == 'delivered'
   require 'uri'
   include_recipe 'chef-sugar::default'
 
-  with_server_config do
+  DeliverySugar::ChefServer.new.with_server_config do
     supermarket_creds = encrypted_data_bag_item_for_environment('creds', 'supermarket')
   end
 
