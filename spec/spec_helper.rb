@@ -1,5 +1,6 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
+require 'chef/sugar'
 
 ChefSpec::Coverage.start!
 

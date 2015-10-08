@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.7.3 (2015-10-08)
+--------------------
+- Added Windows support to the `omnibus_build` resource
+
 v2.7.2 (2015-10-05)
 --------------------
 - Properly include chef-sugar in the `build-cookbook::deploy`.
