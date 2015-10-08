@@ -6,25 +6,25 @@ v2.7.4
 ------
 - Create a separate Windows-specific OmnibusBuild provider
 
-v2.7.3 (2015-10-08)
---------------------
+v2.7.3
+------
 - Added Windows support to the `omnibus_build` resource
 
-v2.7.2 (2015-10-05)
---------------------
+v2.7.2
+------
 - Properly include chef-sugar in the `build-cookbook::deploy`.
 
-v2.7.1 (2015-10-04)
---------------------
+v2.7.1
+------
 - Publish updates to the chef-server.delivery.chef.co
 
-v2.7.0 (2015-10-02)
---------------------
+v2.7.0
+------
 # Feature
 - Added `omnibus_build` resource
 
-v2.6.13 (2015-09-04)
---------------------
+v2.6.13
+-------
 # Bug fixes
 - `File::ALT_SEPARATOR` can be nil
 
@@ -32,23 +32,23 @@ v2.6.13 (2015-09-04)
 - Stop creating symlinks in /usr/bin - We can use load-omnibus-toolchain.sh to set the `PATH` correctly
 - Use bash built by this cookbook for login shell
 
-v2.6.12 (2015-08-25)
---------------------
+v2.6.12
+-------
 # Improvements
 - Ship our own version of cacerts
 
-v2.6.11 (2015-08-19)
---------------------
+v2.6.11
+-------
 # Improvements
 - Fix all rubocop errors
 
-v2.6.10 (2015-08-19)
---------------------
+v2.6.10
+-------
 # Bug fixes
 - Fix fakeroot recipe to remove obsolete resource attributes
 
-v2.6.9 (2015-07-03)
---------------------
+v2.6.9
+------
 # Bug fixes
 - Remove omnibus-toolchain checksums
 
@@ -56,8 +56,8 @@ v2.6.9 (2015-07-03)
 - Add recipe to install the windows sdk
 - DRY up omnibus-toolchain installation logic
 
-v2.6.8 (2015-06-22)
---------------------
+v2.6.8
+------
 # Bug fixes
 - Install glibc-static on non-Power platforms running el-6 or higher
 
@@ -65,28 +65,28 @@ v2.6.8 (2015-06-22)
 - Add path for 7-zip
 - Added logic for installing variants of the omnibus toolchain
 
-v2.6.7 (2015-06-03)
---------------------
+v2.6.7
+------
 # Bug fixes
 - Update Perl path in FreeBSD git configure args
 
-v2.6.6 (2015-06-03)
---------------------
+v2.6.6
+------
 # Bug fixes
 - Install a known working version of Bundler
 
-v2.6.5 (2015-06-01)
---------------------
+v2.6.5
+------
 # Improvements
 - [ruby-windows] install a cacerts bundle that works with the S3 root cert
 
-v2.6.4 (2015-05-01)
---------------------
+v2.6.4
+------
 # Improvements
 - Updates to support RHEL/Ubuntu ppc64/le
 
-v2.6.3 (2015-04-15)
---------------------
+v2.6.3
+------
 # Improvements
 - Install the omnibus toolchain package if supported
 - Don’t compile tools that ship in the omnibus-toolchain package
@@ -95,102 +95,102 @@ v2.6.3 (2015-04-15)
 - Use ChefDK for all Travis testing
 - Fix all Rubocop 0.28.0 style errors
 
-v2.6.2 (2015-03-27)
---------------------
+v2.6.2
+------
 # Improvements
 - Ensure all platforms have a sane `.gitconfig`
 - Properly set Git’s CA bundle on Solaris 10
 
-v2.6.1 (2015-03-23)
---------------------
+v2.6.1
+------
 # Improvements
 - Add patch support to `ruby_install` resource
 - Apply patch to Ruby source on Solaris 11 - this allows us to install Ruby 2.1.x.
 
-v2.6.0 (2015-03-19)
---------------------
+v2.6.0
+------
 # Improvements
 - Install glibc-static on EL6+
 - Updated Solaris 10 build toolchain
 
-v2.5.5 (2015-03-02)
---------------------
+v2.5.5
+------
 # Bug fixes
 - Package signing on EL7 requires the rpm-sign package.
 
-v2.5.4 (2015-03-01)
---------------------
+v2.5.4
+------
 # Bug fixes
 - Don’t configure `SSL_CERT_FILE` globally on Windows
 
-v2.5.3 (2015-02-27)
---------------------
+v2.5.3
+------
 # Improvements
 - Solaris 11 support
 
 # Bug fixes
 -  Ruby install should not modify the PATH on Win systems
 
-v2.5.2 (2015-02-05)
---------------------
+v2.5.2
+------
 # Improvements
 - Update the url for ccache/rsync
 
-v2.5.1 (2014-12-11)
---------------------
+v2.5.1
+------
 # Improvements
 - Create `/etc/ssl/cert.pem` symlink on FreeBSD
 
-v2.5.0 (2014-12-10)
---------------------
+v2.5.0
+------
 # Improvements
 - Bump Ruby version to 2.1.5
 
-v2.4.18 (2014-12-04)
---------------------
+v2.4.18
+-------
 # Bug fixes
 - Ensure FreeBSD Ruby install points at valid root CA cert
 
-v2.4.16 (2014-11-11)
---------------------
+v2.4.16
+-------
 # Bug fixes
 - Fix CA bundle location for omnibus env on windows
 - Upgrade Bash to 4.3.30 to fix [CVE-2014-6271] (Shellshock)
 
-v2.4.14 (2014-11-06)
---------------------
+v2.4.14
+-------
 # Bug fixes
 - Don’t allow `ruby-install` to install deps
 
-v2.4.12 (2014-10-24)
--------------------
+v2.4.12
+-------
 # Bug fixes
 - Configure BSD Make for backward compat mode
 - Guarantee presence of bzip2 on RHEL
 
-v2.4.10 (2014-10-22)
--------------------
+v2.4.10
+-------
 # Bug fixes
 - Ensure HTTPS remotes work in FreeBSD git install
 
-v2.4.8 (2014-10-17)
--------------------
+v2.4.8
+------
 # Bug fixes
 - Reintroduce `sign-rpm` script
 
-v2.4.6 (2014-10-17)
--------------------
+v2.4.6
+------
 # Bug fixes
 - Install ruby before git to ensure correct ownership of /usr/local/lib on OS X
 - Stop infinitively growing Windows PATH
 
-v2.4.4 (2014-10-15)
--------------------
+v2.4.4
+------
 # Bug fixes
 - Disable DTrace integration when compiling Ruby
 
-v2.4.2 (2014-10-14)
--------------------
+v2.4.2
+------
 # Bug fixes
 - Use fully-qualified names when installing FreeBSD packages
 
@@ -198,8 +198,8 @@ v2.4.2 (2014-10-14)
 - Add linting support (Foodcritic, Rubocop) to repo
 - Fix ChefSpec 4.1.x deprecation warnings
 
-v2.4.0 (2014-10-07)
--------------------
+v2.4.0
+------
 ## Feature
 - FreeBSD 10 support
 - RHEL 7 support
@@ -210,8 +210,8 @@ v2.4.0 (2014-10-07)
 - Remove hard dependency on `yum-epel` cookbook
 - RPM signing is now managed from Omnibus
 
-v2.3.4 (2014-09-15)
--------------------
+v2.3.4
+------
 ## Bug fixes
 - Create environment scripts last.
 
@@ -219,29 +219,29 @@ v2.3.4 (2014-09-15)
 - Add some additional elements to PATH on Windows systems.
 - Print `gcc` and `make` versions in `load-omnibus-toolchain.bat`.
 
-v2.3.2 (2014-09-05)
--------------------
+v2.3.2
+------
 ## Improvement
 - Install fakeroot and rpm-build packages on RHEL-based systems
 
-v2.3.0 (2014-08-08)
--------------------
+v2.3.0
+------
 ## Feature
 - SUSE support
 
 ## Improvement
 - Install fakeroot and devscripts packages on Debian-based systems
 
-v2.2.0 (2014-06-19)
--------------------
+v2.2.0
+------
 ## Improvement
 - Fix the idempotency check for chruby
 - Set SELinux to permissive
 - Install rsync
 - Update Chef Sugar to v2.0.0
 
-v2.1.2 (2014-06-12)
--------------------
+v2.1.2
+------
 ## Improvement
 - Upgrade to ChefSpec 4
 - Use the maximum number of builders when compiling from source
@@ -250,8 +250,8 @@ v2.1.2 (2014-06-12)
 - Check `/usr/local/bin/bash` when checking if Bash is installed
 - Bump default Ruby version to 2.1.2 to fix readline issues
 
-v2.1.0 (2014-05-20)
--------------------
+v2.1.0
+------
 ## Feature
 - Platform-specific scripts to laod omnibus toolchain/environment
 - Deploy `sign-rpm` script on RHEL platform family
@@ -260,8 +260,8 @@ v2.1.0 (2014-05-20)
 - Add proper support for Windows
 - Add a group for the build user
 
-v2.0.2 (2014-04-07)
--------------------
+v2.0.2
+------
 - Fix memory leak in string concatenation
 
 v2.0.0
