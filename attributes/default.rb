@@ -17,22 +17,23 @@
 
 default['omnibus'].tap do |omnibus|
   omnibus['build_user']         = 'omnibus'
-  omnibus['build_user_home']    = nil
   omnibus['ruby_version']       = '2.1.5'
   omnibus['toolchain_name']     = 'omnibus-toolchain'
   omnibus['toolchain_version']  = '0.0.1'
 
   if platform_family == 'windows'
-    omnibus['build_user_group']  = 'Administrators'
-    omnibus['install_dir']       = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus')
-    omnibus['cache_dir']         = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'cache', 'omnibus')
+    omnibus['build_user_home']  = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus')
+    omnibus['build_user_group'] = 'Administrators'
+    omnibus['install_dir']      = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus', 'build')
+    omnibus['cache_dir']        = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'cache', 'omnibus')
     # Passsword must be clear-text on Windows. You should store this password in
     # an encrypted data bag item and override in your wrapper.
     omnibus['build_user_password'] = 'getonthebus'
   else
-    omnibus['build_user_group']  = 'omnibus'
-    omnibus['install_dir']       = '/opt/omnibus'
-    omnibus['cache_dir']         = '/var/cache/omnibus'
+    omnibus['build_user_home']  = nil
+    omnibus['build_user_group'] = 'omnibus'
+    omnibus['install_dir']      = '/opt/omnibus'
+    omnibus['cache_dir']        = '/var/cache/omnibus'
     # You should store this password in an encrypted data bag item and override
     # in your wrapper. Per Chef's requirements on Unix systems, the password below is
     # hashed using the MD5-based BSD password algorithm 1. The plain text version
