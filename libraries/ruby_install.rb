@@ -215,6 +215,7 @@ class Chef
       cacerts.source('cacert.pem')
       cacerts.cookbook('omnibus')
       cacerts.backup(false)
+      cacerts.sensitive(true)
       cacerts.run_action(:create)
     end
 

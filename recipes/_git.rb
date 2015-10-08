@@ -87,6 +87,10 @@ elsif windows?
   git_paths << windows_safe_path_join(program_files, 'Git', 'libexec', 'git-core')
   git_path = git_paths.join(File::PATH_SEPARATOR)
 
+  windows_path git_path do
+    action :add
+  end
+
   omnibus_env['PATH'] << git_path
 else
   include_recipe 'omnibus::_bash'

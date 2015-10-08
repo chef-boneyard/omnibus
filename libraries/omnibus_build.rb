@@ -130,21 +130,32 @@ class Chef
     end
 
     def execute_with_omnibus_toolchain(command)
-      load_toolchain = if windows?
-                         "call #{windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')}"
-                       else
-                         "source #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')}"
-                       end
-
       execute = Resource::Execute.new("#{new_resource.project_name}: #{command}", run_context)
       execute.command(
         <<-CODE.gsub(/^ {10}/, '')
-          #{load_toolchain} && #{command}
+          source #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')}
+          #{command}
         CODE
       )
       execute.cwd(new_resource.project_dir)
       execute.environment(new_resource.environment)
-      execute.user(new_resource.build_user) unless windows?
+      execute.user(new_resource.build_user)
+      execute.run_action(:run)
+    end
+  end
+
+  class Provider::OmnibusBuildWindows < Provider::OmnibusBuild
+    include Omnibus::Helper
+
+    provides :omnibus_build, platform_family: 'windows'
+
+    protected
+
+    def execute_with_omnibus_toolchain(command)
+      execute = Resource::Execute.new("#{new_resource.project_name}: #{command}", run_context)
+      execute.command("call #{windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')} && #{command}")
+      execute.cwd(new_resource.project_dir)
+      execute.environment(new_resource.environment)
       execute.run_action(:run)
     end
   end
