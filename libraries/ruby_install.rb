@@ -35,6 +35,8 @@ class Chef
   end
 
   class Provider::RubyInstallUnix < Provider::LWRPBase
+    provides :ruby_install
+
     def whyrun_supported?
       true
     end
@@ -96,6 +98,8 @@ class Chef
 
   class Provider::RubyInstallWindows < Provider::LWRPBase
     include Omnibus::Helper
+
+    provides :ruby_install, platform_family: 'windows'
 
     def whyrun_supported?
       true
@@ -222,14 +226,3 @@ class Chef
     end
   end
 end
-
-Chef::Platform.set(
-  resource: :ruby_install,
-  provider: Chef::Provider::RubyInstallUnix
-)
-
-Chef::Platform.set(
-  platform: :windows,
-  resource: :ruby_install,
-  provider: Chef::Provider::RubyInstallWindows
-)
