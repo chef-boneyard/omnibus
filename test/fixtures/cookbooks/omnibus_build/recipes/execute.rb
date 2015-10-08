@@ -5,7 +5,7 @@ harmony_project_dir = File.join(build_user_home, 'harmony')
 
 git harmony_project_dir do
   repository 'https://github.com/chef/omnibus-harmony.git'
-  user node['omnibus']['build_user']
+  user node['omnibus']['build_user'] unless windows? # The git resource's user attribute doesn't play nice on Windows
   action :sync
 end
 

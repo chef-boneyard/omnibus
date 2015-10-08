@@ -33,10 +33,10 @@ class Chef
               required: true
     attribute :install_dir,
               kind_of: String,
-              default: lazy { |r| "/opt/#{r.project_name}" }
+              default: lazy { |r| ChefConfig.windows? ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
     attribute :omnibus_base_dir,
               kind_of: String,
-              default: lazy { ChefConfig.windows? ? 'C:/omnibus-ruby' : '/var/cache/omnibus' }
+              default: lazy { ChefConfig.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
     attribute :log_level,
               kind_of: Symbol,
               equal_to: [:internal, :debug, :info, :warn, :error, :fatal],
@@ -130,16 +130,21 @@ class Chef
     end
 
     def execute_with_omnibus_toolchain(command)
+      load_toolchain = if windows?
+                         "call #{windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')}"
+                       else
+                         "source #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')}"
+                       end
+
       execute = Resource::Execute.new("#{new_resource.project_name}: #{command}", run_context)
       execute.command(
         <<-CODE.gsub(/^ {10}/, '')
-          source #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')}
-          #{command}
+          #{load_toolchain} && #{command}
         CODE
       )
       execute.cwd(new_resource.project_dir)
       execute.environment(new_resource.environment)
-      execute.user(new_resource.build_user)
+      execute.user(new_resource.build_user) unless windows?
       execute.run_action(:run)
     end
   end
