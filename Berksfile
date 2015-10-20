@@ -6,8 +6,6 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'languages', git: 'https://github.com/chef-cookbooks/languages.git', branch: 'ruby_install'
-
 group :integration do
   cookbook 'apt'
   cookbook 'fancy_execute'
