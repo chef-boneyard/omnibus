@@ -34,6 +34,16 @@ unless windows?
 
   # The RHEL 7 EC2 images do not include bzip2, which is a dep of ruby-install.
   package 'bzip2' if platform_family?('rhel', 'fedora')
+
+  # Install ruby-install so we can easily install and manage rubies. This is
+  # needed by the +ruby_install+ HWRP which installs rubies for us.
+  remote_install 'ruby-install' do
+    source 'https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1'
+    checksum '1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e'
+    version '0.4.1'
+    install_command "make -j #{node.builders} install"
+    not_if { installed_at_version?('ruby-install', '0.4.1') }
+  end
 end
 
 build_env = {}
