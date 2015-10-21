@@ -76,16 +76,6 @@ describe 'omnibus::_ruby' do
       end
     end
 
-    it 'installs ruby-install' do
-      allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?)
-
-      expect(chef_run).to install_remote_install('ruby-install')
-        .with_source('https://codeload.github.com/postmodern/ruby-install/tar.gz/v0.4.1')
-        .with_checksum('1b35d2b6dbc1e75f03fff4e8521cab72a51ad67e32afd135ddc4532f443b730e')
-        .with_version('0.4.1')
-        .with_install_command('make -j 2 install')
-    end
-
     it 'installs ruby' do
       expect(chef_run).to install_ruby_install('2.1.5')
     end
