@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.7.5
+------
+- Move ruby_install to the languages cookbook and vendor from there.
+
 v2.7.4
 ------
 - Create a separate Windows-specific OmnibusBuild provider
