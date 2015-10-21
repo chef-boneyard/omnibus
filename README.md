@@ -73,20 +73,6 @@ Usage
 -----
 Include the `omnibus::default` recipe in your node's run list and override the cookbook's default attributes as desired. At the very least you will want to override `node['omnibus']['install_dir']` to match the installation directory of your Omnibus project.
 
-
-Testing
--------
-You can run the tests in this cookbook using Rake:
-
-```text
-rake integration  # Run Test Kitchen integration tests
-rake style        # Run all style checks
-rake style:chef   # Lint Chef cookbooks
-rake style:ruby   # Run Ruby style checks
-rake travis:ci    # Run tests on Travis
-```
-
-
 License & Authors
 -----------------
 - Author: Seth Vargo (<sethvargo@gmail.com>)
