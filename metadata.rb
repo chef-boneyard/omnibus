@@ -4,7 +4,7 @@ maintainer_email  'releng@chef.io'
 license           'Apache 2.0'
 description       'Prepares a machine to be an Omnibus builder.'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           '2.7.5'
+version           '2.7.6'
 
 supports 'amazon'
 supports 'centos'
@@ -25,7 +25,7 @@ depends 'build-essential', '~> 2.0'
 depends 'chef-sugar',      '~> 3.0'
 depends 'homebrew',        '~> 1.9'
 depends 'windows',         '~> 1.30'
-depends 'wix',             '~> 1.1'
+depends 'wix',             '~> 2.0'
 depends 'windows-sdk',     '~> 1.0'
 depends 'languages'
 
