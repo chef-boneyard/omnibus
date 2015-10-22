@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v2.7.7
+------
+- Fix Windows detection on older Chef versions
+
 v2.7.6
 ------
 - Bump the version pin on the wix cookbook.  We now depend on Wix 3.10 features.
