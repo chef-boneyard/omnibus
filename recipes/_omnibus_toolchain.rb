@@ -48,15 +48,27 @@ if solaris_10?
     package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
   end
 
-  package_path = File.join(Chef::Config[:file_cache_path], File.basename(package_url))
-
-  remote_file package_path do
-    source package_url
-    action :create_if_missing
+  install_options = '-a auto-install'
+elsif aix?
+  package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.powerpc.bff"
+  if File.exists?('/opt/omnibus-toolchain')
+    Chef::Log.warn('Assuming the existence of /opt/omnibus-toolchain means that the package is already installed.')
+    installed = true
   end
+else
+  Chef::Application.fatal!("I don't know how to install #{node['omnibus']['toolchain_name']} on this platform!", 1)
+end
 
-  package node['omnibus']['toolchain_name'] do
-    source package_path
-    options '-a auto-install'
-  end
+package_path = File.join(Chef::Config[:file_cache_path], File.basename(package_url))
+
+remote_file package_path do
+  source package_url
+  action :create_if_missing
+  not_if { installed }
+end
+
+package node['omnibus']['toolchain_name'] do
+  source package_path
+  options install_options
+  not_if { installed }
 end

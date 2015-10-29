@@ -110,7 +110,8 @@ EOH
     end
 
     def extract
-      extract_command = 'tar -xv'
+      # None of AIX's coreutils like '-v' ¯\_(ツ)_/¯
+      extract_command = (aix? ? 'tar -x' : 'tar -xv')
       extract_command << 'z' if new_resource.source =~ /\.gz/
       extract_command << 'j' if new_resource.source =~ /\.bz2/
 
