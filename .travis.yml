@@ -19,12 +19,18 @@ services:
 
 env:
   matrix:
-    - PLATFORM=debian-7
-    - PLATFORM=debian-8
-    - PLATFORM=ubuntu-1204
-    - PLATFORM=ubuntu-1404
-    - PLATFORM=centos-6
-    - PLATFORM=centos-7
+    - CHEF_VERSION=12.0.3 PLATFORM=debian-7
+    - CHEF_VERSION=12.0.3 PLATFORM=debian-8
+    - CHEF_VERSION=12.0.3 PLATFORM=ubuntu-1204
+    - CHEF_VERSION=12.0.3 PLATFORM=ubuntu-1404
+    - CHEF_VERSION=12.0.3 PLATFORM=centos-6
+    - CHEF_VERSION=12.0.3 PLATFORM=centos-7
+    - CHEF_VERSION=latest PLATFORM=debian-7
+    - CHEF_VERSION=latest PLATFORM=debian-8
+    - CHEF_VERSION=latest PLATFORM=ubuntu-1204
+    - CHEF_VERSION=latest PLATFORM=ubuntu-1404
+    - CHEF_VERSION=latest PLATFORM=centos-6
+    - CHEF_VERSION=latest PLATFORM=centos-7
 
 matrix:
   fast_finish: true
