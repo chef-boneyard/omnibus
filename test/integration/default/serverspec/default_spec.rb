@@ -6,7 +6,7 @@ end
 
 describe user('omnibus') do
   it { should exist }
-  it('', pending: os[:family] == 'darwin') { should have_login_shell '/bin/bash' }
+  it('', pending: os[:family] == 'darwin') { should have_login_shell '/usr/local/bin/bash' }
 end
 
 describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'), if: os[:family] == 'darwin' do
@@ -15,7 +15,7 @@ end
 
 describe 'ccache' do
   describe command('/usr/local/bin/ccache --version') do
-    its(:stdout) { should match(/3\.1\.9/) }
+    its(:stdout) { should match('3.1.9') }
   end
 
   # FreeBSD 10+ uses clang
@@ -40,13 +40,13 @@ end
 
 describe 'bash' do
   describe command('/usr/local/bin/bash --version') do
-    its(:stdout) { should match(/4\.3\.30/) }
+    its(:stdout) { should match('4.3.30') }
   end
 end
 
 describe 'git' do
   describe command('/usr/local/bin/git --version') do
-    its(:stdout) { should match(/1\.9\.0/) }
+    its(:stdout) { should match('1.9.0') }
   end
 
   # Ensure `https` remote functions correctly
