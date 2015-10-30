@@ -28,7 +28,6 @@ include_recipe 'omnibus::_omnibus_toolchain' if omnibus_toolchain_enabled?
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_cacerts'
 include_recipe 'omnibus::_ccache'
-include_recipe 'omnibus::_chruby'
 include_recipe 'omnibus::_compile'
 # Installing ruby before git is the cleanest way to guarantee that
 # on OS X, ownership of /usr/local/lib is correct for both the

@@ -33,12 +33,8 @@ describe 'ccache' do
 end
 
 describe 'ruby' do
-  describe command("su - omnibus -c 'source ~/.bashrc && which ruby'") do
-    its(:stdout) { should match '/opt/rubies/ruby-2.1.5/bin/ruby' }
-  end
-
-  describe command("su - omnibus -l -c 'source ~/.bashrc && ruby --version'") do
-    its(:stdout) { should match(/2\.1\.5/) }
+  describe command('/opt/languages/ruby/2.1.5/bin/ruby --version') do
+    its(:stdout) { should match('2.1.5') }
   end
 end
 
@@ -86,16 +82,17 @@ describe 'environment' do
 
   describe file(File.join(home_dir, 'load-omnibus-toolchain.sh')) do
     it { should be_file }
-    # it { should be_owned_by 'omnibus' }
-    # it { should be_grouped_into 'omnibus' }
+
+    describe command("su - omnibus -l -c 'source ~/load-omnibus-toolchain.sh && which ruby'") do
+      its(:stdout) { should match %r{/opt/languages/ruby/2.1.5/bin/ruby$} }
+    end
   end
 
   [
     '.gitconfig',
     '.bash_profile',
     '.bashrc',
-    File.join('.bashrc.d', 'omnibus-path.sh'),
-    File.join('.bashrc.d', 'chruby-default.sh')
+    File.join('.bashrc.d', 'omnibus-path.sh')
   ].each do |dot_file|
     describe file(File.join(home_dir, dot_file)) do
       it { should be_file }

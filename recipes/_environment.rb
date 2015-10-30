@@ -31,7 +31,7 @@ if windows?
 
       set HOMEDRIVE=#{ENV['SYSTEMDRIVE']}
       set HOMEPATH=#{build_user_home.split(':').last}
-      set PATH=#{omnibus_env.delete('PATH').join(File::PATH_SEPARATOR)};%PATH%
+      set PATH=#{omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)};%PATH%
       #{omnibus_env.map { |k, v| "set #{k}=#{v.first}" }.join("\n")}
 
       ECHO(
@@ -106,24 +106,12 @@ if windows?
     EOH
     owner node['omnibus']['build_user']
     group node['omnibus']['build_user_group']
+    sensitive true
   end
 else
-  if omnibus_toolchain_enabled?
-    omnibus_env['PATH'] << "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin"
-    omnibus_env['PATH'] << '/usr/local/bin'
-  else
-    omnibus_env['PATH'] << '/usr/local/bin'
 
-    additional_config = <<-EOH.gsub(/^ {6}/, '')
-      # Load chruby
-      if ! command -v chruby > /dev/null; then
-        source /usr/local/share/chruby/chruby.sh
-      fi
-
-      # Automatically set the ruby version for the omnibus user
-      chruby #{node['omnibus']['ruby_version']}
-    EOH
-  end
+  omnibus_env['PATH'] << "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin" if omnibus_toolchain_enabled?
+  omnibus_env['PATH'] << '/usr/local/bin'
 
   if solaris_10?
     omnibus_env['PATH'] << '/usr/sfw/bin'
@@ -137,10 +125,8 @@ else
       ###################################################################
       # Load the base Omnibus environment
       ###################################################################
-      export PATH="#{omnibus_env.delete('PATH').join(File::PATH_SEPARATOR)}:$PATH"
+      export PATH="#{omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)}:$PATH"
       #{omnibus_env.map { |k, v| "export #{k}=#{v.first}" }.join("\n")}
-
-      #{additional_config}
 
       echo ""
       echo "========================================"
@@ -175,5 +161,6 @@ else
     owner node['omnibus']['build_user']
     group node['omnibus']['build_user_group']
     mode '0755'
+    sensitive true
   end
 end

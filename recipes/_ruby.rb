@@ -23,54 +23,12 @@ include_recipe 'omnibus::_common'
 # Provided by the omnibus-toolchain package
 return if omnibus_toolchain_enabled?
 
-unless windows?
-  include_recipe 'omnibus::_bash'
-  include_recipe 'omnibus::_cacerts'
-  include_recipe 'omnibus::_chruby'
-  include_recipe 'omnibus::_compile'
-  include_recipe 'omnibus::_openssl'
-  include_recipe 'omnibus::_xml'
-  include_recipe 'omnibus::_yaml'
-
-  # The RHEL 7 EC2 images do not include bzip2, which is a dep of ruby-install.
-  package 'bzip2' if platform_family?('rhel', 'fedora')
-end
-
-build_env = {}
-patches   = []
-
-#
-# Taken from the omnibus-software/ruby
-#
-#   https://github.com/chef/omnibus-software/blob/38e8befd5ecd14b7ad32c4bd3118fe4caf79ee92/config/software/ruby.rb
-#
-if solaris_11?
-  build_env['CC']   = '/usr/sfw/bin/gcc'
-  build_env['MAKE'] = 'gmake'
-
-  if sparc?
-    build_env['CFLAGS']  = '-O0 -g -pipe -mcpu=v9'
-    build_env['LDFLAGS'] = '-mcpu=v9'
-  end
-
-  patches << 'https://raw.githubusercontent.com/chef/omnibus-software/38e8befd5ecd14b7ad32c4bd3118fe4caf79ee92/config/patches/ruby/ruby-solaris-linux-socket-compat.patch'
-end
-
-# Install the version of Ruby we want into /usr/local
-ruby_install node['omnibus']['ruby_version'] do
-  environment build_env
-  patches     patches
-end
-
-# Install bundler (into the Ruby we just installed)
-ruby_gem 'bundler' do
-  ruby    node['omnibus']['ruby_version']
-  version '1.9.9'
-end
+r = ruby_install node['omnibus']['ruby_version']
 
 if windows?
-  ruby_base_path = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'rubies', node['omnibus']['ruby_version'])
-  omnibus_env['PATH'] << windows_safe_path_join(ruby_base_path, 'bin')
-  omnibus_env['PATH'] << windows_safe_path_join(ruby_base_path, 'mingw', 'bin')
-  omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(ruby_base_path, 'ssl', 'certs', 'cacert.pem')
+  omnibus_env['PATH'] << windows_safe_path_join(r.prefix, 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(r.prefix, 'mingw', 'bin')
+  omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(r.prefix, 'ssl', 'certs', 'cacert.pem')
+else
+  omnibus_env['PATH'] << ::File.join(r.prefix, 'bin')
 end
