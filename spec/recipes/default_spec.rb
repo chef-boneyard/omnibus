@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::default' do
-  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   it 'creates the Chef::Config[:file_cache_path] directory' do
     expect(chef_run).to create_directory(Chef::Config[:file_cache_path])
