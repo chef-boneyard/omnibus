@@ -58,12 +58,6 @@ describe 'git' do
   end
 end
 
-describe 'rsync' do
-  describe command('/usr/local/bin/rsync --version') do
-    its(:stdout) { should match(/3\.1\.0/) }
-  end
-end
-
 describe 'environment' do
   describe '$PATH' do
     # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
