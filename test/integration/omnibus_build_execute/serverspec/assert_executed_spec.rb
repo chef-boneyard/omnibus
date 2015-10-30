@@ -1,4 +1,4 @@
-require_relative '../../../kitchen/data/spec_helper'
+require 'spec_helper'
 
 describe omnibus_build("#{home_dir}/harmony/pkg/harmony*.metadata.json") do
   it { should have_project('harmony') }

@@ -1,14 +1,4 @@
-require 'serverspec'
-require 'pathname'
-require 'tmpdir'
-
-set :backend, :exec
-
-home_dir = if os[:family] == 'darwin'
-             '/Users/omnibus'
-           else
-             '/home/omnibus'
-           end
+require 'spec_helper'
 
 describe group('omnibus'), pending: (os[:family] == 'darwin') do
   it { should exist }
