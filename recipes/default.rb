@@ -39,8 +39,6 @@ include_recipe 'omnibus::_libffi'
 include_recipe 'omnibus::_openssl'
 include_recipe 'omnibus::_packaging'
 include_recipe 'omnibus::_selinux'
-include_recipe 'omnibus::_xml'
-include_recipe 'omnibus::_yaml'
 
 # Create environment loading scripts last
 include_recipe 'omnibus::_environment'
