@@ -30,3 +30,27 @@ def home_dir
     '/home/omnibus'
   end
 end
+
+#
+# The following helpers convert platforms and platform versions into
+# Omnibus-compatible values. See the following for more details:
+#
+# https://github.com/chef/omnibus/blob/v4.1.0/lib/omnibus/metadata.rb#L128-L212
+#
+def omnibus_platform(provided_platform)
+  case provided_platform
+  when 'redhat', 'centos'
+    'el'
+  else
+    provided_platform
+  end
+end
+
+def omnibus_platform_version(provided_platform, provided_platform_version)
+  case provided_platform
+  when 'debian', 'redhat', 'centos'
+    provided_platform_version.split('.').first
+  else
+    provided_platform_version
+  end
+end

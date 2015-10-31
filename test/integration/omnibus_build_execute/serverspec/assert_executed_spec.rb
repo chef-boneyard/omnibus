@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe omnibus_build("#{home_dir}/harmony/pkg/harmony*.metadata.json") do
   it { should have_project('harmony') }
-  it { should have_platform(os[:family]) }
-  it { should have_platform_version(os[:release]) }
+  it { should have_platform(omnibus_platform(os[:family])) }
+  it { should have_platform_version(omnibus_platform_version(os[:family], os[:release])) }
   it { should have_arch(os[:arch]) }
   it { should have_package("#{home_dir}/harmony/pkg/#{subject.metadata['basename']}") }
 end
