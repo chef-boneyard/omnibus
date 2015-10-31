@@ -57,4 +57,10 @@ elsif solaris_10?
     to '/usr/sfw/bin/gmake'
     only_if { File.exist?('/usr/sfw/bin/gmake') }
   end
+elsif rhel?
+  # Make sure tar is installed. It's missing from some CentOS Docker images:
+  #
+  #   https://github.com/CentOS/sig-cloud-instance-images/issues/4
+  #
+  package 'tar'
 end

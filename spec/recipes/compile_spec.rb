@@ -43,4 +43,14 @@ describe 'omnibus::_compile' do
         .with_to('/usr/sfw/bin/gmake')
     end
   end
+
+  context 'on RHEL' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.6').converge(described_recipe)
+    end
+
+    it 'installs tar' do
+      expect(chef_run).to install_package('tar')
+    end
+  end
 end
