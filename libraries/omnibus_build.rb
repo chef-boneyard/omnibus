@@ -138,9 +138,26 @@ class Chef
         CODE
       )
       execute.cwd(new_resource.project_dir)
-      execute.environment(new_resource.environment)
+      execute.environment(environment)
       execute.user(new_resource.build_user)
       execute.run_action(:run)
+    end
+
+    def environment
+      environment = new_resource.environment || {}
+      # Ensure we inheriet the calling procceses $PATH
+      environment['PATH'] = ENV['PATH']
+      # We need to all underlying build process respect the build user
+      # as specified by the `build_user` attribute.
+      environment['USER']     = new_resource.build_user
+      environment['USERNAME'] = new_resource.build_user
+      environment['HOME']     = new_resource.project_dir
+      environment['LOGNAME']  = new_resource.build_user
+      # Ensure we don't inherit the $TMPDIR of the calling process. $TMPDIR
+      # is set per user so we can hit permission issues when we execute
+      # the build as a different user.
+      environment['TMPDIR'] = nil if mac_os_x?
+      environment
     end
   end
 

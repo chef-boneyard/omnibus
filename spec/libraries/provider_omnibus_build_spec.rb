@@ -171,4 +171,28 @@ describe Chef::Provider::OmnibusBuild do
       subject.send(:execute_with_omnibus_toolchain, command)
     end
   end
+
+  describe '#environment' do
+    it 'uses the $PATH from the calling process' do
+      expect(subject.send(:environment)['PATH']).to eq(ENV['PATH'])
+    end
+
+    it 'sets the appropriate environment variables to the configured build_user' do
+      expect(subject.send(:environment)['USER']).to eq(build_user)
+      expect(subject.send(:environment)['USERNAME']).to eq(build_user)
+      expect(subject.send(:environment)['LOGNAME']).to eq(build_user)
+    end
+
+    it 'sets $HOME to the configured project_dir' do
+      expect(subject.send(:environment)['HOME']).to eq(project_dir)
+    end
+
+    context 'on Mac OS X' do
+      let(:node) { stub_node(platform: 'mac_os_x', version: '10.9.2') }
+
+      it 'unsets $TMPDIR' do
+        expect(subject.send(:environment)['TMPDIR']).to be_nil
+      end
+    end
+  end
 end
