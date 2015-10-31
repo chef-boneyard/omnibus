@@ -6,7 +6,7 @@ end
 
 describe user('omnibus') do
   it { should exist }
-  it('', pending: os[:family] == 'darwin') { should have_login_shell '/usr/local/bin/bash' }
+  it { should have_login_shell '/usr/local/bin/bash' }
 end
 
 describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'), if: os[:family] == 'darwin' do

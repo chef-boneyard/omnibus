@@ -11,7 +11,7 @@ end
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |file| require_relative(file) }
 
-set :path, '/sbin:/usr/local/sbin:/usr/bin:/bin'
+set :path, '/sbin:/usr/sbin:/usr/local/sbin:/usr/bin:/bin'
 
 def mac_os_x?
   os[:family] == 'darwin'
@@ -39,8 +39,10 @@ end
 #
 def omnibus_platform(provided_platform)
   case provided_platform
-  when 'redhat', 'centos'
+  when 'centos', 'redhat'
     'el'
+  when 'darwin'
+    'mac_os_x'
   else
     provided_platform
   end
@@ -50,6 +52,14 @@ def omnibus_platform_version(provided_platform, provided_platform_version)
   case provided_platform
   when 'debian', 'redhat', 'centos'
     provided_platform_version.split('.').first
+  when 'darwin', 'mac_os_x'
+    # specinfra returns the `darwin` version...we want the OS X version.
+    # We'll compute this the same way Ohai does:
+    #
+    #   https://github.com/chef/ohai/blob/master/lib/ohai/plugins/darwin/platform.rb
+    #
+    pv = `/usr/bin/sw_vers`.split(/^ProductVersion:\s+(.+)$/)[1]
+    pv.split('.')[0..1].join('.')
   else
     provided_platform_version
   end
