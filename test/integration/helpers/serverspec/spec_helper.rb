@@ -21,13 +21,21 @@ def windows?
   os[:family] == 'windows'
 end
 
-def home_dir
+def build_user_home_dir
+  home_dir(build_user)
+end
+
+def build_user
+  'omnibus'
+end
+
+def home_dir(user)
   if mac_os_x?
-    '/Users/omnibus'
+    "/Users/#{user}"
   elsif windows?
-    'C:/Users/omnibus'
+    "C:/Users/#{user}"
   else
-    '/home/omnibus'
+    "/home/#{user}"
   end
 end
 

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe group('omnibus'), pending: (os[:family] == 'darwin') do
+describe group(build_user), pending: (os[:family] == 'darwin') do
   it { should exist }
 end
 
-describe user('omnibus') do
+describe user(build_user) do
   it { should exist }
   it { should have_login_shell '/usr/local/bin/bash' }
 end
@@ -63,21 +63,21 @@ describe 'environment' do
     # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
     # check the $PATH because ServerSpec doesn't execute a login shell
     # automatically.
-    describe command("su - omnibus -l -c 'echo $PATH'") do
+    describe command("su - #{build_user} -l -c 'echo $PATH'") do
       its(:stdout) { should match %r{^/usr/local/bin(.+)} }
     end
   end
 
   describe '$SSL_CERT_FILE', if: os[:family] == 'freebsd' do
-    describe command("su - omnibus -l -c 'echo $SSL_CERT_FILE'") do
+    describe command("su - #{build_user} -l -c 'echo $SSL_CERT_FILE'") do
       its(:stdout) { should match %r{^/usr/local/share/certs/ca-root-nss.crt} }
     end
   end
 
-  describe file(File.join(home_dir, 'load-omnibus-toolchain.sh')) do
+  describe file(File.join(build_user_home_dir, 'load-omnibus-toolchain.sh')) do
     it { should be_file }
 
-    describe command("su - omnibus -l -c 'source ~/load-omnibus-toolchain.sh && which ruby'") do
+    describe command("su - #{build_user} -l -c 'source ~/load-omnibus-toolchain.sh && which ruby'") do
       its(:stdout) { should match %r{/opt/languages/ruby/2.1.5/bin/ruby$} }
     end
   end
@@ -88,17 +88,17 @@ describe 'environment' do
     '.bashrc',
     File.join('.bashrc.d', 'omnibus-path.sh')
   ].each do |dot_file|
-    describe file(File.join(home_dir, dot_file)) do
+    describe file(File.join(build_user_home_dir, dot_file)) do
       it { should be_file }
       # it { should be_owned_by 'omnibus' }
       # it { should be_grouped_into 'omnibus' }
     end
   end
 
-  describe file(File.join(home_dir, 'sign-rpm')), if: os[:family] == 'redhat' do
+  describe file(File.join(build_user_home_dir, 'sign-rpm')), if: os[:family] == 'redhat' do
     it { should be_file }
-    it { should be_owned_by 'omnibus' }
-    it { should be_grouped_into 'omnibus' }
+    it { should be_owned_by(build_user) }
+    it { should be_grouped_into(build_user) }
   end
 
   describe file('/etc/make.conf'), if: os[:family] == 'freebsd' do
