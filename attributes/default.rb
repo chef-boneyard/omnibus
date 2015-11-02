@@ -26,18 +26,23 @@ default['omnibus'].tap do |omnibus|
     omnibus['build_user_group'] = 'Administrators'
     omnibus['install_dir']      = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus', 'build')
     omnibus['cache_dir']        = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'cache', 'omnibus')
-    # Passsword must be clear-text on Windows. You should store this password in
-    # an encrypted data bag item and override in your wrapper.
-    omnibus['build_user_password'] = 'get0ntheBus'
   else
     omnibus['build_user_home']  = nil
     omnibus['build_user_group'] = 'omnibus'
     omnibus['install_dir']      = '/opt/omnibus'
     omnibus['cache_dir']        = '/var/cache/omnibus'
-    # You should store this password in an encrypted data bag item and override
-    # in your wrapper. Per Chef's requirements on Unix systems, the password below is
-    # hashed using the MD5-based BSD password algorithm 1. The plain text version
-    # is 'get0ntheBus'.
+  end
+
+  # You should store this password in an encrypted data bag item and
+  # override in your wrapper. We've set a default password here purely
+  # for testing purposes.
+  if platform_family == 'windows' || platform_family == 'mac_os_x'
+    # Passsword must be clear-text on Windows and Mac OS X.
+    omnibus['build_user_password'] = 'get0ntheBus'
+  else
+    # Per Chef's requirements on Unix systems, the password below is
+    # hashed using the MD5-based BSD password algorithm 1. The plain
+    # text version is 'get0ntheBus'.
     omnibus['build_user_password'] = '$1$QTCj0tQy$C60hWNmo8wZo.ctvDSy9p/'
   end
 end
