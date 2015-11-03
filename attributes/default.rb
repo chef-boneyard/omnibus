@@ -32,6 +32,11 @@ default['omnibus'].tap do |omnibus|
   else
     omnibus['build_user_home']  = nil
     omnibus['build_user_group'] = 'omnibus'
+    if platform_family == 'aix'
+      omnibus['build_user_shell'] = '/opt/omnibus-toolchain/embedded/bin/bash'
+    else
+      omnibus['build_user_shell'] = '/usr/local/bin/bash'
+    end
     omnibus['install_dir']      = '/opt/omnibus'
     omnibus['cache_dir']        = '/var/cache/omnibus'
     # You should store this password in an encrypted data bag item and override

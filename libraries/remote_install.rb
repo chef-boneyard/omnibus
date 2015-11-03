@@ -110,7 +110,7 @@ EOH
     end
 
     def extract
-      extract_command = 'tar -xv'
+      extract_command = 'tar -x'
       extract_command << 'z' if new_resource.source =~ /\.gz/
       extract_command << 'j' if new_resource.source =~ /\.bz2/
 
