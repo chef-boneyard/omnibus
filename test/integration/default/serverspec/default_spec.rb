@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Unix', if: !windows? do
-  describe group(build_user), pending: (os[:family] == 'darwin') do
+  describe group(build_user), pending: mac_os_x? do
     it { should exist }
   end
 
@@ -10,8 +10,18 @@ describe 'Unix', if: !windows? do
     it { should have_login_shell '/usr/local/bin/bash' }
   end
 
-  describe command('pkgutil --pkg-info=com.apple.pkg.CLTools_Executables'), if: os[:family] == 'darwin' do
-    its(:exit_status) { should eq 0 }
+  describe 'Xcode Command Line Tools', if: mac_os_x? do
+    let(:pkg_receipt) do
+      if omnibus_platform_version(os[:family], os[:release]) == '10.8'
+        'com.apple.pkg.DeveloperToolsCLI'
+      else
+        'com.apple.pkg.CLTools_Executables'
+      end
+    end
+
+    it 'is installed' do
+      expect(command("pkgutil --pkg-info=#{pkg_receipt}").exit_status).to eq 0
+    end
   end
 
   describe 'ccache' do
