@@ -25,10 +25,10 @@ default['omnibus'].tap do |omnibus|
 
   if platform_family == 'windows'
     omnibus['build_user_group'] = 'Administrators'
-    omnibus['cache_dir']        = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus-cache')
+    omnibus['base_dir']         = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus-ruby')
   else
     omnibus['build_user_group'] = 'omnibus'
-    omnibus['cache_dir']        = '/var/cache/omnibus'
+    omnibus['base_dir']         = '/var/cache/omnibus'
   end
 
   # You should store this password in an encrypted data bag item and

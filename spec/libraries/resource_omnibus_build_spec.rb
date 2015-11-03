@@ -25,8 +25,8 @@ describe Chef::Resource::OmnibusBuild do
   let(:project_dir) { "/home/#{build_user}/#{project_name}" }
   let(:project_name) { 'meeseeks' }
 
-  it 'has a default omnibus_base_dir' do
-    expect(subject.omnibus_base_dir).to eq('/var/cache/omnibus')
+  it 'has a default base_dir' do
+    expect(subject.base_dir).to eq('/var/cache/omnibus')
   end
 
   it 'has a default install_dir based on the project name' do
@@ -51,8 +51,8 @@ describe Chef::Resource::OmnibusBuild do
       allow(ChefConfig).to receive(:windows?).and_return(true)
     end
 
-    it 'has a Windowsy default omnibus_base_dir' do
-      expect(subject.omnibus_base_dir).to eq('C:/omnibus-cache')
+    it 'has a Windowsy default base_dir' do
+      expect(subject.base_dir).to eq('C:/omnibus-ruby')
     end
 
     it 'has a Windowsy default install_dir based on the project name' do

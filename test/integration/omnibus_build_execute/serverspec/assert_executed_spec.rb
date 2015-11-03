@@ -10,7 +10,11 @@ end
 
 def omnibus_directories
   dirs = []
-  dirs << omnibus_cache_dir
+  dirs << omnibus_base_dir
+  dirs << File.join(omnibus_base_dir, 'build')
+  dirs << File.join(omnibus_base_dir, 'cache')
+  dirs << File.join(omnibus_base_dir, 'pkg')
+  dirs << File.join(omnibus_base_dir, 'src')
   dirs << if windows?
             'C:/harmony'
           else

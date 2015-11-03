@@ -16,7 +16,7 @@ describe 'omnibus::_common' do
       .with_recursive(true)
   end
 
-  it 'creates the cache dir' do
+  it 'creates the Omnibus base dir' do
     expect(chef_run).to create_directory('/var/cache/omnibus')
       .with_mode('0755')
       .with_owner('omnibus')

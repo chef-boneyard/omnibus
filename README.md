@@ -28,12 +28,10 @@ All other recipes should be treated as "private" and are not meant to be used in
 
 Attributes
 ----------
-| Attribute     | Default              | Description                             |
-|---------------|----------------------|-----------------------------------------|
-| `build_user`  | `omnibus`            | The user to perform the Omnibus build   |
-| `cache_dir`   | `/var/cache/omnibus` | The cache directory for Omnibus         |
-| `install_dir` |                      | The Omnbius project's install directory |
-
+| Attribute     | Default                                               | Description                                              |
+|---------------|-------------------------------------------------------|----------------------------------------------------------|
+| `build_user`  | `omnibus`                                             | The user to execute Omnibus builds as                    |
+| `base_dir`    | Windows: `C:/omnibus-ruby` *nix: `/var/cache/omnibus` | The "base" directory where Omnibus will store its data. |
 
 Resources
 ---------
@@ -49,7 +47,7 @@ This resource is used to execute a build of an Omnibus project.
 | `project_name`     |                                                       | The name of the Omnibus project to build |
 | `project_dir`      |                                                       | The directory to install Omnibus |
 | `install_dir`      | `/opt/<PROJECT>`                                      | The installation of the project being built |
-| `omnibus_base_dir` | Windows: 'C:/omnibus-ruby' *nix: '/var/cache/omnibus' | The cache directory for Omnibus |
+| `base_dir`         | Windows: `C:/omnibus-ruby` *nix: `/var/cache/omnibus` | The base directory for Omnibus |
 | `log_level`        | `:internal`                                           | Log level used during the build. Valid values include: `:internal, :debug, :info, :warn, :error, :fatal` |
 | `config_file`      | `<PROJECT_DIR>/omnibus.rb`                            | Omnibus configuration file used for the build. |
 | `config_overrides` | `{}`                                                  | Overrides for one or more Omnibus config options |

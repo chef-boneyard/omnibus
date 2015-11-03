@@ -39,7 +39,7 @@ end
 
 # Create the omnibus directories
 [
-  node['omnibus']['cache_dir'],
+  node['omnibus']['base_dir'],
   node['omnibus']['install_dir']
 ].compact.each do |dir|
   directory dir do

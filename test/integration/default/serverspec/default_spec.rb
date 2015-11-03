@@ -60,6 +60,11 @@ describe 'Unix', if: !windows? do
   end
 
   describe 'environment' do
+    describe file(omnibus_base_dir) do
+      it { should exist }
+      it { should be_directory }
+    end
+
     describe '$PATH' do
       # On RHEL, +sudo+ does not execute a login shell by default. We can't simply
       # check the $PATH because ServerSpec doesn't execute a login shell
@@ -153,10 +158,18 @@ describe 'Windows', if: windows? do
   end
 
   describe 'environment' do
+    # We are using regular Ruby because ServerSpec existent checks are failing on Windows
+    describe omnibus_base_dir do
+      it 'exists' do
+        expect(File.directory?(omnibus_base_dir)).to be true
+      end
+    end
+
     [
       '.gitconfig',
-      'load-omnibus-toolchain.bat',
+      'load-omnibus-toolchain.bat'
     ].each do |env_file|
+      # We are using regular Ruby because ServerSpec existent checks are failing on Windows
       describe env_file do
         it 'exists' do
           expect(File.exist?(File.join(build_user_home_dir, env_file))).to be true

@@ -34,9 +34,9 @@ class Chef
     attribute :install_dir,
               kind_of: String,
               default: lazy { |r| Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
-    attribute :omnibus_base_dir,
+    attribute :base_dir,
               kind_of: String,
-              default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-cache') : '/var/cache/omnibus' }
+              default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
     attribute :log_level,
               kind_of: Symbol,
               equal_to: [:internal, :debug, :info, :warn, :error, :fatal],
@@ -101,15 +101,15 @@ class Chef
     def prepare_build_enviornment
       # Optionally wipe all caches (including the git cache)
       if new_resource.expire_cache
-        cache = Resource::Directory.new(new_resource.omnibus_base_dir, run_context)
+        cache = Resource::Directory.new(new_resource.base_dir, run_context)
         cache.recursive(true)
         cache.run_action(:delete)
       end
 
       # Clean up various directories from the last build
       %W(
-        #{new_resource.omnibus_base_dir}/build/#{new_resource.project_name}/*.manifest
-        #{new_resource.omnibus_base_dir}/pkg
+        #{new_resource.base_dir}/build/#{new_resource.project_name}/*.manifest
+        #{new_resource.base_dir}/pkg
         #{new_resource.project_dir}/pkg
         #{new_resource.install_dir}
       ).each do |directory|
@@ -120,7 +120,7 @@ class Chef
 
       # Create required build directories with the correct ownership
       %W(
-        #{new_resource.omnibus_base_dir}
+        #{new_resource.base_dir}
         #{new_resource.install_dir}
       ).each do |directory|
         d = Resource::Directory.new(directory, run_context)

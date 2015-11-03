@@ -39,9 +39,9 @@ def home_dir(user)
   end
 end
 
-def omnibus_cache_dir
+def omnibus_base_dir
   if windows?
-    'C:/omnibus-cache'
+    'C:/omnibus-ruby'
   else
     '/var/cache/omnibus'
   end
