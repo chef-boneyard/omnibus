@@ -47,7 +47,7 @@ describe 'Unix', if: !windows? do
 
   describe 'git' do
     describe command('/usr/local/bin/git --version') do
-      its(:stdout) { should match('1.9.0') }
+      its(:stdout) { should match('2.6.2') }
     end
 
     # Ensure `https` remote functions correctly
@@ -131,7 +131,7 @@ describe 'Windows', if: windows? do
 
   describe 'git' do
     describe command('git --version') do
-      its(:stdout) { should match('1.9.0') }
+      its(:stdout) { should match('2.6.2') }
     end
   end
 

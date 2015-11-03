@@ -51,6 +51,13 @@ file File.join(build_user_home, '.gitconfig') do
   EOH
 end
 
+# Ensure our version is in sync with the Git cookbook so we don't install
+# different versions during a single CCR. Eventually we will use the
+# Git cookbook's resources/recipes directly but we'll need to update it
+# to support some of the more esoteric platforms this cookbook supports.
+node.set['git']['version']  = node['omnibus']['git_version']
+node.set['git']['checksum'] = node['omnibus']['git_checksum']
+
 # Provided by the omnibus-toolchain package
 if omnibus_toolchain_enabled?
 
@@ -71,9 +78,10 @@ if omnibus_toolchain_enabled?
 
   return
 elsif windows?
-  windows_package 'Git version 1.9.0-preview20140217' do
-    source 'https://github.com/msysgit/msysgit/releases/download/Git-1.9.0-preview20140217/Git-1.9.0-preview20140217.exe'
-    checksum '22d2d3f43c8a3eb59820c50da81022e98d4df92c333dffaae1ae88aefbceedfc'
+
+  windows_package "Git version #{node['omnibus']['git_version']}" do
+    source "https://github.com/git-for-windows/git/releases/download/v#{node['omnibus']['git_version']}.windows.1/Git-#{node['omnibus']['git_version']}-32-bit.exe"
+    checksum node['omnibus']['git_checksum']
     installer_type :inno
     action :install
   end
@@ -142,14 +150,13 @@ else
   end
 
   remote_install 'git' do
-    source          'https://git-core.googlecode.com/files/git-1.9.0.tar.gz'
-    checksum        'de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882'
-    version         '1.9.0'
+    source          "https://www.kernel.org/pub/software/scm/git/git-#{node['omnibus']['git_version']}.tar.gz"
+    checksum        node['omnibus']['git_checksum']
+    version         node['omnibus']['git_version']
     build_command   "./configure #{configure_args}"
     compile_command "#{make} -j #{node.builders}"
     install_command "#{make} install"
     environment     git_environment
-    not_if { installed_at_version?('git', '1.9.0') }
+    not_if { installed_at_version?('/usr/local/bin/git', node['omnibus']['git_version']) }
   end
-
 end
