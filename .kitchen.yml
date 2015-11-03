@@ -34,32 +34,6 @@ platforms:
     run_list: apt::default
   - name: ubuntu-14.04
     run_list: apt::default
-  - name: aix-6.1
-    driver:
-      user: root
-      password: <%= ENV['AIX_61_WPAR_PASSWORD'] %>
-    driver_plugin: wpar
-    driver_config:
-      lpar_ip: 172.31.10.17
-      lpar_user: root
-      lpar_password: <%= ENV['AIX_61_LPAR_PASSWORD'] %>
-      wpar_ip: 172.31.10.161
-      wpar_user: root
-      wpar_password: <%= ENV['AIX_61_WPAR_PASSWORD'] %>
-  - name: aix-7.1
-    driver:
-      user: root
-      password: <%= ENV['AIX_71_WPAR_PASSWORD'] %>
-    driver_plugin: wpar
-    driver_config:
-      lpar_ip: 172.31.10.23
-      lpar_user: root
-      lpar_password: <%= ENV['AIX_71_LPAR_PASSWORD'] %>
-      lpar_version: 7.1
-      wpar_ip: 172.31.10.171
-      wpar_user: root
-      wpar_password: <%= ENV['AIX_71_WPAR_PASSWORD'] %>
-      wpar_version: 7.1
   #
   # The following (private) boxes are shared via Atlas. Please note this
   # requires adding your Atlas account to the `Chef` org and will
