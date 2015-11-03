@@ -36,7 +36,7 @@ class Chef
               default: lazy { |r| Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
     attribute :omnibus_base_dir,
               kind_of: String,
-              default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
+              default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-cache') : '/var/cache/omnibus' }
     attribute :log_level,
               kind_of: Symbol,
               equal_to: [:internal, :debug, :info, :warn, :error, :fatal],

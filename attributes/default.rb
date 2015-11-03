@@ -25,7 +25,7 @@ default['omnibus'].tap do |omnibus|
 
   if platform_family == 'windows'
     omnibus['build_user_group'] = 'Administrators'
-    omnibus['cache_dir']        = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'cache', 'omnibus')
+    omnibus['cache_dir']        = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus-cache')
   else
     omnibus['build_user_group'] = 'omnibus'
     omnibus['cache_dir']        = '/var/cache/omnibus'

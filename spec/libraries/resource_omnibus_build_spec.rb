@@ -52,7 +52,7 @@ describe Chef::Resource::OmnibusBuild do
     end
 
     it 'has a Windowsy default omnibus_base_dir' do
-      expect(subject.omnibus_base_dir).to eq('C:/omnibus-ruby')
+      expect(subject.omnibus_base_dir).to eq('C:/omnibus-cache')
     end
 
     it 'has a Windowsy default install_dir based on the project name' do
