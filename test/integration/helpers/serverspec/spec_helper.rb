@@ -4,14 +4,14 @@ require 'tmpdir'
 
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM).nil?
   set :backend, :exec
+  set :path, '/sbin:/usr/sbin:/usr/local/sbin:/usr/bin:/bin'
 else
   set :backend, :cmd
   set :os, family: 'windows'
+  set :path, 'C:/Program Files (x86)/Git/Cmd;C:/Program Files (x86)/Git/libexec/git-core;C:/wix;C:/Program Files/7-Zip'
 end
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |file| require_relative(file) }
-
-set :path, '/sbin:/usr/sbin:/usr/local/sbin:/usr/bin:/bin'
 
 def mac_os_x?
   os[:family] == 'darwin'
@@ -33,9 +33,17 @@ def home_dir(user)
   if mac_os_x?
     "/Users/#{user}"
   elsif windows?
-    "C:/Users/#{user}"
+    "C:/#{user}"
   else
     "/home/#{user}"
+  end
+end
+
+def omnibus_cache_dir
+  if windows?
+    'C:/omnibus-cache'
+  else
+    '/var/cache/omnibus'
   end
 end
 
