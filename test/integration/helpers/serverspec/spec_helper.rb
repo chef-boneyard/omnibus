@@ -8,7 +8,7 @@ if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM).nil?
 else
   set :backend, :cmd
   set :os, family: 'windows'
-  set :path, 'C:/Program Files (x86)/Git/Cmd;C:/Program Files (x86)/Git/libexec/git-core;C:/wix;C:/Program Files/7-Zip'
+  set :path, 'C:/Program Files (x86)/Git/Cmd;C:/Program Files (x86)/Git/libexec/git-core;C:/wix;C:/Program Files/7-Zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64'
 end
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |file| require_relative(file) }

@@ -161,6 +161,13 @@ describe 'Windows', if: windows? do
     end
   end
 
+  describe 'Windows SDK' do
+    describe command('signtool sign /?') do
+      # `signtool.exe` returns output over STDERR... *sigh*
+      its(:stderr) { should match 'Usage: signtool sign' }
+    end
+  end
+
   describe '7-zip' do
     describe command('7z -h') do
       its(:stdout) { should match '9.22' }
