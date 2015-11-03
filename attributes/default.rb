@@ -17,17 +17,16 @@
 
 default['omnibus'].tap do |omnibus|
   omnibus['build_user']         = 'omnibus'
+  omnibus['build_user_home']    = nil
   omnibus['install_dir']        = nil
   omnibus['ruby_version']       = '2.1.5'
   omnibus['toolchain_name']     = 'omnibus-toolchain'
   omnibus['toolchain_version']  = '0.0.1'
 
   if platform_family == 'windows'
-    omnibus['build_user_home']  = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus')
     omnibus['build_user_group'] = 'Administrators'
     omnibus['cache_dir']        = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'cache', 'omnibus')
   else
-    omnibus['build_user_home']  = nil
     omnibus['build_user_group'] = 'omnibus'
     omnibus['cache_dir']        = '/var/cache/omnibus'
   end
