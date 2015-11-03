@@ -28,11 +28,11 @@ All other recipes should be treated as "private" and are not meant to be used in
 
 Attributes
 ----------
-| Attribute     | Default              | Description                           |
-|---------------|----------------------|---------------------------------------|
-| `build_user`  | `omnibus`            | The user to perform the Omnibus build |
-| `install_dir` | `/opt/omnibus`       | The directory to install Omnibus      |
-| `cache_dir`   | `/var/cache/omnibus` | The cache directory for Omnibus       |
+| Attribute     | Default              | Description                             |
+|---------------|----------------------|-----------------------------------------|
+| `build_user`  | `omnibus`            | The user to perform the Omnibus build   |
+| `cache_dir`   | `/var/cache/omnibus` | The cache directory for Omnibus         |
+| `install_dir` |                      | The Omnbius project's install directory |
 
 
 Resources

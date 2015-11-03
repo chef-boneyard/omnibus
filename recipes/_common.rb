@@ -39,9 +39,9 @@ end
 
 # Create the omnibus directories
 [
-  node['omnibus']['install_dir'],
-  node['omnibus']['cache_dir']
-].each do |dir|
+  node['omnibus']['cache_dir'],
+  node['omnibus']['install_dir']
+].compact.each do |dir|
   directory dir do
     mode '0755'
     owner node['omnibus']['build_user']
