@@ -2,6 +2,31 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.0.0
+------
+
+# New Features
+
+* Make Git version a configurable option; Bump default version to 2.6.2.
+* Add Docker support to Test Kitchen config (used in Travis testing).
+
+# Improvements
+
+* Remove `chruby`
+* Remove `rsync`
+* Remove `ccache`
+* Update `ruby_install` usage.
+* Depend on `remote_install` cookbook and remove duplicate resource.
+* `omnibus_build` resource - Ensure all underlying build processes respect `build_user`.
+* Remove pessimistic locking in cookbook deps - This makes it easier to integrate this cookbook onto nodes with large run lists.
+* Make the `install_dir` attribute optional.
+* Rename `cache_dir` attribute to the proper `base_dir` (this matches the naming we use everywhere else).
+* Ensure `tar` is installed on EL.
+* Ensure Homebrew directories have the correct group ownership on Mac OS X.
+* Complete integration test coverage (ServerSpec) for FreeBSD, Mac OS X and Windows (yes the tests work on Windows).
+* Suppress Ruby warnings when running tests on Travis.
+* Converge and execute all integration tests on Travis against Debian, Ubuntu and CentOS.
+
 v2.7.7
 ------
 - Fix Windows detection on older Chef versions
