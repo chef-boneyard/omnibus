@@ -1,3 +1,16 @@
+
+include_recipe 'chef-sugar::default'
+
+# There are issues on Mac OS X using the `omnibus_build` resource when
+# the user executing the CCR and the `build_user` are not the same. This
+# only happens when running things in Test Kitchen with the Vagrant driver
+# so we'll just make the `build_user` "vagrant" in this scenerio.
+if mac_os_x? && vagrant?
+  node.set['omnibus']['build_user']          = 'vagrant'
+  node.set['omnibus']['build_user_group']    = 'vagrant'
+  node.set['omnibus']['build_user_password'] = 'vagrant'
+end
+
 include_recipe 'omnibus::default'
 
 # clone Harmony project

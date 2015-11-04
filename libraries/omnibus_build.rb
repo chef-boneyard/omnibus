@@ -34,7 +34,7 @@ class Chef
     attribute :install_dir,
               kind_of: String,
               default: lazy { |r| Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
-    attribute :omnibus_base_dir,
+    attribute :base_dir,
               kind_of: String,
               default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
     attribute :log_level,
@@ -101,15 +101,15 @@ class Chef
     def prepare_build_enviornment
       # Optionally wipe all caches (including the git cache)
       if new_resource.expire_cache
-        cache = Resource::Directory.new(new_resource.omnibus_base_dir, run_context)
+        cache = Resource::Directory.new(new_resource.base_dir, run_context)
         cache.recursive(true)
         cache.run_action(:delete)
       end
 
       # Clean up various directories from the last build
       %W(
-        #{new_resource.omnibus_base_dir}/build/#{new_resource.project_name}/*.manifest
-        #{new_resource.omnibus_base_dir}/pkg
+        #{new_resource.base_dir}/build/#{new_resource.project_name}/*.manifest
+        #{new_resource.base_dir}/pkg
         #{new_resource.project_dir}/pkg
         #{new_resource.install_dir}
       ).each do |directory|
@@ -120,7 +120,7 @@ class Chef
 
       # Create required build directories with the correct ownership
       %W(
-        #{new_resource.omnibus_base_dir}
+        #{new_resource.base_dir}
         #{new_resource.install_dir}
       ).each do |directory|
         d = Resource::Directory.new(directory, run_context)
@@ -138,9 +138,26 @@ class Chef
         CODE
       )
       execute.cwd(new_resource.project_dir)
-      execute.environment(new_resource.environment)
+      execute.environment(environment)
       execute.user(new_resource.build_user)
       execute.run_action(:run)
+    end
+
+    def environment
+      environment = new_resource.environment || {}
+      # Ensure we inheriet the calling procceses $PATH
+      environment['PATH'] = ENV['PATH']
+      # We need to all underlying build process respect the build user
+      # as specified by the `build_user` attribute.
+      environment['USER']     = new_resource.build_user
+      environment['USERNAME'] = new_resource.build_user
+      environment['HOME']     = new_resource.project_dir
+      environment['LOGNAME']  = new_resource.build_user
+      # Ensure we don't inherit the $TMPDIR of the calling process. $TMPDIR
+      # is set per user so we can hit permission issues when we execute
+      # the build as a different user.
+      environment['TMPDIR'] = nil if mac_os_x?
+      environment
     end
   end
 

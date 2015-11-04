@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::_common' do
-  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   it 'includes _user' do
     expect(chef_run).to include_recipe('omnibus::_user')
@@ -16,17 +16,26 @@ describe 'omnibus::_common' do
       .with_recursive(true)
   end
 
-  it 'creates the install dir' do
-    expect(chef_run).to create_directory('/opt/omnibus')
+  it 'creates the Omnibus base dir' do
+    expect(chef_run).to create_directory('/var/cache/omnibus')
       .with_mode('0755')
       .with_owner('omnibus')
       .with_recursive(true)
   end
 
-  it 'creates the cache dir' do
-    expect(chef_run).to create_directory('/var/cache/omnibus')
-      .with_mode('0755')
-      .with_owner('omnibus')
-      .with_recursive(true)
+  context '`install_dir` attribute is set' do
+    let(:install_dir) { '/opt/foo' }
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new do |node|
+        node.set['omnibus']['install_dir'] = install_dir
+      end.converge(described_recipe)
+    end
+
+    it 'creates the install dir' do
+      expect(chef_run).to create_directory(install_dir)
+        .with_mode('0755')
+        .with_owner('omnibus')
+        .with_recursive(true)
+    end
   end
 end

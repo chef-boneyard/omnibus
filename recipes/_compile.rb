@@ -31,10 +31,6 @@ return if windows?
 
 include_recipe 'build-essential::default'
 
-# Use homebrew as the default package manager on OSX. We cannot install homebrew
-# until AFTER we have installed the XCode command line tools via build-essential
-include_recipe 'homebrew::default' if mac_os_x?
-
 if freebsd?
   # Ensuring BSD Make is executed with the `-B` option (backward-compat mode)
   # allows many pieces of software to compile without `gmake`. A full
@@ -50,6 +46,27 @@ if freebsd?
     end
     only_if { File.exist?('/etc/make.conf') }
   end
+elsif mac_os_x?
+  # Use homebrew as the default package manager on OSX. We cannot install homebrew
+  # until AFTER we have installed the XCode command line tools via build-essential
+  # node.set['homebrew']['owner']       = node['omnibus']['build_user']
+  node.set['homebrew']['auto-update'] = false
+  include_recipe 'homebrew::default'
+
+  # Ensure /usr/local/* are writable by the `staff` group
+  %w(
+    /usr/local
+    /usr/local/bin
+    /usr/local/etc
+    /usr/local/lib
+    /usr/local/share
+  ).each do |dir|
+    directory dir do
+      group 'staff'
+      mode  '0775'
+      recursive true
+    end
+  end
 elsif solaris_10?
   # This is ugly but we can't gurantee all tooling will respect the
   # `MAKE` enviroment variable.
@@ -57,4 +74,10 @@ elsif solaris_10?
     to '/usr/sfw/bin/gmake'
     only_if { File.exist?('/usr/sfw/bin/gmake') }
   end
+elsif rhel?
+  # Make sure tar is installed. It's missing from some CentOS Docker images:
+  #
+  #   https://github.com/CentOS/sig-cloud-instance-images/issues/4
+  #
+  package 'tar'
 end

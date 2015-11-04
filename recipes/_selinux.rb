@@ -20,7 +20,7 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-return unless rhel?
+return unless !docker? && rhel?
 
 # Omnibus requires SELinux be in a permissive state or rsync commands will fail
 execute 'selinux-permissive' do

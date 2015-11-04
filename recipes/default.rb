@@ -27,22 +27,14 @@ include_recipe 'omnibus::_omnibus_toolchain' if omnibus_toolchain_enabled?
 # private recipes may depend on each other.
 include_recipe 'omnibus::_bash'
 include_recipe 'omnibus::_cacerts'
-include_recipe 'omnibus::_ccache'
-include_recipe 'omnibus::_chruby'
 include_recipe 'omnibus::_compile'
-# Installing ruby before git is the cleanest way to guarantee that
-# on OS X, ownership of /usr/local/lib is correct for both the
-# git install of perl5 and the homebrew install of libyaml.
-include_recipe 'omnibus::_ruby'
 include_recipe 'omnibus::_git'
+include_recipe 'omnibus::_ruby'
 include_recipe 'omnibus::_github'
 include_recipe 'omnibus::_libffi'
 include_recipe 'omnibus::_openssl'
 include_recipe 'omnibus::_packaging'
-include_recipe 'omnibus::_rsync'
 include_recipe 'omnibus::_selinux'
-include_recipe 'omnibus::_xml'
-include_recipe 'omnibus::_yaml'
 
 # Create environment loading scripts last
 include_recipe 'omnibus::_environment'

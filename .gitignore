@@ -48,3 +48,5 @@ vendor/
 
 # Delivery
 cli.toml
+
+Dockerfile*

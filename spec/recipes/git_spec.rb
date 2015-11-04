@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::_git' do
-  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   it 'includes _bash' do
     expect(chef_run).to include_recipe('omnibus::_bash')
@@ -17,7 +17,7 @@ describe 'omnibus::_git' do
 
   context 'on debian' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'debian', version: '7.4')
+      ChefSpec::SoloRunner.new(platform: 'debian', version: '7.4')
         .converge(described_recipe)
     end
 
@@ -32,7 +32,7 @@ describe 'omnibus::_git' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '9.1')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.1')
         .converge(described_recipe)
     end
 
@@ -54,7 +54,7 @@ describe 'omnibus::_git' do
 
   context 'on mac_os_x' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'mac_os_x', version: '10.8.2')
+      ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.8.2')
         .converge(described_recipe)
     end
 
@@ -71,7 +71,7 @@ describe 'omnibus::_git' do
     let(:chef_run) do
       # Make Solaris 11 look like Solaris 10 as Fauxhai doesn't yet contain
       # data for the latter.
-      ChefSpec::ServerRunner.new(platform: 'solaris2', version: '5.11') do |node|
+      ChefSpec::SoloRunner.new(platform: 'solaris2', version: '5.11') do |node|
         node.automatic['platform_version'] = '5.10'
       end.converge(described_recipe)
     end
@@ -84,7 +84,7 @@ describe 'omnibus::_git' do
 
   context 'on rhel 5' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'redhat', version: '5.10')
+      ChefSpec::SoloRunner.new(platform: 'redhat', version: '5.10')
         .converge(described_recipe)
     end
 
@@ -98,7 +98,7 @@ describe 'omnibus::_git' do
 
   context 'on rhel 6' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'redhat', version: '6.5')
+      ChefSpec::SoloRunner.new(platform: 'redhat', version: '6.5')
         .converge(described_recipe)
     end
 
@@ -113,7 +113,7 @@ describe 'omnibus::_git' do
 
   context 'on suse 11' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'suse', version: '11.2')
+      ChefSpec::SoloRunner.new(platform: 'suse', version: '11.2')
         .converge(described_recipe)
     end
 
@@ -129,9 +129,9 @@ describe 'omnibus::_git' do
     allow_any_instance_of(Chef::Resource).to receive(:installed_at_version?).and_return(false)
 
     expect(chef_run).to install_remote_install('git')
-      .with_source('https://git-core.googlecode.com/files/git-1.9.0.tar.gz')
-      .with_checksum('de3097fdc36d624ea6cf4bb853402fde781acdb860f12152c5eb879777389882')
-      .with_version('1.9.0')
+      .with_source('https://www.kernel.org/pub/software/scm/git/git-2.6.2.tar.gz')
+      .with_checksum('34dfc06b44880df91940dc318a2d3c83b79e67b6f05319c7c71e94d30893636d')
+      .with_version('2.6.2')
       .with_build_command('./configure --prefix=/usr/local --without-tcltk')
       .with_compile_command('make -j 2')
       .with_install_command('make install')

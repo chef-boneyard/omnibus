@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'omnibus::_user' do
-  let(:chef_run) { ChefSpec::ServerRunner.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
-  it 'creates the omnibus user' do
+  it 'creates the omnibus build user' do
     expect(chef_run).to create_user('omnibus')
   end
 
