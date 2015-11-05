@@ -47,8 +47,8 @@ module Omnibus
     end
 
     def omnibus_toolchain_enabled?
-      # Currenlty we only build the Omnibus Toolchain for Solaris 10
-      solaris_10?
+      # Currently we only build the Omnibus Toolchain for Solaris 10 and AIX
+      solaris_10? || aix?
     end
   end
 end

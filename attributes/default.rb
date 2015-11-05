@@ -30,6 +30,11 @@ default['omnibus'].tap do |omnibus|
     omnibus['git_checksum']     = 'ade9f885220964ec190b5de6c6aa42857e00afc7b21827223807c857cce38a78'
   else
     omnibus['build_user_group'] = 'omnibus'
+    if platform_family == 'aix'
+      omnibus['build_user_shell'] = "/opt/#{omnibus['toolchain_name']}/embedded/bin/bash"
+    else
+      omnibus['build_user_shell'] = '/usr/local/bin/bash'
+    end
     omnibus['base_dir']         = '/var/cache/omnibus'
     omnibus['git_checksum']     = '34dfc06b44880df91940dc318a2d3c83b79e67b6f05319c7c71e94d30893636d'
   end
