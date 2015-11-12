@@ -21,31 +21,42 @@
 toolchain_name = node['omnibus']['toolchain_name']
 toolchain_version = node['omnibus']['toolchain_version']
 
-if solaris_10?
-  # create a nocheck file for automated install
-  file '/var/sadm/install/admin/auto-install' do
-    content <<-EOH.flush
-      mail=
-      instance=overwrite
-      partial=nocheck
-      runlevel=nocheck
-      idepend=nocheck
-      space=ask
-      setuid=nocheck
-      conflict=nocheck
-      action=nocheck
-      basedir=default
-    EOH
-    owner 'root'
-    group 'root'
-    mode '0444'
-  end
+if File.exist?('/opt/omnibus-toolchain') || File.exist?('/opt/angry-omnibus-toolchain')
+  Chef::Log.warn('Assuming the existence of /opt/(angry-)omnibus-toolchain means that the package is already installed.')
+else
+  install_options = ''
+  if solaris_10?
+    # create a nocheck file for automated install
+    file '/var/sadm/install/admin/auto-install' do
+      content <<-EOH.flush
+        mail=
+        instance=overwrite
+        partial=nocheck
+        runlevel=nocheck
+        idepend=nocheck
+        space=ask
+        setuid=nocheck
+        conflict=nocheckit
+        action=nocheck
+        basedir=default
+      EOH
+      owner 'root'
+      group 'root'
+      mode '0444'
+    end
 
-  case node['kernel']['machine']
-  when 'i86pc'
-    package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.i86pc.solaris"
-  when 'sun4v', 'sun4u'
-    package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
+    case node['kernel']['machine']
+    when 'i86pc'
+      package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.i86pc.solaris"
+    when 'sun4v', 'sun4u'
+      package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
+    end
+
+    install_options = '-a auto-install'
+  elsif aix?
+    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.powerpc.bff"
+  else
+    Chef::Application.fatal!("I don't know how to install #{node['omnibus']['toolchain_name']} on this platform!", 1)
   end
 
   package_path = File.join(Chef::Config[:file_cache_path], File.basename(package_url))
@@ -57,6 +68,6 @@ if solaris_10?
 
   package node['omnibus']['toolchain_name'] do
     source package_path
-    options '-a auto-install'
+    options install_options
   end
 end
