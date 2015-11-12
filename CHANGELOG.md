@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.1.0
+------
+# Feature
+- AIX support
+
 v3.0.0
 ------
 
