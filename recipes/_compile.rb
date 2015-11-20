@@ -54,19 +54,19 @@ elsif mac_os_x?
   include_recipe 'homebrew::default'
 
   # Ensure /usr/local/* are writable by the `staff` group
-  %w(
-    /usr/local
-    /usr/local/bin
-    /usr/local/etc
-    /usr/local/lib
-    /usr/local/share
-  ).each do |dir|
-    directory dir do
-      group 'staff'
-      mode  '0775'
-      recursive true
-    end
-  end
+  # %w(
+  #   /usr/local
+  #   /usr/local/bin
+  #   /usr/local/etc
+  #   /usr/local/lib
+  #   /usr/local/share
+  # ).each do |dir|
+  #   directory dir do
+  #     group 'staff'
+  #     mode  '0775'
+  #     recursive true
+  #   end
+  # end
 elsif solaris_10?
   # This is ugly but we can't gurantee all tooling will respect the
   # `MAKE` enviroment variable.
