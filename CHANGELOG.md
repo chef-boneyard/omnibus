@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.1.1
+------
+- prepend xlc to PATH on AIX
+
 v3.1.0
 ------
 # Feature
