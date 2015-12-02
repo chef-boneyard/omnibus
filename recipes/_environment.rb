@@ -113,7 +113,9 @@ else
   omnibus_env['PATH'] << "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin" if omnibus_toolchain_enabled?
   omnibus_env['PATH'] << '/usr/local/bin'
 
-  if solaris_10?
+  if aix?
+    omnibus_env['PATH'].unshift('/opt/IBM/xlC/13.1.0/bin:/opt/IBM/xlC/13.1.0/bin')
+  elsif solaris_10?
     omnibus_env['PATH'] << '/usr/sfw/bin'
     omnibus_env['PATH'] << '/usr/ccs/bin'
   end
@@ -151,7 +153,11 @@ else
       echo "Ruby.........$(ruby --version | head -1)"
       echo "RubyGems.....$(gem --version | head -1)"
       echo "Bundler......$(bundle --version | head -1)"
-      echo "GCC..........$(gcc --version | head -1)"
+      #{if aix?
+          'echo "XLC..........$(xlc -qversion | head -1)"'
+        else
+          'echo "GCC..........$(gcc --version | head -1)"'
+        end}
       echo "Make.........$(make --version | head -1)"
       echo "Bash.........$(bash --version | head -1)"
 
