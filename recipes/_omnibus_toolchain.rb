@@ -21,8 +21,10 @@
 toolchain_name = node['omnibus']['toolchain_name']
 toolchain_version = node['omnibus']['toolchain_version']
 
-if File.exist?('/opt/omnibus-toolchain') || File.exist?('/opt/angry-omnibus-toolchain')
-  Chef::Log.warn('Assuming the existence of /opt/(angry-)omnibus-toolchain means that the package is already installed.')
+if File.exist?("/opt/#{toolchain_name}/version-manifest.json") &&
+   (JSON.parse(File.read("/opt/#{toolchain_name}/version-manifest.json"))['build_version'] == toolchain_version)
+
+  Chef::Log.info("`#{toolchain_name}` is already installed at version #{toolchain_version}.")
 else
   install_options = ''
   if solaris_10?
