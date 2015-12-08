@@ -2,6 +2,14 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.1.2
+------
+- Properly point `git` compile at homebrew-installed `curl`
+- Ensure omnibus-toolchain is available on current CCR $PATH
+- Configure `GIT_SSL_CAINFO` for current CCR
+- Set build user shell to Omnibus Toolchain bash for all supported platforms
+- Don’t set `/usr/local` ownership on recent OS X
+
 v3.1.1
 ------
 - prepend xlc to PATH on AIX
