@@ -70,11 +70,12 @@ if omnibus_toolchain_enabled?
   #
   execute "git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
     environment(
-      'PATH' => "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin",
       'HOME' => build_user_home
     )
     user node['omnibus']['build_user']
   end
+
+  ENV['GIT_SSL_CAINFO'] = "/opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem"
 
   return
 elsif windows?
