@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.1.3
+------
+- Ensure all configured compilers appear on current CCR $PATH
+
 v3.1.2
 ------
 - Properly point `git` compile at homebrew-installed `curl`
