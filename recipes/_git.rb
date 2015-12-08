@@ -70,11 +70,12 @@ if omnibus_toolchain_enabled?
   #
   execute "git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
     environment(
-      'PATH' => "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin",
       'HOME' => build_user_home
     )
     user node['omnibus']['build_user']
   end
+
+  ENV['GIT_SSL_CAINFO'] = "/opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem"
 
   return
 elsif windows?
@@ -132,7 +133,11 @@ else
     package 'curl'
     package 'expat'
     package 'gettext'
-    git_environment['CPPFLAGS'] = '-I/usr/local/opt/openssl/include' if node['platform_version'].satisfies?('>= 10.11')
+
+    if node['platform_version'].satisfies?('>= 10.10')
+      git_environment['CPPFLAGS'] = '-I/usr/local/opt/curl/include -I/usr/local/opt/openssl/include'
+      git_environment['LDFLAGS'] = '-L/usr/local/opt/curl/lib'
+    end
   elsif rhel?
     package 'curl-devel'
     package 'expat-devel'

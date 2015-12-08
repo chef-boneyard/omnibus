@@ -65,6 +65,7 @@ elsif mac_os_x?
       group 'staff'
       mode  '0775'
       recursive true
+      not_if { node['platform_version'].satisfies?('>= 10.11') }
     end
   end
 elsif solaris_10?

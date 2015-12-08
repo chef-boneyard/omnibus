@@ -50,6 +50,14 @@ module Omnibus
       # Currently we only build the Omnibus Toolchain for Solaris 10 and AIX
       solaris_10? || aix?
     end
+
+    def build_user_shell
+      if omnibus_toolchain_enabled?
+        "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/bash"
+      else
+        '/usr/local/bin/bash'
+      end
+    end
   end
 end
 
