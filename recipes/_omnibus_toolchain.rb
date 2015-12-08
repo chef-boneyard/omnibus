@@ -71,3 +71,7 @@ else
     options install_options
   end
 end
+
+# Ensure the tools that ship in the omnibus-toolchain are available on
+# the $PATH of the chef-client run.
+ENV['PATH'] = "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin:#{ENV['PATH']}"
