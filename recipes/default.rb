@@ -21,7 +21,7 @@
 include_recipe 'omnibus::_common'
 
 # Install the Omnibus toolchain package on platforms that support it
-include_recipe 'omnibus::_omnibus_toolchain' if omnibus_toolchain_enabled?
+include_recipe 'omnibus::_omnibus_toolchain'
 
 # Include other recipes. Note: they may not be executed in this order, since
 # private recipes may depend on each other.

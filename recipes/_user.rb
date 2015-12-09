@@ -20,6 +20,9 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
+# Install the omnibus toolchain so we have a shell
+include_recipe 'omnibus::_omnibus_toolchain'
+
 # If this is a fresh solaris 10 system, there will not be an /export/home
 # directory, and useradd doesn't do recursive create with -m
 directory '/export/home' do

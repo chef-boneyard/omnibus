@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+return unless omnibus_toolchain_enabled?
+
 # These are sort of 'global' variables, independent of platform
 toolchain_name = node['omnibus']['toolchain_name']
 toolchain_version = node['omnibus']['toolchain_version']
@@ -55,6 +57,8 @@ else
     install_options = '-a auto-install'
   elsif aix?
     package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.powerpc.bff"
+  elsif nexus?
+    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.nexus7.x86_64.rpm"
   else
     Chef::Application.fatal!("I don't know how to install #{node['omnibus']['toolchain_name']} on this platform!", 1)
   end
@@ -67,6 +71,7 @@ else
   end
 
   package node['omnibus']['toolchain_name'] do
+    provider Chef::Provider::Package::Yum if nexus?
     source package_path
     options install_options
   end
