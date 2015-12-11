@@ -37,7 +37,7 @@ end
 
 # Ensure '/usr/local/bin/bash' is added to acceptable shells list
 execute 'chsec_login_shell' do
-  command "chsec -f /etc/security/login.cfg -s usw -a 'shells=/bin/sh,/bin/bsh,/bin/csh,/bin/ksh,/bin/tsh,/bin/ksh93,/usr/bin/sh,/usr/bin/bsh,/usr/bin/csh,/usr/bin/ksh,/usr/bin/tsh,/usr/bin/ksh93,/usr/bin/rksh,/usr/bin/rksh93,/usr/sbin/uucp/uucico,/usr/sbin/sliplogin,/usr/sbin/snappd,/usr/bin/bash,#{node['omnibus']['build_user_shell']}'"
+  command "chsec -f /etc/security/login.cfg -s usw -a 'shells=/bin/sh,/bin/bsh,/bin/csh,/bin/ksh,/bin/tsh,/bin/ksh93,/usr/bin/sh,/usr/bin/bsh,/usr/bin/csh,/usr/bin/ksh,/usr/bin/tsh,/usr/bin/ksh93,/usr/bin/rksh,/usr/bin/rksh93,/usr/sbin/uucp/uucico,/usr/sbin/sliplogin,/usr/sbin/snappd,/usr/bin/bash,#{build_user_shell}'"
   only_if { aix? }
 end
 
