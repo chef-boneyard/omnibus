@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.2.0
+------
+- Sort env & tool list on all platforms.
+- Enable omnibus toolchain for nexus platform
+- Properly detect if the Toolchain is installed at a particular version
+
 v3.1.4
 ------
 - 'build_user_shell' is not longer a node attribute
