@@ -40,7 +40,7 @@ if windows?
       ECHO ========================================
       ECHO(
 
-      FOR /F "tokens=*" %%G IN ('set') DO echo %%G
+      FOR /F "tokens=*" %%G IN ('set ^| sort') DO echo %%G
 
       REM ###############################################################
       REM # Query tool versions
@@ -88,15 +88,15 @@ if windows?
       ECHO ========================================
       ECHO(
 
-      ECHO Git............%GIT_VERSION%
-      ECHO Ruby...........%RUBY_VERSION%
-      ECHO RubyGems.......%GEM_VERSION%
+      ECHO 7-Zip..........%SEVENZIP_VERSION%
       ECHO Bundler........%BUNDLER_VERSION%
       ECHO GCC............%GCC_VERSION%
+      ECHO Git............%GIT_VERSION%
       ECHO Make...........%MAKE_VERSION%
-      ECHO 7-Zip..........%SEVENZIP_VERSION%
-      ECHO WiX:Heat.......%WIX_HEAT_VERSION%
+      ECHO Ruby...........%RUBY_VERSION%
+      ECHO RubyGems.......%GEM_VERSION%
       ECHO WiX:Candle.....%WIX_CANDLE_VERSION%
+      ECHO WiX:Heat.......%WIX_HEAT_VERSION%
       ECHO WiX:Light......%WIX_LIGHT_VERSION%
 
       ECHO(
@@ -142,7 +142,7 @@ else
       echo "========================================"
       echo ""
 
-      env
+      env | sort
 
       ###################################################################
       # Query tool versions
@@ -155,17 +155,17 @@ else
       echo "========================================"
       echo ""
 
-      echo "Git..........$(git --version | head -1)"
-      echo "Ruby.........$(ruby --version | head -1)"
-      echo "RubyGems.....$(gem --version | head -1)"
+      echo "Bash.........$(bash --version | head -1)"
       echo "Bundler......$(bundle --version | head -1)"
       #{if aix?
           'echo "XLC..........$(xlc -qversion | head -1)"'
         else
           'echo "GCC..........$(gcc --version | head -1)"'
         end}
+      echo "Git..........$(git --version | head -1)"
       echo "Make.........$(make --version | head -1)"
-      echo "Bash.........$(bash --version | head -1)"
+      echo "Ruby.........$(ruby --version | head -1)"
+      echo "RubyGems.....$(gem --version | head -1)"
 
       echo ""
       echo "========================================"
