@@ -46,7 +46,6 @@ end
 
 user node['omnibus']['build_user'] do
   home     build_user_home
-  supports manage_home: true
   password node['omnibus']['build_user_password']
   unless windows?
     shell build_user_shell
