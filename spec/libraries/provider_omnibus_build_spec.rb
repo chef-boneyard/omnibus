@@ -49,6 +49,10 @@ describe Chef::Provider::OmnibusBuild do
   end
 
   describe '#bundle_install_command' do
+    it 'excludes the development group' do
+      expect(subject.send(:bundle_install_command)).to match(/--without development/)
+    end
+
     context 'a Gemfile.lock exists' do
       before do
         expect(File).to receive(:exist?).with("#{project_dir}/Gemfile.lock").and_return(true)

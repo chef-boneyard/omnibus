@@ -81,9 +81,9 @@ class Chef
 
     def bundle_install_command
       if ::File.exist?(::File.join(new_resource.project_dir, 'Gemfile.lock'))
-        'bundle install --deployment'
+        'bundle install --without development --deployment'
       else
-        'bundle install --path vendor/bundle'
+        'bundle install --without development --path vendor/bundle'
       end
     end
 
