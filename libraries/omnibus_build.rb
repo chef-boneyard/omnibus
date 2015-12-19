@@ -151,7 +151,6 @@ class Chef
       # as specified by the `build_user` attribute.
       environment['USER']     = new_resource.build_user
       environment['USERNAME'] = new_resource.build_user
-      environment['HOME']     = new_resource.project_dir
       environment['LOGNAME']  = new_resource.build_user
       # Ensure we don't inherit the $TMPDIR of the calling process. $TMPDIR
       # is set per user so we can hit permission issues when we execute
