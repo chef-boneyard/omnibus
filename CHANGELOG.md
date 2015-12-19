@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.2.2
+------
+- Don’t override `HOME` during `omnibus_build` execution
+- Ensure we use the
+
 v3.2.1
 ------
 - `omnibus_buld` - Exclude the `development` group when bundle installing
