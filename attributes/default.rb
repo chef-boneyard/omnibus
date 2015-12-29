@@ -16,13 +16,15 @@
 #
 
 default['omnibus'].tap do |omnibus|
-  omnibus['build_user']         = 'omnibus'
-  omnibus['build_user_home']    = nil
-  omnibus['install_dir']        = nil
-  omnibus['toolchain_name']     = 'omnibus-toolchain'
-  omnibus['toolchain_version']  = '0.0.1'
-  omnibus['git_version']        = '2.6.2'
-  omnibus['ruby_version']       = '2.1.5'
+  omnibus['build_user']               = 'omnibus'
+  omnibus['build_user_home']          = nil
+  omnibus['install_dir']              = nil
+  omnibus['toolchain_name']           = 'omnibus-toolchain'
+  omnibus['toolchain_version']        = '1.1.2'
+  omnibus['toolchain_meta_bucket']    = 'opscode-omnibus-package-metadata'
+  omnibus['toolchain_package_bucket'] = 'opscode-omnibus-packages'
+  omnibus['git_version']              = '2.6.2'
+  omnibus['ruby_version']             = '2.1.5'
 
   if platform_family == 'windows'
     omnibus['build_user_group'] = 'Administrators'

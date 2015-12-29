@@ -38,4 +38,18 @@ describe 'omnibus::_bash' do
       .with_owner('omnibus')
       .with_mode('0755')
   end
+
+  context 'when run on Solaris (11)' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'solaris2',
+        version: '5.11') do
+      end.converge(described_recipe)
+    end
+
+    it 'fix the build user\'s shell' do
+      expect(chef_run).to create_user('omnibus')
+        .with_shell('/usr/local/bin/bash')
+    end
+  end
 end

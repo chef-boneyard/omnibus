@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+require 'json'
+require 'open-uri'
+
 module Omnibus
   # Recipe Helpers
   module Helper
@@ -46,16 +49,64 @@ module Omnibus
       node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
     end
 
-    def omnibus_toolchain_enabled?
-      # Currently we only build the Omnibus Toolchain for Solaris 10 and AIX
-      solaris_10? || aix? || nexus?
-    end
-
     def build_user_shell
       if omnibus_toolchain_enabled?
         "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/bash"
       else
         '/usr/local/bin/bash'
+      end
+    end
+
+    def omnibus_toolchain_enabled?
+      # Currently we only build the Omnibus Toolchain for Solaris 10, AIX, and Nexus
+      solaris_10? || aix? || nexus?
+    end
+
+    def toolchain_full_name
+      node['omnibus']['toolchain_name'] + '-' + node['omnibus']['toolchain_version']
+    end
+
+    def etc_shells
+      File.read('/etc/shells')
+    rescue
+      nil
+    end
+
+    def toolchain_url(toolchain_name = node['omnibus']['toolchain_name'])
+      version        = node['omnibus']['toolchain_version']
+      meta_bucket    = node['omnibus']['toolchain_meta_bucket']    # opscode-omnibus-package-metadata
+      package_bucket = node['omnibus']['toolchain_package_bucket'] # opscode-omnibus-packages
+
+      # unfortunately necessary as omni$vehicle doesn't align with ohai
+      p = {
+        os:               node['os'],
+        platform_version: node['platform_version'],
+        arch:             node['kernel']['machine']
+      }
+
+      case p[:arch]
+      when 'i86pc'
+        p[:arch] = 'i386'
+      when 'sun4v'
+        p[:arch] = 'sparc'
+      end
+
+      begin
+        result = JSON.parse(open("https://#{meta_bucket}.s3.amazonaws.com/#{toolchain_name}-release-manifest/#{version}.json").read)
+
+        relpath = result["#{p[:os]}"]["#{p[:platform_version]}"]["#{p[:arch]}"]["#{version}-1"]['relpath']
+        "https://#{package_bucket}.s3.amazonaws.com" + relpath
+      rescue JSON::ParserError
+        message = "#{toolchain_full_name} isn't available on this platform!"
+
+        # sadly #omnibus_toolchain_enabled? above doesn't work in chefspec
+        if node['os'] == ('aix' || 'nexus')
+          raise message
+        elsif node['os'] == 'solaris2' && node['platform_version'] == '5.10'
+          raise message
+        else
+          Chef::Log.warn("#{message} But it's okay.")
+        end
       end
     end
   end

@@ -106,3 +106,17 @@ file File.join(build_user_home, '.bashrc.d', 'omnibus-path.sh') do
     export PATH="/usr/local/bin:$PATH"
   EOH
 end
+
+if solaris_11?
+  template '/etc/shells' do
+    variables(
+      omnibus_shell:   build_user_shell,
+      existing_shells: etc_shells
+    )
+    notifies :create, 'user[omnibus]', :immediately
+  end
+
+  user 'omnibus' do
+    shell build_user_shell
+  end
+end
