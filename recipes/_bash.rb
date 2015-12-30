@@ -22,18 +22,19 @@ include_recipe 'omnibus::_common'
 
 return if windows?
 # Provided by the omnibus-toolchain package
-return if omnibus_toolchain_enabled?
+unless omnibus_toolchain_enabled?
 
-include_recipe 'omnibus::_compile'
+  include_recipe 'omnibus::_compile'
 
-remote_install 'bash' do
-  source 'http://ftp.gnu.org/gnu/bash/bash-4.3.30.tar.gz'
-  version '4.3.30'
-  checksum '317881019bbf2262fb814b7dd8e40632d13c3608d2f237800a8828fbb8a640dd'
-  build_command './configure'
-  compile_command "make -j #{node.builders}"
-  install_command 'make install'
-  not_if { installed_at_version?('/usr/local/bin/bash', '4.3.30') }
+  remote_install 'bash' do
+    source 'http://ftp.gnu.org/gnu/bash/bash-4.3.30.tar.gz'
+    version '4.3.30'
+    checksum '317881019bbf2262fb814b7dd8e40632d13c3608d2f237800a8828fbb8a640dd'
+    build_command './configure'
+    compile_command "make -j #{node.builders}"
+    install_command 'make install'
+    not_if { installed_at_version?('/usr/local/bin/bash', '4.3.30') }
+  end
 end
 
 #
