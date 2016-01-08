@@ -94,7 +94,7 @@ class Chef
         new_resource.project_name,
         "--log-level #{new_resource.log_level}",
         "--config #{new_resource.config_file}",
-        "--override #{new_resource.config_overrides.map { |k, v| "#{k}:#{v}" }.join(' ')}"
+        new_resource.config_overrides.empty? ? '' : "--override #{new_resource.config_overrides.map { |k, v| "#{k}:#{v}" }.join(' ')}"
       ].join(' ')
     end
 
