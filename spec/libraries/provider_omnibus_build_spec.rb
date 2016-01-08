@@ -83,6 +83,10 @@ describe Chef::Provider::OmnibusBuild do
       expect(subject.send(:build_command)).to match(/--log-level internal/)
     end
 
+    it 'does not have an override CLI option' do
+      expect(subject.send(:build_command)).to_not match(/--override/)
+    end
+
     context 'config overrides are set' do
       let(:config_overrides) do
         {
