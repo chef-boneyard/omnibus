@@ -16,10 +16,10 @@ For a full list of supported platforms and external cookbook requirements, pleas
 
 Recipes
 -------
-The default recipe is the main entrypoint for the cookbook and does the following:
+The default recipe is the main entry point for the cookbook and does the following:
 
 - Ensures all required Omnibus-related directories are created and owned by the build user.
-- Ensures a sane build tool-chain is installed and configured (using the [build-essential](http://community.opscode.com/cookbooks/build-essential) cookbook)
+- Ensures a sane build toolchain is installed and configured (using the [build-essential](http://community.opscode.com/cookbooks/build-essential) cookbook or [Omnibus Toolchain](https://github.com/chef/omnibus-toolchain))
 - Ensures git is installed (using the [git](http://community.opscode.com/cookbooks/git) cookbook)
 - Includes a platform-specific recipe to apply additional tweaks as appropriate.
 
@@ -28,10 +28,19 @@ All other recipes should be treated as "private" and are not meant to be used in
 
 Attributes
 ----------
-| Attribute     | Default                                               | Description                                              |
-|---------------|-------------------------------------------------------|----------------------------------------------------------|
-| `build_user`  | `omnibus`                                             | The user to execute Omnibus builds as                    |
-| `base_dir`    | Windows: `C:/omnibus-ruby` *nix: `/var/cache/omnibus` | The "base" directory where Omnibus will store its data. |
+| Attribute                  | Default                                               | Description |
+|----------------------------|-------------------------------------------------------|-------------|
+| `build_user`               | `omnibus`                                             | The user to execute Omnibus builds as |
+| `base_dir`                 | Windows: `C:/omnibus-ruby` *nix: `/var/cache/omnibus` | The "base" directory where Omnibus will store its data |
+| `build_user_home`          | `/home/<BUILD_USER>`                                  | Home directory of the build user |
+| `install_dir`              | `/opt/<PROJECT>`                                      | The installation of the project being built |
+| `toolchain_name`           | `omnibus-toolchain`                                   | Name of the full toolchain fat package to use |
+| `toolchain_version`        | `1.1.2`                                               | Version of the full toolchain fat package to use |
+| `toolchain_meta_bucket`    | `opscode-omnibus-package-metadata`                    | Amazon S3 bucket containing download urls of toolchain packages |
+| `toolchain_package_bucket` | `opscode-omnibus-package-metadata`                    | Amazon S3 bucket containing toolchain packages ala [omnitruck](https://docs.chef.io/api_omnitruck.html)|
+| `git_version`              | `2.6.2`                                               | Version of git to compile and install |
+| `ruby_version`             | `2.1.5`                                               | Version of ruby to compile and install |
+
 
 Resources
 ---------
@@ -42,18 +51,18 @@ This resource is used to execute a build of an Omnibus project.
 
 #### Attributes
 
-| Attribute          | Default                                               | Description                           |
-|--------------------|-------------------------------------------------------|---------------------------------------|
+| Attribute          | Default                                               | Description |
+|--------------------|-------------------------------------------------------|-------------|
 | `project_name`     |                                                       | The name of the Omnibus project to build |
 | `project_dir`      |                                                       | The directory to install Omnibus |
 | `install_dir`      | `/opt/<PROJECT>`                                      | The installation of the project being built |
 | `base_dir`         | Windows: `C:/omnibus-ruby` *nix: `/var/cache/omnibus` | The base directory for Omnibus |
 | `log_level`        | `:internal`                                           | Log level used during the build. Valid values include: `:internal, :debug, :info, :warn, :error, :fatal` |
-| `config_file`      | `<PROJECT_DIR>/omnibus.rb`                            | Omnibus configuration file used for the build. |
+| `config_file`      | `<PROJECT_DIR>/omnibus.rb`                            | Omnibus configuration file used for the build |
 | `config_overrides` | `{}`                                                  | Overrides for one or more Omnibus config options |
 | `expire_cache`     | `false`                                               | Indiciates the Omnibus cache (including git cache) should be wiped before building.  |
-| `build_user`       | `node['omnibus']['build_user']`                       | The user to execute the Omnibus build as. |
-| `environment`      | `{}`                                                  | Environment variables to set in the underlying build process. |
+| `build_user`       | `node['omnibus']['build_user']`                       | The user to execute the Omnibus build as |
+| `environment`      | `{}`                                                  | Environment variables to set in the underlying build process |
 
 #### Example Usage
 

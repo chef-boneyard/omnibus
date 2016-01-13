@@ -1,0 +1,17 @@
+<% if @existing_shells.nil? %>
+/usr/bin/sh
+/usr/bin/csh
+/usr/bin/ksh
+/usr/bin/jsh
+/usr/bin/bsh
+/bin/sh
+/bin/csh
+/bin/ksh
+/bin/jsh
+/sbin/sh
+/sbin/jsh
+<% else %>
+<%= @existing_shells %>
+<% end %>
+/usr/bin/bash
+<%= @omnibus_shell %>
