@@ -48,7 +48,7 @@ module Omnibus
 
     def omnibus_toolchain_enabled?
       # Currently we only build the Omnibus Toolchain for Solaris 10 and AIX
-      solaris_10? || aix? || nexus?
+      solaris_10? || aix? || nexus? || ios_xr?
     end
 
     def build_user_shell
