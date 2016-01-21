@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.2.4
+------
+- Support for ios_xr platform.
+
 v3.2.3
 ------
 - Don’t manage the build user’s home
