@@ -2,6 +2,20 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+Unreleased
+______
+- Pull from fauxhai's master branch
+- Add Guardfile
+- Add `node['toolchain_meta_bucket']` & `node['toolchain_package_bucket']`
+- Add `#etc_shells` helper method to collect prexisting /etc/shells
+- Use opscode-omnibus-packages buckets fro omnibus-toolchain
+- Add `#toolchain_url` helper method to determine Omnibus Toolchain url
+- Omnibus Toolchain 1.1.2
+- Only set build user shell after bash compilation on Solaris 11
+- Add appropriate shells to /etc/shells on Solaris 11
+- Use Chefdk from `chef-current-precise` for testing
+- Update README to mention omnibus-toolchain-related additions
+
 v3.2.4
 ------
 - Support for ios_xr platform.

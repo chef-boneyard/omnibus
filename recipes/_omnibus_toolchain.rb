@@ -17,66 +17,57 @@
 # limitations under the License.
 #
 
-return unless omnibus_toolchain_enabled?
-
-# These are sort of 'global' variables, independent of platform
-toolchain_name = node['omnibus']['toolchain_name']
-toolchain_version = node['omnibus']['toolchain_version']
-
-if File.exist?("/opt/#{toolchain_name}/version-manifest.json") &&
-   (JSON.parse(File.read("/opt/#{toolchain_name}/version-manifest.json"))['build_version'] == toolchain_version)
-
-  Chef::Log.info("`#{toolchain_name}` is already installed at version #{toolchain_version}.")
+if omnibus_toolchain_enabled?
+  log 'omnibus_toolchain_enabled' do
+    message "Omnibus Toolchain enabled. Proceeding with install of #{toolchain_full_name}"
+  end
 else
-  install_options = ''
-  if solaris_10?
-    # create a nocheck file for automated install
-    file '/var/sadm/install/admin/auto-install' do
-      content <<-EOH.flush
-        mail=
-        instance=overwrite
-        partial=nocheck
-        runlevel=nocheck
-        idepend=nocheck
-        space=ask
-        setuid=nocheck
-        conflict=nocheckit
-        action=nocheck
-        basedir=default
-      EOH
-      owner 'root'
-      group 'root'
-      mode '0444'
-    end
-
-    case node['kernel']['machine']
-    when 'i86pc'
-      package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.i86pc.solaris"
-    when 'sun4v', 'sun4u'
-      package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
-    end
-
-    install_options = '-a auto-install'
-  elsif aix?
-    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.powerpc.bff"
-  elsif nexus?
-    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.nexus7.x86_64.rpm"
-  elsif ios_xr?
-    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.ios_xr6.x86_64.rpm"
-  else
-    Chef::Application.fatal!("I don't know how to install #{node['omnibus']['toolchain_name']} on this platform!", 1)
+  log 'omnibus_toolchain_not_enabled' do
+    message 'Deciding not to install Omnibus Toolchain (package)'
   end
+  return
+end
 
-  package_path = File.join(Chef::Config[:file_cache_path], File.basename(package_url))
-
-  remote_file package_path do
-    source package_url
-    action :create_if_missing
+if solaris_10?
+  # create a nocheck file for automated install
+  file '/var/sadm/install/admin/auto-install' do
+    content <<-EOH.gsub(/^\s{6}/, '')
+      mail=
+      instance=overwrite
+      partial=nocheck
+      runlevel=nocheck
+      idepend=nocheck
+      space=ask
+      setuid=nocheck
+      conflict=nocheckit
+      action=nocheck
+      basedir=default
+    EOH
+    owner 'root'
+    group 'root'
+    mode '0444'
   end
+end
 
-  package node['omnibus']['toolchain_name'] do
-    provider Chef::Provider::Package::Yum if nexus? || ios_xr?
-    source package_path
-    options install_options
-  end
+package_path = File.join(Chef::Config[:file_cache_path], File.basename(toolchain_url))
+version      = node['omnibus']['toolchain_version']
+
+remote_file package_path do
+  source toolchain_url
+  action :create_if_missing
+end
+
+package node['omnibus']['toolchain_name'] do
+  provider Chef::Provider::Package::Yum if nexus? || ios_xr?
+  source package_path
+  version version
+  options '-a auto-install' if solaris2?
+end
+
+toolchain_shell = "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/bash"
+
+# Ensure the toolchain's bash is added to acceptable shells list
+execute 'chsec_login_shell' do
+  command "chsec -f /etc/security/login.cfg -s usw -a 'shells=/bin/sh,/bin/bsh,/bin/csh,/bin/ksh,/bin/tsh,/bin/ksh93,/usr/bin/sh,/usr/bin/bsh,/usr/bin/csh,/usr/bin/ksh,/usr/bin/tsh,/usr/bin/ksh93,/usr/bin/rksh,/usr/bin/rksh93,/usr/sbin/uucp/uucico,/usr/sbin/sliplogin,/usr/sbin/snappd,/usr/bin/bash,#{toolchain_shell}'"
+  only_if { aix? }
 end

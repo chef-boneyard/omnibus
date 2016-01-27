@@ -21,20 +21,35 @@
 include_recipe 'chef-sugar::default'
 require 'chef/sugar/core_extensions'
 
-# Create the user
-include_recipe 'omnibus::_user'
+# Create a mostly unconfigured user, these
+# duplicate entries in the _user recipe
+# where things like login shell and home
+# directory get added
+group node['omnibus']['build_user_group'] do
+  # The Window's group provider gets cranky if attempting to create a
+  # built-in group.
+  ignore_failure true if windows?
+end
 
-# Ensure the cache directory exists
-directory Chef::Config[:file_cache_path] do
-  recursive true
+user node['omnibus']['build_user'] do
+  unless windows? # rubocop:disable IfUnlessModifier
+    gid node['omnibus']['build_user_group']
+  end
 end
 
 # If we are on Solaris 11, we need to update some paths to favor the gnu utils
 if solaris_11?
   unless ENV['PATH'].include? '/usr/gnu/bin'
-    Chef::Log.debug 'Adding /usr/gnu/bin to path'
     ENV['PATH'] = '/usr/gnu/bin:' + ENV['PATH']
+    Chef::Log.info "Adding /usr/gnu/bin to path, now:\n#{ENV['PATH']}"
   end
+end
+
+include_recipe 'omnibus::_user'
+
+# Ensure the cache directory exists
+directory Chef::Config[:file_cache_path] do
+  recursive true
 end
 
 # Create the omnibus directories
