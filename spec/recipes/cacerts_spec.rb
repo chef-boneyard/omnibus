@@ -13,12 +13,6 @@ describe 'omnibus::_cacerts' do
         .converge(described_recipe)
     end
 
-    it 'creates the .cacerts' do
-      expect(chef_run).to create_file('/home/omnibus/.bashrc.d/cacerts.sh')
-        .with_owner('omnibus')
-        .with_mode('0755')
-    end
-
     it 'creates a link from /etc/ssl/cert.pem to /usr/local/share/certs/ca-root-nss.crt' do
       expect(chef_run).to create_link('/etc/ssl/cert.pem')
         .with_to('/usr/local/share/certs/ca-root-nss.crt')

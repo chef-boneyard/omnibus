@@ -17,66 +17,19 @@
 # limitations under the License.
 #
 
-return unless omnibus_toolchain_enabled?
-
-# These are sort of 'global' variables, independent of platform
-toolchain_name = node['omnibus']['toolchain_name']
-toolchain_version = node['omnibus']['toolchain_version']
-
-if File.exist?("/opt/#{toolchain_name}/version-manifest.json") &&
-   (JSON.parse(File.read("/opt/#{toolchain_name}/version-manifest.json"))['build_version'] == toolchain_version)
-
-  Chef::Log.info("`#{toolchain_name}` is already installed at version #{toolchain_version}.")
+if omnibus_toolchain_enabled?
+  log 'omnibus_toolchain_enabled' do
+    message "Omnibus Toolchain enabled. Proceeding with install of #{node['omnibus']['toolchain_name']}"
+  end
 else
-  install_options = ''
-  if solaris_10?
-    # create a nocheck file for automated install
-    file '/var/sadm/install/admin/auto-install' do
-      content <<-EOH.flush
-        mail=
-        instance=overwrite
-        partial=nocheck
-        runlevel=nocheck
-        idepend=nocheck
-        space=ask
-        setuid=nocheck
-        conflict=nocheckit
-        action=nocheck
-        basedir=default
-      EOH
-      owner 'root'
-      group 'root'
-      mode '0444'
-    end
-
-    case node['kernel']['machine']
-    when 'i86pc'
-      package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.i86pc.solaris"
-    when 'sun4v', 'sun4u'
-      package_url = "https://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.sun4v.solaris"
-    end
-
-    install_options = '-a auto-install'
-  elsif aix?
-    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.powerpc.bff"
-  elsif nexus?
-    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.nexus7.x86_64.rpm"
-  elsif ios_xr?
-    package_url = "http://chef-releng.s3.amazonaws.com/omnibus/omnibus-toolchain/#{toolchain_name}-#{toolchain_version}-1.ios_xr6.x86_64.rpm"
-  else
-    Chef::Application.fatal!("I don't know how to install #{node['omnibus']['toolchain_name']} on this platform!", 1)
+  log 'omnibus_toolchain_not_enabled' do
+    message 'Deciding not to install Omnibus Toolchain (package)'
   end
+  return
+end
 
-  package_path = File.join(Chef::Config[:file_cache_path], File.basename(package_url))
-
-  remote_file package_path do
-    source package_url
-    action :create_if_missing
-  end
-
-  package node['omnibus']['toolchain_name'] do
-    provider Chef::Provider::Package::Yum if nexus? || ios_xr?
-    source package_path
-    options install_options
-  end
+chef_ingredient 'omnibus-toolchain' do
+  product_name 'omnibus-toolchain'
+  version node['omnibus']['toolchain_version']
+  channel :stable
 end

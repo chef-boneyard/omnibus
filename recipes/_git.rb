@@ -111,47 +111,11 @@ else
   configure_args = '--prefix=/usr/local --without-tcltk'
   git_environment = { 'NO_GETTEXT' => '1' }
 
-  if debian?
-    package 'gettext'
-    package 'libcurl4-gnutls-dev'
-    package 'libexpat1-dev'
-    package 'libz-dev'
-    package 'perl-modules'
-  elsif freebsd?
-    package 'ftp/curl'
-    package 'textproc/expat2'
-    package 'devel/gettext'
-    package 'archivers/libzip'
-    # FreeBSD requires gmake instead of make
-    make = 'gmake'
-    configure_args << ' --enable-pthreads=-pthread' \
-                      ' ac_cv_header_libcharset_h=no' \
-                      ' --with-curl=/usr/local' \
-                      ' --with-expat=/usr/local' \
-                      ' --with-perl=/usr/local/bin/perl'
-  elsif mac_os_x?
-    package 'curl'
-    package 'expat'
-    package 'gettext'
-
-    if node['platform_version'].satisfies?('>= 10.10')
-      git_environment['CPPFLAGS'] = '-I/usr/local/opt/curl/include -I/usr/local/opt/openssl/include'
-      git_environment['LDFLAGS'] = '-L/usr/local/opt/curl/lib'
-    end
-  elsif rhel?
-    package 'curl-devel'
-    package 'expat-devel'
-    package 'gettext-devel'
-    package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('>= 6')
-    package 'zlib-devel'
-  elsif suse?
+  if suse?
     package 'libcurl-devel'
     package 'libexpat-devel'
     package 'gettext-runtime'
     package 'zlib-devel'
-  elsif solaris?
-    make = 'gmake'
-    git_environment['CC'] = 'gcc'
   end
 
   remote_install 'git' do

@@ -6,6 +6,10 @@ source 'https://supermarket.chef.io'
 
 metadata
 
+cookbook 'chef-ingredient',
+        github: 'chef-cookbooks/chef-ingredient',
+        branch: 'master'
+
 group :integration do
   cookbook 'apt'
   cookbook 'fancy_execute'

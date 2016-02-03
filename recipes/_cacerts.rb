@@ -42,6 +42,7 @@ if freebsd?
       export SSL_CERT_FILE=#{cacert_path}
 
     EOH
+    not_if { omnibus_toolchain_enabled? }
   end
 
   link '/etc/ssl/cert.pem' do
