@@ -47,8 +47,8 @@ module Omnibus
     end
 
     def omnibus_toolchain_enabled?
-      # the only platforms we don't run the toolchain on yet are Windows and OSX
-      !(windows? || mac_os_x?)
+      # the only platforms we don't run the toolchain is windows
+      !windows?
     end
 
     def build_user_shell
