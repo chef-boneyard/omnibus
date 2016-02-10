@@ -20,8 +20,6 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-return if windows?
-
 #
 # This recipe is used to install additional packages/utilities that are not
 # included by default in the build-essential cookbook. In the long term, this
@@ -81,4 +79,8 @@ elsif rhel?
   #   https://github.com/CentOS/sig-cloud-instance-images/issues/4
   #
   package 'tar'
+elsif windows?
+  msys_path = windows_safe_path_expand(node['build-essential']['msys']['path'])
+  omnibus_env['PATH'] << msys_path
+  omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'mingw', 'bin')
 end
