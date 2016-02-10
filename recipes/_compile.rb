@@ -80,7 +80,7 @@ elsif rhel?
   #
   package 'tar'
 elsif windows?
-  msys_path = windows_safe_path_expand(node['build-essential']['msys']['path'])
-  omnibus_env['PATH'] << msys_path
+  msys_path = node['build-essential']['msys']['path']
+  omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'bin')
   omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'mingw', 'bin')
 end
