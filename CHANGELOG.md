@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.2.5
+------
+- Use build-essential cookbook to setup windows nodes to build ruby.
+
 v3.2.4
 ------
 - Support for ios_xr platform.
