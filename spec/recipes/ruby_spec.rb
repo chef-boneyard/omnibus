@@ -8,8 +8,7 @@ describe 'omnibus::_ruby' do
       allow_any_instance_of(Chef::Recipe).to receive(:omnibus_toolchain_enabled?).and_return(false)
     end
 
-    it 'installs ruby' do
-      expect(chef_run).to install_ruby_install('2.1.5')
-    end
+    # Not sure what to put here, there isn't really much to test?
+
   end
 end

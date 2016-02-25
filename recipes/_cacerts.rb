@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe 'omnibus::_bash'
-
 #
 # On FreeBSD the Ruby install's SSL points at `/etc/ssl/cert.pem` as the
 # default root CA cert. This is actually the location of an optional symlink
