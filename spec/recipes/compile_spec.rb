@@ -10,14 +10,14 @@ describe 'omnibus::_compile' do
   it 'includes homebrew on OSX' do
     stub_command('which git')
     osx_chef_run = ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.8.2')
-                   .converge(described_recipe)
+                                       .converge(described_recipe)
     expect(osx_chef_run).to include_recipe('homebrew::default')
   end
 
   context 'on freebsd' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'freebsd', version: '10.0')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'Configures BSD Make for backward compat mode' do

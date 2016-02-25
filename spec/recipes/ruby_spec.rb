@@ -9,6 +9,5 @@ describe 'omnibus::_ruby' do
     end
 
     # Not sure what to put here, there isn't really much to test?
-
   end
 end
