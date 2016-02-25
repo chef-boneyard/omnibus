@@ -51,13 +51,6 @@ file File.join(build_user_home, '.gitconfig') do
   EOH
 end
 
-# Ensure our version is in sync with the Git cookbook so we don't install
-# different versions during a single CCR. Eventually we will use the
-# Git cookbook's resources/recipes directly but we'll need to update it
-# to support some of the more esoteric platforms this cookbook supports.
-node.set['git']['version']  = node['omnibus']['git_version']
-node.set['git']['checksum'] = node['omnibus']['git_checksum']
-
 # Provided by the omnibus-toolchain package
 if omnibus_toolchain_enabled?
 
