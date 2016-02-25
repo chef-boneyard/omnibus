@@ -78,7 +78,9 @@ if omnibus_toolchain_enabled?
   ENV['GIT_SSL_CAINFO'] = "/opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem"
 
   return
-elsif windows?
+end
+
+if windows?
 
   windows_package "Git version #{node['omnibus']['git_version']}" do
     source "https://github.com/git-for-windows/git/releases/download/v#{node['omnibus']['git_version']}.windows.1/Git-#{node['omnibus']['git_version']}-32-bit.exe"
@@ -101,31 +103,4 @@ elsif windows?
   end
 
   omnibus_env['PATH'] << git_path
-else
-  include_recipe 'omnibus::_bash'
-  include_recipe 'omnibus::_compile'
-  include_recipe 'omnibus::_openssl'
-  include_recipe 'omnibus::_user'
-
-  make           = 'make'
-  configure_args = '--prefix=/usr/local --without-tcltk'
-  git_environment = { 'NO_GETTEXT' => '1' }
-
-  if suse?
-    package 'libcurl-devel'
-    package 'libexpat-devel'
-    package 'gettext-runtime'
-    package 'zlib-devel'
-  end
-
-  remote_install 'git' do
-    source          "https://www.kernel.org/pub/software/scm/git/git-#{node['omnibus']['git_version']}.tar.gz"
-    checksum        node['omnibus']['git_checksum']
-    version         node['omnibus']['git_version']
-    build_command   "./configure #{configure_args}"
-    compile_command "#{make} -j #{node.builders}"
-    install_command "#{make} install"
-    environment     git_environment
-    not_if { installed_at_version?('/usr/local/bin/git', node['omnibus']['git_version']) }
-  end
 end
