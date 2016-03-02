@@ -28,8 +28,8 @@ else
   return
 end
 
-chef_ingredient 'omnibus-toolchain' do
-  product_name 'omnibus-toolchain'
+chef_ingredient node['omnibus']['toolchain_name'] do
+  product_name node['omnibus']['toolchain_name']
   version node['omnibus']['toolchain_version']
   channel :stable
 end
