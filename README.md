@@ -7,12 +7,17 @@ Prepares a machine to be an Omnibus builder.
 
 This project is managed by the CHEF Release Engineering team. For more information on the Release Engineering team's contribution, triage, and release process, please consult the [CHEF Release Engineering OSS Management Guide](https://docs.google.com/a/opscode.com/document/d/1oJB0vZb_3bl7_ZU2YMDBkMFdL-EWplW1BJv_FXTUOzg/edit).
 
+Announcement
+------------
+Starting with omnibus cookbook version 4.0.0, Chef 11 is no longer supported, since 12.5.1 is required to use [chef-ingredient](https://github.com/chef-cookbooks/chef-ingredient). If needed, you can pin to omnibus version `3.2.5` to preserve the old functionality.
+
+Starting with 4.0.0, instead of compiling everything from source in this cookbook, the [omnibus-toolchain](https://github.com/chef/omnibus-toolchain) package will be installed. This package contains patch, bash, make, git, ruby, rubygems, and bundler (built from [omnibus-software](https://github.com/chef/omnibus-software) definitions).
+
 Requirements
 ------------
-This cookbook requires Chef 11.0.0+.
+This cookbook requires Chef 12.5.1+.
 
 For a full list of supported platforms and external cookbook requirements, please see the `metadata.rb` file at the root of the cookbook.
-
 
 Recipes
 -------
@@ -20,7 +25,7 @@ The default recipe is the main entrypoint for the cookbook and does the followin
 
 - Ensures all required Omnibus-related directories are created and owned by the build user.
 - Ensures a sane build tool-chain is installed and configured (using the [build-essential](http://community.opscode.com/cookbooks/build-essential) cookbook)
-- Ensures git is installed (using the [git](http://community.opscode.com/cookbooks/git) cookbook)
+- Ensures the necessary tools to run an Omnibus project (ruby, git, etc) are installed (using the [omnibus-toolchain](https://github.com/chef/omnibus-toolchain) package)
 - Includes a platform-specific recipe to apply additional tweaks as appropriate.
 
 All other recipes should be treated as "private" and are not meant to be used individually. They only exist to support the `default` recipe.
@@ -110,7 +115,7 @@ License & Authors
 - Author: Stephen Delano (<stephen@chef.io>)
 
 ```text
-Copyright 2012-2015, Chef Software, Inc. (<legal@chef.io>)
+Copyright 2012-2016, Chef Software, Inc. (<legal@chef.io>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

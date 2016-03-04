@@ -16,13 +16,11 @@
 #
 
 default['omnibus'].tap do |omnibus|
-  omnibus['build_user']         = 'omnibus'
-  omnibus['build_user_home']    = nil
-  omnibus['install_dir']        = nil
-  omnibus['toolchain_name']     = 'omnibus-toolchain'
-  omnibus['toolchain_version']  = '0.0.1'
-  omnibus['git_version']        = '2.6.2'
-  omnibus['ruby_version']       = '2.1.5'
+  omnibus['build_user']               = 'omnibus'
+  omnibus['build_user_home']          = nil
+  omnibus['install_dir']              = nil
+  omnibus['toolchain_name']           = 'omnibus-toolchain'
+  omnibus['toolchain_version']        = '1.1.5'
 
   if platform_family == 'windows'
     omnibus['build_user_group'] = 'Administrators'
@@ -37,13 +35,13 @@ default['omnibus'].tap do |omnibus|
   # You should store this password in an encrypted data bag item and
   # override in your wrapper. We've set a default password here purely
   # for testing purposes.
-  if platform_family == 'windows' || platform_family == 'mac_os_x'
-    # Passsword must be clear-text on Windows and Mac OS X.
-    omnibus['build_user_password'] = 'get0ntheBus'
-  else
-    # Per Chef's requirements on Unix systems, the password below is
-    # hashed using the MD5-based BSD password algorithm 1. The plain
-    # text version is 'get0ntheBus'.
-    omnibus['build_user_password'] = '$1$QTCj0tQy$C60hWNmo8wZo.ctvDSy9p/'
-  end
+  omnibus['build_user_password'] = if platform_family == 'windows' || platform_family == 'mac_os_x'
+                                     # Password must be clear-text on Windows and Mac OS X.
+                                     'get0ntheBus'
+                                   else
+                                     # Per Chef's requirements on Unix systems, the password below is
+                                     # hashed using the MD5-based BSD password algorithm 1. The plain
+                                     # text version is 'get0ntheBus'.
+                                     '$1$QTCj0tQy$C60hWNmo8wZo.ctvDSy9p/'
+                                   end
 end

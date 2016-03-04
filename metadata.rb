@@ -30,6 +30,7 @@ depends 'remote_install'
 depends 'windows'
 depends 'wix'
 depends 'windows-sdk'
+depends 'chef-ingredient'
 
 source_url 'https://github.com/chef-cookbooks/omnibus' if respond_to?(:source_url)
 issues_url 'https://github.com/chef-cookbooks/omnibus/issues' if respond_to?(:issues_url)
