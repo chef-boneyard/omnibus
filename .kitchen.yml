@@ -7,6 +7,8 @@ driver:
 provisioner:
   name: chef_zero
   require_chef_omnibus: <%= ENV['CHEF_VERSION'] || '12.5.1' %>
+  attributes:
+    vagrant: true
 
 platforms:
   - name: centos-5.11
@@ -54,6 +56,9 @@ platforms:
   - name: macosx-10.11
     driver:
       box: chef/macosx-10.11 # private
+  - name: windows-server-2008r2-standard
+    driver:
+      box: chef/windows-server-2008r2-standard # private
   - name: windows-server-2012r2-standard
     driver:
       box: chef/windows-server-2012r2-standard # private

@@ -61,13 +61,10 @@ elsif rhel?
     mode '0755'
   end
 elsif windows?
-  include_recipe '7-zip::default'
   include_recipe 'wix::default'
   include_recipe 'windows-sdk::windows_sdk'
 
   omnibus_env['PATH'] << node['wix']['home']
   omnibus_env['PATH'] << node['7-zip']['home']
-  # This works around 7-zip apparently not respecting its install dir, and installing to Program Files instead.
-  omnibus_env['PATH'] << windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Program Files', '7-zip')
   omnibus_env['PATH'] << windows_safe_path_join(ENV['ProgramFiles(x86)'] || ENV['ProgramFiles'], 'Windows Kits', '8.1', 'bin', 'x64')
 end

@@ -26,7 +26,6 @@ include_recipe 'omnibus::_common'
 # recipe should just "go away" and the build-essential cookbook should become
 # more awesome.
 #
-
 include_recipe 'build-essential::default'
 
 if freebsd?
