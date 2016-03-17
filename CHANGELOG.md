@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.2.6
+------
+- Remove password complexity requirement on vagrant
+- Change 7-zip default location to `C:\Program Files\7-zip` to match the installer.
+
 v3.2.5
 ------
 - Use build-essential cookbook to setup windows nodes to build ruby.
