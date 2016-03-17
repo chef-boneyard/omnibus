@@ -18,7 +18,7 @@ describe 'omnibus::_git' do
   context 'on debian' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'debian', version: '7.4')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs the correct development packages' do
@@ -33,7 +33,7 @@ describe 'omnibus::_git' do
   context 'on freebsd' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.1')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs the correct development packages' do
@@ -55,7 +55,7 @@ describe 'omnibus::_git' do
   context 'on mac_os_x' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.8.2')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs the correct development packages' do
@@ -85,7 +85,7 @@ describe 'omnibus::_git' do
   context 'on rhel 5' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'redhat', version: '5.10')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs the correct development packages' do
@@ -99,7 +99,7 @@ describe 'omnibus::_git' do
   context 'on rhel 6' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'redhat', version: '6.5')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs the correct development packages' do
@@ -114,7 +114,7 @@ describe 'omnibus::_git' do
   context 'on suse 11' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'suse', version: '11.2')
-        .converge(described_recipe)
+                          .converge(described_recipe)
     end
 
     it 'installs the correct development packages' do
