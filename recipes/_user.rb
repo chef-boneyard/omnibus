@@ -23,15 +23,16 @@ include_recipe 'omnibus::_common'
 # Install the omnibus toolchain so we have a shell
 include_recipe 'omnibus::_omnibus_toolchain'
 
-# If this is an ephemeral vagrant/test-kitchen instance, we relax the password
-# so that the default password "vagrant" can be used.
-powershell_script 'Disable password complexity requirements' do
-  only_if { windows? && vagrant? }
-  code <<-EOH
-    secedit /export /cfg $env:temp/export.cfg
-    ((get-content $env:temp/export.cfg) -replace ('PasswordComplexity = 1', 'PasswordComplexity = 0')) | Out-File $env:temp/export.cfg
-    secedit /configure /db $env:windir/security/new.sdb /cfg $env:temp/export.cfg /areas SECURITYPOLICY
-  EOH
+if windows? && vagrant?
+  # If this is an ephemeral vagrant/test-kitchen instance, we relax the password
+  # so that the default password "vagrant" can be used.
+  powershell_script 'Disable password complexity requirements' do
+    code <<-EOH
+      secedit /export /cfg $env:temp/export.cfg
+      ((get-content $env:temp/export.cfg) -replace ('PasswordComplexity = 1', 'PasswordComplexity = 0')) | Out-File $env:temp/export.cfg
+      secedit /configure /db $env:windir/security/new.sdb /cfg $env:temp/export.cfg /areas SECURITYPOLICY
+    EOH
+  end
 end
 
 # If this is a fresh solaris 10 system, there will not be an /export/home
