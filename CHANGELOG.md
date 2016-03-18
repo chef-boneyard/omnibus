@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.2.7
+------
+- Use `powershell_script` resource only on Windows.
+
 v3.2.6
 ------
 - Remove password complexity requirement on vagrant
