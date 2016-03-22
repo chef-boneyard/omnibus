@@ -43,6 +43,13 @@ if freebsd?
     end
     only_if { File.exist?('/etc/make.conf') }
   end
+
+  # If we have an updated build-essential cookbook that includes gcc 4.9, symlink
+  # this to /usr/local/bin to ensure it gets picked up over the system library.
+  link '/usr/local/bin/gcc' do
+    to '/usr/local/bin/gcc49'
+    only_if { File.exist?('/usr/local/bin/gcc49') && platform_version.satisfies?('<= 9.3') }
+  end
 elsif mac_os_x?
   # Use homebrew as the default package manager on OSX. We cannot install homebrew
   # until AFTER we have installed the XCode command line tools via build-essential
