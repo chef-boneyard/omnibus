@@ -21,12 +21,12 @@
 include_recipe 'chef-sugar::default'
 require 'chef/sugar/core_extensions'
 
-# This works around the fact that 7-zip's default differs from the default installer:
+# This works around the fact that seven_zip's default differs from the default installer:
 # *we* tell it where to put it. 7-zip is installed by build-essentials, which is
 # called from _compile. We do it at the top because many things include 7zip and we
 # want to be triple sure.
 if windows?
-  node.default['7-zip']['home'] = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Program Files', '7-zip')
+  node.default['seven_zip']['home'] = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'Program Files', '7-zip')
 end
 
 # Create the user
