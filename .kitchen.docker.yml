@@ -5,6 +5,11 @@ platforms:
   - name: debian-7
     run_list: apt::default
   - name: debian-8
+    driver:
+      provision_command:
+        # Ensure wget is installed to workaround:
+        #   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=814070
+        - apt-get install -y wget
     run_list: apt::default
   - name: ubuntu-12.04
     run_list: apt::default
