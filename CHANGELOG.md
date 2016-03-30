@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v3.3.0
+------
+- Peg to build-essential `>= 3.0.0`
+- Update `7-zip` attribute references to `seven_zip`
+
 v3.2.7
 ------
 - Use `powershell_script` resource only on Windows.
