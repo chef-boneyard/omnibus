@@ -159,6 +159,8 @@ else
       echo "Bundler......$(bundle --version | head -1)"
       #{if aix?
           'echo "XLC..........$(xlc -qversion | head -1)"'
+        elsif freebsd? && node['platform_version'].to_i <= 9
+          'echo "GCC..........$(gcc49 --version | head -1)"'
         else
           'echo "GCC..........$(gcc --version | head -1)"'
         end}
