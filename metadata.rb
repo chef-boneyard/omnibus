@@ -22,6 +22,7 @@ supports 'windows'
 
 depends 'build-essential', '>= 3.0.0'
 depends 'chef-sugar', '>= 3.2.0'
+depends 'chef-ingredient', '>= 0.18.0'
 depends 'git'
 depends 'homebrew'
 depends 'languages'

@@ -20,9 +20,7 @@ default['omnibus'].tap do |omnibus|
   omnibus['build_user_home']    = nil
   omnibus['install_dir']        = nil
   omnibus['toolchain_name']     = 'omnibus-toolchain'
-  omnibus['toolchain_version']  = '0.0.1'
-  omnibus['git_version']        = '2.6.2'
-  omnibus['ruby_version']       = '2.1.5'
+  omnibus['toolchain_version']  = '1.1.6'
 
   if platform_family == 'windows'
     omnibus['build_user_group'] = 'Administrators'
