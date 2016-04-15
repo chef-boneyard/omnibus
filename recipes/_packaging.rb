@@ -41,14 +41,14 @@ elsif rhel?
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'
-  # EL 7 split rpm-sign into its own package:  http://cholla.mmto.org/computers/linux/rpm/signing.html
-  package 'rpm-sign' if node['platform_version'].satisfies?('>= 7')
-  # EL 6 and later consider glibc-static optional: https://access.redhat.com/solutions/33868
-  # The libhugetlbfs build (analytics) requires it.
-  if (ppc64? || ppc64le?) && node['platform_version'].satisfies?('~> 6')
+
+  if node['platform_version'].satisfies?('>= 7')
+    # EL 7 split rpm-sign into its own package:  http://cholla.mmto.org/computers/linux/rpm/signing.html
+    package 'rpm-sign'
+  elsif node['platform_version'].satisfies?('~> 6') && (ppc64? || ppc64le?)
+    # EL 6 and later consider glibc-static optional: https://access.redhat.com/solutions/33868
+    # The libhugetlbfs build (analytics) requires it.
     # See https://github.com/kaustubh-d/omnibus/commit/41b547817572a8a75d857cfc3562ca819f327761
-    package 'glibc-static'
-  elsif node['platform_version'].satisfies?('>= 6')
     package 'glibc-static'
   end
 

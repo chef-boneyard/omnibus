@@ -17,19 +17,10 @@
 # limitations under the License.
 #
 
-if omnibus_toolchain_enabled?
-  log 'omnibus_toolchain_enabled' do
-    message "Omnibus Toolchain enabled. Proceeding with install of #{node['omnibus']['toolchain_name']}"
-  end
-else
-  log 'omnibus_toolchain_not_enabled' do
-    message 'Deciding not to install Omnibus Toolchain (package)'
-  end
-  return
-end
+log "omnibus-toolchain is #{omnibus_toolchain_enabled? ? 'enabled' : 'disabled'}"
+return unless omnibus_toolchain_enabled?
 
 chef_ingredient node['omnibus']['toolchain_name'] do
-  product_name node['omnibus']['toolchain_name']
   version node['omnibus']['toolchain_version']
   channel :stable
 end
