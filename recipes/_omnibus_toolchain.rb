@@ -24,10 +24,3 @@ chef_ingredient node['omnibus']['toolchain_name'] do
   version node['omnibus']['toolchain_version']
   channel :stable
 end
-
-# For omnibus builders - we want to symlink git to /usr/local/bin so that it
-# is available in the machine's base path without having to worry about which
-# toolchain (angry or not) is installed.
-link '/usr/local/bin/git' do
-  to "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/git"
-end
