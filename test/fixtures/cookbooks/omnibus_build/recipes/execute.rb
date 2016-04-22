@@ -16,6 +16,11 @@ include_recipe 'omnibus::default'
 # clone Harmony project
 harmony_project_dir = File.join(build_user_home, 'harmony')
 
+# In order to have all the toolchain executables in the path, we need to set up
+# the environment like load-omnibus-toolchain.sh does. This is a little hacky
+# but we can't source the env like a shell does so this works.
+ENV['PATH'] = "/opt/omnibus-toolchain/embedded/bin:#{ENV['PATH']}"
+
 git harmony_project_dir do
   repository 'https://github.com/chef/omnibus-harmony.git'
   user node['omnibus']['build_user'] unless windows? # The git resource's user attribute doesn't play nice on Windows

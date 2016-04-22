@@ -51,24 +51,14 @@ file File.join(build_user_home, '.gitconfig') do
   EOH
 end
 
-# Ensure our version is in sync with the Git cookbook so we don't install
-# different versions during a single CCR. Eventually we will use the
-# Git cookbook's resources/recipes directly but we'll need to update it
-# to support some of the more esoteric platforms this cookbook supports.
-node.set['git']['version']  = node['omnibus']['git_version']
-node.set['git']['checksum'] = node['omnibus']['git_checksum']
-
 # Provided by the omnibus-toolchain package
 if omnibus_toolchain_enabled?
 
-  # We need to configure the omnibus-build-essential's embedded git to use
+  # We need to configure the omnibus-toolchain's embedded git to use
   # ca bundle that ships in the package. This can most likely be fixed by
-  # a well placed `./configure` option when compiling git. Follow this
-  # issue for more details:
+  # a well placed `./configure` option when compiling git.
   #
-  #  https://github.com/chef/omnibus-build-essential/issues/7
-  #
-  execute "git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
+  execute "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
     environment(
       'HOME' => build_user_home
     )
@@ -78,8 +68,9 @@ if omnibus_toolchain_enabled?
   ENV['GIT_SSL_CAINFO'] = "/opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem"
 
   return
-elsif windows?
+end
 
+if windows?
   windows_package "Git version #{node['omnibus']['git_version']}" do
     source "https://github.com/git-for-windows/git/releases/download/v#{node['omnibus']['git_version']}.windows.1/Git-#{node['omnibus']['git_version']}-32-bit.exe"
     checksum node['omnibus']['git_checksum']
@@ -101,67 +92,4 @@ elsif windows?
   end
 
   omnibus_env['PATH'] << git_path
-else
-  include_recipe 'omnibus::_bash'
-  include_recipe 'omnibus::_compile'
-  include_recipe 'omnibus::_openssl'
-  include_recipe 'omnibus::_user'
-
-  make           = 'make'
-  configure_args = '--prefix=/usr/local --without-tcltk'
-  git_environment = { 'NO_GETTEXT' => '1' }
-
-  if debian?
-    package 'gettext'
-    package 'libcurl4-gnutls-dev'
-    package 'libexpat1-dev'
-    package 'libz-dev'
-    package 'perl-modules'
-  elsif freebsd?
-    package 'ftp/curl'
-    package 'textproc/expat2'
-    package 'devel/gettext'
-    package 'archivers/libzip'
-    # FreeBSD requires gmake instead of make
-    make = 'gmake'
-    configure_args << ' --enable-pthreads=-pthread' \
-                      ' ac_cv_header_libcharset_h=no' \
-                      ' --with-curl=/usr/local' \
-                      ' --with-expat=/usr/local' \
-                      ' --with-perl=/usr/local/bin/perl'
-  elsif mac_os_x?
-    package 'curl'
-    package 'expat'
-    package 'gettext'
-
-    if node['platform_version'].satisfies?('>= 10.10')
-      git_environment['CPPFLAGS'] = '-I/usr/local/opt/curl/include -I/usr/local/opt/openssl/include'
-      git_environment['LDFLAGS'] = '-L/usr/local/opt/curl/lib'
-    end
-  elsif rhel?
-    package 'curl-devel'
-    package 'expat-devel'
-    package 'gettext-devel'
-    package 'perl-ExtUtils-MakeMaker' if version(node['platform_version']).satisfies?('>= 6')
-    package 'zlib-devel'
-  elsif suse?
-    package 'libcurl-devel'
-    package 'libexpat-devel'
-    package 'gettext-runtime'
-    package 'zlib-devel'
-  elsif solaris?
-    make = 'gmake'
-    git_environment['CC'] = 'gcc'
-  end
-
-  remote_install 'git' do
-    source          "https://www.kernel.org/pub/software/scm/git/git-#{node['omnibus']['git_version']}.tar.gz"
-    checksum        node['omnibus']['git_checksum']
-    version         node['omnibus']['git_version']
-    build_command   "./configure #{configure_args}"
-    compile_command "#{make} -j #{node.builders}"
-    install_command "#{make} install"
-    environment     git_environment
-    not_if { installed_at_version?('/usr/local/bin/git', node['omnibus']['git_version']) }
-  end
 end

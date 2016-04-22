@@ -122,10 +122,6 @@ else
 
   omnibus_path = omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)
 
-  # Ensure the tools that ship in the omnibus-toolchain are available on
-  # the $PATH of the chef-client run.
-  ENV['PATH'] = "#{omnibus_path}:#{ENV['PATH']}"
-
   file ::File.join(build_user_home, 'load-omnibus-toolchain.sh') do
     content <<-EOH.gsub(/^ {6}/, '')
       #!/usr/bin/env bash

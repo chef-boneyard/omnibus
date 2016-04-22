@@ -45,6 +45,12 @@ if solaris_11?
   end
 end
 
+# If we're on Solaris 10, ensure we have a /usr/local/bin directory
+directory '/usr/local/bin' do
+  recursive true
+  only_if { solaris2? }
+end
+
 # Create the omnibus directories
 [
   node['omnibus']['base_dir'],
