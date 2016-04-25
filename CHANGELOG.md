@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.0.0
+------
+- Rather than building from source, install the omnibus-toolchain package for all platforms except windows.
+
 v3.3.0
 ------
 - Peg to build-essential `>= 3.0.0`
