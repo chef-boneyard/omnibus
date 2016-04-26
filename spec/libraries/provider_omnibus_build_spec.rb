@@ -157,7 +157,7 @@ describe Chef::Provider::OmnibusBuild do
     it 'loads the omnbius toolchain from the build user home' do
       expect(execute_resource).to receive(:command).with(
         <<-EOH.gsub(/^ {10}/, '')
-          source #{build_user_home}\/load-omnibus-toolchain.sh
+          . #{build_user_home}\/load-omnibus-toolchain.sh
           #{command}
         EOH
       )
