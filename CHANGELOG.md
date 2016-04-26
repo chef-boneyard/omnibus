@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.0.1
+------
+- [omnibus_build] Use `.` as the `source` command is not available in all shells
+
 v4.0.0
 ------
 - Rather than building from source, install the omnibus-toolchain package for all platforms except windows.
