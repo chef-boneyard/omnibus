@@ -78,6 +78,7 @@ elsif rhel?
   #   https://github.com/CentOS/sig-cloud-instance-images/issues/4
   #
   package 'tar'
+  package 'bzip2'
 elsif windows?
   msys_path = node['build-essential']['msys']['path']
   omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'bin')
