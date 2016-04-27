@@ -52,5 +52,9 @@ describe 'omnibus::_compile' do
     it 'installs tar' do
       expect(chef_run).to install_package('tar')
     end
+
+    it 'installs bzip2' do
+      expect(chef_run).to install_package('bzip2')
+    end
   end
 end
