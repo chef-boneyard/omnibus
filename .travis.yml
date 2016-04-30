@@ -44,7 +44,7 @@ before_script:
   # We have to install chef-sugar for ChefSpec
   - /opt/chefdk/embedded/bin/chef gem install chef-sugar
   # Ensure kitchen-docker is available for testing
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-docker
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
 script:
   - /opt/chefdk/embedded/bin/chef --version
   - /opt/chefdk/embedded/bin/rubocop --version
