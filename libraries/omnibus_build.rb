@@ -16,163 +16,125 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require_relative 'helper'
 
-class Chef
-  class Resource::OmnibusBuild < Resource::LWRPBase
+module OmnibusCookbook
+  class OmnibusBuild < Chef::Resource
+    require_relative 'helper'
+
     resource_name :omnibus_build
-
-    actions :execute
-    default_action :execute
-
-    attribute :project_name,
-              kind_of: String,
-              name_attribute: true
-    attribute :project_dir,
-              kind_of: String,
-              required: true
-    attribute :install_dir,
-              kind_of: String,
-              default: lazy { |r| Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
-    attribute :base_dir,
-              kind_of: String,
-              default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
-    attribute :log_level,
-              kind_of: Symbol,
-              equal_to: [:internal, :debug, :info, :warn, :error, :fatal],
-              default: :internal
-    attribute :config_file,
-              kind_of: String,
-              default: lazy { |r| ::File.join(r.project_dir, 'omnibus.rb') }
-    attribute :config_overrides,
-              kind_of: Hash,
-              default: {}
-    attribute :expire_cache,
-              kind_of: [TrueClass, FalseClass],
-              default: false
-    attribute :build_user,
-              kind_of: String,
-              default: lazy { |r| r.node['omnibus']['build_user'] }
-    attribute :environment,
-              kind_of: Hash,
-              default: {}
-  end
-
-  class Provider::OmnibusBuild < Provider::LWRPBase
-    include Omnibus::Helper
 
     provides :omnibus_build
 
+    property :project_name, String, name_property: true
+    property :project_dir, String, required: true
+    property :install_dir, String, default: lazy { default_install_dir }
+    property :base_dir, String, default: lazy { default_base_dir }
+    property :log_level, [:internal, :debug, :info, :warn, :error, :fatal], default: :internal
+    property :config_file, String, default: lazy { default_config_file }
+    property :config_overrides, Hash, default: {}
+    property :expire_cache, [TrueClass, FalseClass], default: false
+    property :build_user, String, default: lazy { node['omnibus']['build_user'] } # evil. leaving for back-compat. should be removed.
+    property :environment, Hash, default: lazy { default_environment }
+
+    # Enable why-run
     def whyrun_supported?
       true
     end
 
-    action(:execute) do
-      converge_by("execute #{new_resource}") do
-        prepare_build_enviornment
-        # bundle install
-        execute_with_omnibus_toolchain(bundle_install_command)
-        # omnibus build
-        execute_with_omnibus_toolchain("bundle exec #{build_command}")
-      end
+    #######################################
+    # helpers for default property settings
+    #######################################
+    def default_install_dir
+      Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], project_name) : "/opt/#{project_name}"
     end
 
-    protected
-
-    def bundle_install_command
-      if ::File.exist?(::File.join(new_resource.project_dir, 'Gemfile.lock'))
-        'bundle install --without development --deployment'
-      else
-        'bundle install --without development --path vendor/bundle'
-      end
+    def default_base_dir
+      Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus'
     end
 
-    def build_command
-      [
-        'omnibus',
-        'build',
-        new_resource.project_name,
-        "--log-level #{new_resource.log_level}",
-        "--config #{new_resource.config_file}",
-        new_resource.config_overrides.empty? ? '' : "--override #{new_resource.config_overrides.map { |k, v| "#{k}:#{v}" }.join(' ')}"
-      ].join(' ')
+    def default_config_file
+      ::File.join(project_dir, 'omnibus.rb')
     end
 
-    def prepare_build_enviornment
-      # Optionally wipe all caches (including the git cache)
-      if new_resource.expire_cache
-        cache = Resource::Directory.new(new_resource.base_dir, run_context)
-        cache.recursive(true)
-        cache.run_action(:delete)
-      end
-
-      # Clean up various directories from the last build
-      %W(
-        #{new_resource.base_dir}/build/#{new_resource.project_name}/*.manifest
-        #{new_resource.base_dir}/pkg
-        #{new_resource.project_dir}/pkg
-        #{new_resource.install_dir}
-      ).each do |directory|
-        d = Resource::Directory.new(directory, run_context)
-        d.recursive(true)
-        d.run_action(:delete)
-      end
-
-      # Create required build directories with the correct ownership
-      %W(
-        #{new_resource.base_dir}
-        #{new_resource.install_dir}
-      ).each do |directory|
-        d = Resource::Directory.new(directory, run_context)
-        d.owner(new_resource.build_user)
-        d.run_action(:create)
-      end
+    def default_environment
+      {
+        'PATH' => ENV['PATH'],
+        'USER' => build_user,
+        'USERNAME' => build_user,
+        'LOGNAME' => build_user,
+        'TMPDIR' => nil
+      }
     end
 
-    def execute_with_omnibus_toolchain(command)
-      execute = Resource::Execute.new("#{new_resource.project_name}: #{command}", run_context)
-      execute.command(
-        <<-CODE.gsub(/^ {10}/, '')
-          . #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')}
-          #{command}
-        CODE
-      )
-      execute.cwd(new_resource.project_dir)
-      execute.environment(environment)
-      execute.user(new_resource.build_user)
-      execute.run_action(:run)
-    end
-
-    def environment
-      environment = new_resource.environment || {}
-      # Ensure we inheriet the calling procceses $PATH
-      environment['PATH'] = ENV['PATH']
-      # We need to all underlying build process respect the build user
-      # as specified by the `build_user` attribute.
-      environment['USER']     = new_resource.build_user
-      environment['USERNAME'] = new_resource.build_user
-      environment['LOGNAME']  = new_resource.build_user
-      # Ensure we don't inherit the $TMPDIR of the calling process. $TMPDIR
-      # is set per user so we can hit permission issues when we execute
-      # the build as a different user.
-      environment['TMPDIR'] = nil if mac_os_x?
-      environment
-    end
-  end
-
-  class Provider::OmnibusBuildWindows < Provider::OmnibusBuild
     include Omnibus::Helper
+    include Omnibus::ResourceHelpers
 
-    provides :omnibus_build, platform_family: 'windows'
+    ################
+    # Action seciton
+    ################
 
-    protected
+    action :execute do
+      converge_by("building #{name}") do
+        #####
+        # prepare_build_enviornment
+        #####
 
-    def execute_with_omnibus_toolchain(command)
-      execute = Resource::Execute.new("#{new_resource.project_name}: #{command}", run_context)
-      execute.command("call #{windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')} && #{command}")
-      execute.cwd(new_resource.project_dir)
-      execute.environment(new_resource.environment)
-      execute.run_action(:run)
+        # Optionally wipe all caches (including the git cache)
+        if new_resource.expire_cache
+          directory new_resource.base_dir.to_s do
+            recursive true
+            action :delete
+          end
+        end
+
+        # Clean up various directories from the last build
+        %W(
+          #{base_dir}/build/#{project_name}/*.manifest
+          #{base_dir}/pkg
+          #{project_dir}/pkg
+          #{install_dir}
+        ).each do |d|
+          directory "#{d} removal" do
+            path d
+            recursive true
+            action :delete
+          end
+        end
+
+        # Create required build directories with the correct ownership
+        %W(
+          #{base_dir}
+          #{install_dir}
+        ).each do |d|
+          directory "#{d} creation" do
+            path d
+            owner build_user
+            action :create
+          end
+        end
+
+        #####
+        # bundle install
+        #####
+        execute "#{project_name}: bundle install" do
+          command cmd_with_toolchain(bundle_install_command)
+          cwd project_dir
+          environment new_resource.environment
+          user build_user
+          action :run
+        end
+
+        #####
+        # omnibus build
+        #####
+        execute "#{project_name}: bundle exec build_command" do
+          command cmd_with_toolchain("bundle exec #{build_command}")
+          cwd project_dir
+          environment new_resource.environment
+          user build_user
+          action :run
+        end
+      end
     end
   end
 end

@@ -19,3 +19,13 @@ platforms:
     run_list: yum-epel::default
   - name: centos-7
     run_list: yum-epel::default
+
+suites:
+  - name: default
+    run_list: omnibus::default
+
+  #
+  # Build
+  #
+  - name: omnibus_build_execute
+    run_list: omnibus_build::execute
