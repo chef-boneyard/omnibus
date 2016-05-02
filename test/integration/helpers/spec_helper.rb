@@ -1,17 +1,18 @@
-require 'serverspec'
+# require 'serverspec'
 require 'pathname'
 require 'tmpdir'
 
-if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM).nil?
-  set :backend, :exec
-  set :path, '/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:/usr/bin:/bin'
-else
-  set :backend, :cmd
-  set :os, family: 'windows'
-  set :path, 'C:/Program Files (x86)/Git/Cmd;C:/Program Files (x86)/Git/libexec/git-core;C:/wix;C:/Program Files/7-Zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64'
-end
+# FIXME: what to do about windows?
+# if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM).nil?
+#   set :backend, :exec
+#   set :path, '/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:/usr/bin:/bin'
+# else
+#   set :backend, :cmd
+#   set :os, family: 'windows'
+#   set :path, 'C:/Program Files (x86)/Git/Cmd;C:/Program Files (x86)/Git/libexec/git-core;C:/wix;C:/Program Files/7-Zip;C:\Program Files (x86)\Windows Kits\8.1\bin\x64'
+# end
 
-Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |file| require_relative(file) }
+# Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |file| require_relative(file) }
 
 def mac_os_x?
   os[:family] == 'darwin'
@@ -23,10 +24,6 @@ end
 
 def build_user_home_dir
   home_dir(build_user)
-end
-
-def build_user
-  'omnibus'
 end
 
 def home_dir(user)
@@ -79,11 +76,4 @@ def omnibus_platform_version(provided_platform, provided_platform_version)
   else
     provided_platform_version
   end
-end
-
-# this is essentially a copy of the omnibus_toolchain_enabled method in
-# Omnibus::Helper
-def omnibus_toolchain_enabled?
-  # the only platforms we don't run the toolchain on yet is Windows
-  !windows?
 end
