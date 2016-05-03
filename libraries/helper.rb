@@ -24,10 +24,6 @@ module Omnibus
       ::File.join(args).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR || File::SEPARATOR)
     end
 
-    def windows_safe_path_expand(arg)
-      ::File.expand_path(arg).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR || File::SEPARATOR)
-    end
-
     def build_user_home
       if node['omnibus']['build_user_home']
         node['omnibus']['build_user_home']
@@ -42,6 +38,14 @@ module Omnibus
       end
     end
 
+    def build_user_shell
+      if omnibus_toolchain_enabled?
+        "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/bash"
+      else
+        '/usr/local/bin/bash'
+      end
+    end
+
     def omnibus_env
       node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
     end
@@ -51,16 +55,52 @@ module Omnibus
       !windows?
     end
 
-    def build_user_shell
-      if omnibus_toolchain_enabled?
-        "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/bash"
-      else
-        '/usr/local/bin/bash'
-      end
+    def windows_safe_path_expand(arg)
+      ::File.expand_path(arg).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR || File::SEPARATOR)
     end
   end
 end
 
+module Omnibus
+  # Recipe Helpers
+  module ResourceHelpers
+    def bundle_install_command
+      if ::File.exist?(::File.join(project_dir, 'Gemfile.lock'))
+        'bundle install --without development --deployment'
+      else
+        'bundle install --without development --path vendor/bundle'
+      end
+    end
+
+    def build_command
+      [
+        'omnibus',
+        'build',
+        project_name,
+        "--log-level #{log_level}",
+        overrides_string.to_s,
+        "--config #{config_file}"
+      ].join(' ')
+    end
+
+    def cmd_with_toolchain(command)
+      if Chef::Platform.windows?
+        "call #{windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')} && #{command}"
+      else
+        <<-CODE.gsub(/^ {10}/, '')
+          . #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')} ; #{command}
+        CODE
+      end
+    end
+
+    def overrides_string
+      return '' if config_overrides.empty?
+      '--override ' + config_overrides.map { |k, v| "#{k}:#{v}" }.join(' ')
+    end
+  end
+end
+
+# WHYYYYYYYY
 Chef::Node.send(:include, Omnibus::Helper)
 Chef::Recipe.send(:include, Omnibus::Helper)
 Chef::Resource.send(:include, Omnibus::Helper)
