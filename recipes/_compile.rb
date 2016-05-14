@@ -80,7 +80,7 @@ elsif rhel?
   package 'tar'
   package 'bzip2'
 elsif windows?
-  msys_path = node['build-essential']['msys']['path']
+  msys_path = node['build-essential']['mingw64']['path']
   omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'bin')
   omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'mingw', 'bin')
 end
