@@ -14,6 +14,11 @@ RSpec.configure do |config|
     # changes. Global state is hard...
     allow_any_instance_of(Chef::Recipe).to receive(:build_user_home)
       .and_return('/home/omnibus')
+
+    # Allow us to mimic a Windows node
+    stub_const('File::ALT_SEPARATOR', '\\')
+    allow(ENV).to receive(:[])
+    allow(ENV).to receive(:[]).with('SYSTEMDRIVE').and_return('C:')
   end
 
   config.log_level = :fatal

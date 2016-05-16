@@ -58,6 +58,10 @@ module Omnibus
         '/usr/local/bin/bash'
       end
     end
+
+    def windows_arch_i386?
+      windows? && (i386? || (node.name =~ /i386/))
+    end
   end
 end
 

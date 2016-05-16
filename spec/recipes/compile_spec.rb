@@ -57,4 +57,42 @@ describe 'omnibus::_compile' do
       expect(chef_run).to install_package('bzip2')
     end
   end
+
+  context 'on Windows' do
+    let(:node_name) { 'chefdk-windows-2008r2-builder-1a6dad' }
+    let(:platform_version) { '2008R2' }
+
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'windows', version: platform_version) do |node|
+        node.name(node_name)
+        node.automatic['fqdn'] = node_name
+      end.converge(described_recipe)
+    end
+
+    let(:omnibus_env_path) { chef_run.node.run_state[:omnibus_env]['PATH'] }
+
+    it 'prefers the 64-bit MinGW toolchain' do
+      expect(omnibus_env_path).to include('C:\mingw64\bin', 'C:\mingw64\msys\1.0\bin')
+    end
+
+    context 'when a Windows node has a 32-bit architecture' do
+      # This version of Windows has a 32-bit arch in Fauxhai:
+      #
+      #   https://github.com/customink/fauxhai/blob/master/lib/fauxhai/platforms/windows/2003R2.json#L186
+      #
+      let(:platform_version) { '2003R2' }
+
+      it 'prefers the 32-bit MinGW toolchain' do
+        expect(omnibus_env_path).to include('C:\mingw32\bin', 'C:\mingw32\msys\1.0\bin')
+      end
+    end
+
+    context 'when a Windows node has i386 in its name' do
+      let(:node_name) { 'chefdk-windows-2008r2-i386-builder-dcb6f4' }
+
+      it 'prefers the 32-bit MinGW toolchain' do
+        expect(omnibus_env_path).to include('C:\mingw32\bin', 'C:\mingw32\msys\1.0\bin')
+      end
+    end
+  end
 end

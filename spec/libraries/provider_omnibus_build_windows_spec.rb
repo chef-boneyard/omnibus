@@ -21,8 +21,8 @@ describe Chef::Provider::OmnibusBuildWindows do
   subject { Chef::Provider::OmnibusBuildWindows.new(resource, run_context) }
 
   let(:build_user) { 'some_user' }
-  let(:build_user_home) { "C:/Users/#{build_user}" }
-  let(:project_dir) { 'C:/build/harmony' }
+  let(:build_user_home) { "C:\\Users\\#{build_user}" }
+  let(:project_dir) { 'C:\build\harmony' }
 
   let(:node) { stub_node(platform: 'windows', version: '2012R2') }
 
@@ -57,7 +57,7 @@ describe Chef::Provider::OmnibusBuildWindows do
 
     it 'loads the omnbius toolchain from the build user home' do
       expect(execute_resource).to receive(:command).with(
-        "call #{build_user_home}\/load-omnibus-toolchain.bat && #{command}"
+        "call #{build_user_home}\\load-omnibus-toolchain.bat && #{command}"
       )
       subject.send(:execute_with_omnibus_toolchain, command)
     end
