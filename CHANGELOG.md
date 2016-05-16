@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.1.0
+------
+- Depend on build-essential 4.0+
+- Load the correct MinGW/MYSYS with `load-omnibus-toolchain.bat`
+- Generate a `load-omnibus-toolchain.ps1` so Omnibus builds work as expected in PowerShell
+
 v4.0.2
 ------
 - Install bzip2 package in the compile recipe on RHEL
