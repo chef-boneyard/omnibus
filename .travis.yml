@@ -42,15 +42,15 @@ matrix:
 before_script:
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   # We have to install chef-sugar for ChefSpec
-  - /opt/chefdk/embedded/bin/chef gem install chef-sugar
+  - /opt/chefdk/bin/chef gem install chef-sugar
   # Ensure kitchen-docker is available for testing
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-docker
+  - /opt/chefdk/bin/chef gem install kitchen-docker
 script:
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
-  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec
+  - /opt/chefdk/bin/chef --version
   - /opt/chefdk/bin/cookstyle --version
   - /opt/chefdk/bin/cookstyle
+  - /opt/chefdk/bin/foodcritic --version
+  - /opt/chefdk/bin/foodcritic . --exclude spec
   - /opt/chefdk/embedded/bin/rspec spec
   - /opt/chefdk/embedded/bin/kitchen --version
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify "$PLATFORM"
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/bin/kitchen verify "$PLATFORM"
