@@ -70,9 +70,11 @@ describe 'omnibus::_compile' do
     end
 
     let(:omnibus_env_path) { chef_run.node.run_state[:omnibus_env]['PATH'] }
+    let(:omnibus_msystem) { chef_run.node.run_state[:omnibus_env]['MSYSTEM'] }
 
     it 'prefers the 64-bit MinGW toolchain' do
-      expect(omnibus_env_path).to include('C:\mingw64\bin', 'C:\mingw64\msys\1.0\bin')
+      expect(omnibus_env_path).to include('C:\msys2\bin', 'C:\msys2\mingw64\bin')
+      expect(omnibus_msystem).to eq(['MINGW64'])
     end
 
     context 'when a Windows node has a 32-bit architecture' do
@@ -83,7 +85,8 @@ describe 'omnibus::_compile' do
       let(:platform_version) { '2003R2' }
 
       it 'prefers the 32-bit MinGW toolchain' do
-        expect(omnibus_env_path).to include('C:\mingw32\bin', 'C:\mingw32\msys\1.0\bin')
+        expect(omnibus_env_path).to include('C:\msys2\bin', 'C:\msys2\mingw32\bin')
+        expect(omnibus_msystem).to eq(['MINGW32'])
       end
     end
 
@@ -91,7 +94,8 @@ describe 'omnibus::_compile' do
       let(:node_name) { 'chefdk-windows-2008r2-i386-builder-dcb6f4' }
 
       it 'prefers the 32-bit MinGW toolchain' do
-        expect(omnibus_env_path).to include('C:\mingw32\bin', 'C:\mingw32\msys\1.0\bin')
+        expect(omnibus_env_path).to include('C:\msys2\bin', 'C:\msys2\mingw32\bin')
+        expect(omnibus_msystem).to eq(['MINGW32'])
       end
     end
   end

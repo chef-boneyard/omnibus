@@ -20,7 +20,7 @@ supports 'suse'
 supports 'ubuntu'
 supports 'windows'
 
-depends 'build-essential', '>= 4.0.0'
+depends 'build-essential', '>= 6.0.0'
 depends 'chef-sugar', '>= 3.2.0'
 depends 'chef-ingredient', '>= 0.18.0'
 depends 'git'
