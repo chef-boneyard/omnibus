@@ -22,7 +22,7 @@ default['omnibus'].tap do |omnibus|
   omnibus['toolchain_name']     = 'omnibus-toolchain'
   omnibus['toolchain_version']  = '1.1.7'
   omnibus['git_version']        = '2.6.2'
-  omnibus['ruby_version']       = '2.1.5'
+  omnibus['ruby_version']       = '2.1.8'
 
   if platform_family == 'windows'
     omnibus['build_user_group'] = 'Administrators'
