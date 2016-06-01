@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.1.1
+------
+- Begin cooking with cookstyle.
+- Bump the omnibus-toolchain build version to 1.1.7.
+
 v4.1.0
 ------
 - Depend on build-essential 4.0+
