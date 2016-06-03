@@ -44,10 +44,13 @@ directory '/export/home' do
   only_if { solaris_10? }
 end
 
-group node['omnibus']['build_user_group'] do
+group "create #{node['omnibus']['build_user_group']} group" do
+  group_name node['omnibus']['build_user_group']
   # The Window's group provider get's cranky if attempting to create a
   # built-in group.
   ignore_failure true if windows?
+  # Don't remove existing members - in case this is a built-in group.
+  append true
 end
 
 # Ensure '/usr/local/bin/bash' is added to acceptable shells list

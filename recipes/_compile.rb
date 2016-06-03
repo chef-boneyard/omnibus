@@ -80,12 +80,9 @@ elsif rhel?
   package 'tar'
   package 'bzip2'
 elsif windows?
-  mingw_path = if windows_arch_i386?
-                 node['build-essential']['mingw32']['path']
-               else
-                 node['build-essential']['mingw64']['path']
-               end
-
-  omnibus_env['PATH'] << windows_safe_path_join(mingw_path, 'bin')
-  omnibus_env['PATH'] << windows_safe_path_join(mingw_path, 'msys', '1.0', 'bin')
+  bitness = windows_arch_i386? ? '32' : '64'
+  msys_path = node['build-essential']['msys2']['path']
+  omnibus_env['MSYSTEM'] << "MINGW#{bitness}"
+  omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(msys_path, "mingw#{bitness}", 'bin')
 end
