@@ -34,9 +34,9 @@ elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
   if node['platform_version'].satisfies?('>= 7') && (ppc64? || ppc64le?)
-    include_recipe 'omnibus::_fakeroot'
+    include_recipe 'omnibus::_fakeroot_source'
   else
-    package 'fakeroot'
+    include_recipe 'omnibus::_fakeroot_package'
   end
   package 'ncurses-devel'
   package 'rpm-build'
