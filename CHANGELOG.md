@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.0
+------
+- Export msys2 based environment on windows
+
 v4.1.2
 ------
 - Bump the version of Ruby to 2.1.8 on non-omnibus-toolchain slaves.
