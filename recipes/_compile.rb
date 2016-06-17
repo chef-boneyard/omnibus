@@ -85,4 +85,5 @@ elsif windows?
   omnibus_env['MSYSTEM'] << "MINGW#{bitness}"
   omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'bin')
   omnibus_env['PATH'] << windows_safe_path_join(msys_path, "mingw#{bitness}", 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'usr', 'bin')
 end
