@@ -41,4 +41,39 @@ describe 'omnibus::_packaging' do
       expect(chef_run).to install_package('zlib-devel')
     end
   end
+
+  context "on centos" do
+    shared_examples "installs from package repos" do
+      let(:chef_run) do
+        ChefSpec::SoloRunner.new(platform: 'centos', version: centos_version)
+                            .converge(described_recipe)
+      end
+
+      it "installs from the package repos" do
+        expect(chef_run).to include_recipe("omnibus::_fakeroot_package")
+      end
+    end
+
+    context "on centos 6" do
+      let(:centos_version) { '6.6' }
+      it_behaves_like "installs from package repos"
+    end
+
+    context "on centos 7" do
+      let(:centos_version) { '7.0' }
+      it_behaves_like "installs from package repos"
+
+      context "on ppc" do
+        let(:chef_run) do
+          ChefSpec::SoloRunner.new(platform: 'centos', version: '7.0') do |node|
+            node.automatic['kernel']['machine'] = 'ppc64'
+          end.converge(described_recipe)
+        end
+
+        it "installs fakeroot from source" do
+          expect(chef_run).to include_recipe("omnibus::_fakeroot_source")
+        end
+      end
+    end
+  end
 end

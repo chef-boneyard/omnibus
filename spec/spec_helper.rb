@@ -17,8 +17,12 @@ RSpec.configure do |config|
 
     # Allow us to mimic a Windows node
     stub_const('File::ALT_SEPARATOR', '\\')
-    allow(ENV).to receive(:[])
-    allow(ENV).to receive(:[]).with('SYSTEMDRIVE').and_return('C:')
+    allow(ENV).to receive(:[]) do |name|
+      {
+        "PATH" => '',
+        "SYSTEMDRIVE" => "C:"
+      }[name]
+    end
   end
 
   config.log_level = :fatal
