@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.1
+------
+- Add msys binaries to the toolchain `PATH`
+
 v4.2.0
 ------
 - Export msys2 based environment on windows
