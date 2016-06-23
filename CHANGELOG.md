@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.2
+------
+- Bump toolchain version
+- Remove fakeroot recipe
+
 v4.2.1
 ------
 - Add msys binaries to the toolchain `PATH`
