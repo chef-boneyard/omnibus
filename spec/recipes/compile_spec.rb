@@ -27,23 +27,6 @@ describe 'omnibus::_compile' do
     end
   end
 
-  context 'on Solaris 10' do
-    let(:chef_run) do
-      # Make Solaris 11 look like Solaris 10 as Fauxhai doesn't yet contain
-      # data for the latter.
-      ChefSpec::SoloRunner.new(platform: 'solaris2', version: '5.11') do |node|
-        node.automatic['platform_version'] = '5.10'
-      end.converge(described_recipe)
-    end
-
-    it 'creates a `make` symlink that points to `gmake`' do
-      allow(File).to receive(:exist?).and_call_original
-      allow(File).to receive(:exist?).with('/usr/sfw/bin/gmake').and_return(true)
-      expect(chef_run).to create_link('/usr/local/bin/make')
-        .with_to('/usr/sfw/bin/gmake')
-    end
-  end
-
   context 'on RHEL' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.6').converge(described_recipe)

@@ -27,17 +27,11 @@ include_recipe 'omnibus::_common'
 if debian?
   package 'devscripts'
   package 'dpkg-dev'
-  package 'fakeroot'
   package 'ncurses-dev'
   package 'zlib1g-dev'
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
-  if node['platform_version'].satisfies?('>= 7') && (ppc64? || ppc64le?)
-    include_recipe 'omnibus::_fakeroot'
-  else
-    package 'fakeroot'
-  end
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'

@@ -65,13 +65,6 @@ elsif mac_os_x?
       not_if { node['platform_version'].satisfies?('>= 10.11') }
     end
   end
-elsif solaris_10?
-  # This is ugly but we can't gurantee all tooling will respect the
-  # `MAKE` enviroment variable.
-  link '/usr/local/bin/make' do
-    to '/usr/sfw/bin/gmake'
-    only_if { File.exist?('/usr/sfw/bin/gmake') }
-  end
 elsif rhel?
   # Make sure tar is installed. It's missing from some CentOS Docker images:
   #
