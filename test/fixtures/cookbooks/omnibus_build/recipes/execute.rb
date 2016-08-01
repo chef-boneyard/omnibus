@@ -29,7 +29,7 @@ end
 
 omnibus_build 'harmony' do
   project_dir harmony_project_dir
-  log_level :internal
+  log_level :info
   config_overrides(
     append_timestamp: true
   )
