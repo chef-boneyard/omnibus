@@ -58,7 +58,7 @@ if omnibus_toolchain_enabled?
   # ca bundle that ships in the package. This can most likely be fixed by
   # a well placed `./configure` option when compiling git.
   #
-  execute "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
+  execute "/opt/#{node['omnibus']['toolchain_name']}/bin/git config --global http.sslCAinfo /opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem" do
     environment(
       'HOME' => build_user_home
     )

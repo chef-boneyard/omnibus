@@ -167,7 +167,7 @@ if windows?
   end
 else
 
-  omnibus_env['PATH'] << "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin" if omnibus_toolchain_enabled?
+  omnibus_env['PATH'] << "/opt/#{node['omnibus']['toolchain_name']}/bin" if omnibus_toolchain_enabled?
   omnibus_env['PATH'] << '/usr/local/bin'
 
   if aix?

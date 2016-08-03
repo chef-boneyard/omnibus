@@ -5,7 +5,7 @@ describe 'omnibus::_user' do
 
   it 'creates the omnibus build user' do
     expect(chef_run).to create_user('omnibus')
-      .with_shell(%r{(\/opt\/.*?\/embedded\/bin\/bash|\/usr\/local\/bin\/bash)})
+      .with_shell(%r{(\/opt\/.*?\/bin\/bash|\/usr\/local\/bin\/bash)})
   end
 
   it 'creates the home directory' do

@@ -53,7 +53,7 @@ module Omnibus
 
     def build_user_shell
       if omnibus_toolchain_enabled?
-        "/opt/#{node['omnibus']['toolchain_name']}/embedded/bin/bash"
+        "/opt/#{node['omnibus']['toolchain_name']}/bin/bash"
       else
         '/usr/local/bin/bash'
       end
