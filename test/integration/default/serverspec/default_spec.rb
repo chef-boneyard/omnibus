@@ -4,7 +4,7 @@ describe 'On unix-ish', if: !windows? do
   describe 'platforms with omnibus toolchain enabled', if: omnibus_toolchain_enabled? do
     describe user(build_user) do
       it { should exist }
-      it { should have_login_shell '/opt/omnibus-toolchain/embedded/bin/bash' }
+      it { should have_login_shell '/opt/omnibus-toolchain/bin/bash' }
     end
 
     describe 'Xcode Command Line Tools', if: mac_os_x? do
@@ -22,26 +22,26 @@ describe 'On unix-ish', if: !windows? do
     end
 
     describe 'ruby' do
-      describe command('/opt/omnibus-toolchain/embedded/bin/ruby --version') do
+      describe command('/opt/omnibus-toolchain/bin/ruby --version') do
         its(:exit_status) { should eq 0 }
       end
     end
 
     describe 'bash --version' do
-      describe command('/opt/omnibus-toolchain/embedded/bin/bash --version') do
+      describe command('/opt/omnibus-toolchain/bin/bash --version') do
         its(:exit_status) { should eq 0 }
       end
     end
 
     describe 'git --version' do
-      describe command('/opt/omnibus-toolchain/embedded/bin/git --version') do
+      describe command('/opt/omnibus-toolchain/bin/git --version') do
         its(:exit_status) { should eq 0 }
       end
 
       # Ensure `https` remote functions correctly
       Dir.mktmpdir('omnibus') do |tmpdir|
         # Ensure HTTPS remote support works
-        describe command("/opt/omnibus-toolchain/embedded/bin/git clone https://github.com/chef-cookbooks/omnibus.git #{tmpdir}") do
+        describe command("/opt/omnibus-toolchain/bin/git clone https://github.com/chef-cookbooks/omnibus.git #{tmpdir}") do
           its(:exit_status) { should eq 0 }
         end
       end
@@ -51,10 +51,10 @@ describe 'On unix-ish', if: !windows? do
       it { should be_file }
 
       describe command("su - #{build_user} -l -c 'source ~/load-omnibus-toolchain.sh && which ruby'") do
-        its(:stdout) { should match %r{/opt/omnibus-toolchain/embedded/bin/ruby$} }
+        its(:stdout) { should match %r{/opt/omnibus-toolchain/bin/ruby$} }
       end
       describe command("su - #{build_user} -l -c 'source ~/load-omnibus-toolchain.sh && echo $PATH'") do
-        its(:stdout) { should match %r{^/opt/omnibus-toolchain/embedded/bin(.+)} }
+        its(:stdout) { should match %r{^/opt/omnibus-toolchain/bin(.+)} }
       end
     end
   end
