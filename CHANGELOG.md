@@ -2,6 +2,13 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.3
+------
+- Bump toolchain version
+- Add fakeroot back for debian only
+- Correct toolchain paths
+- Allow Windows env variables to have newlines 
+
 v4.2.2
 ------
 - Bump toolchain version
