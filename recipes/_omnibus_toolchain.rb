@@ -24,4 +24,5 @@ chef_ingredient node['omnibus']['toolchain_name'] do
   version node['omnibus']['toolchain_version']
   channel :stable
   platform_version_compatibility_mode true
+  action :upgrade
 end
