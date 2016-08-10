@@ -9,7 +9,7 @@ describe 'omnibus::_omnibus_toolchain' do
     end
 
     it 'installs omnibus-toolchain' do
-      expect(chef_run).to install_chef_ingredient('omnibus-toolchain')
+      expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain')
     end
   end
 end
