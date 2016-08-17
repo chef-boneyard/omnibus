@@ -36,6 +36,7 @@ elsif rhel?
   package 'ncurses-devel'
   package 'rpm-build'
   package 'zlib-devel'
+  package 'fakeroot'
 
   if node['platform_version'].satisfies?('>= 7')
     # EL 7 split rpm-sign into its own package:  http://cholla.mmto.org/computers/linux/rpm/signing.html
