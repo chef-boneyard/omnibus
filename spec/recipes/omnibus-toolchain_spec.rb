@@ -11,5 +11,27 @@ describe 'omnibus::_omnibus_toolchain' do
     it 'installs omnibus-toolchain' do
       expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain')
     end
+
+    context 'when version has an override' do
+      before do
+        chef_run.node.normal['omnibus']['toolchain_version'] = '1.1.0-30499'
+        chef_run.converge(described_recipe)
+      end
+
+      it 'installs a specific version of omnibus-toolchain' do
+        expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain').with version: '1.1.0-30499'
+      end
+    end
+
+    context 'when channel has an override' do
+      before do
+        chef_run.node.normal['omnibus']['toolchain_channel'] = 'unstable'
+        chef_run.converge(described_recipe)
+      end
+
+      it 'installs omnibus-toolchain from a specific channel' do
+        expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain').with channel: :unstable
+      end
+    end
   end
 end
