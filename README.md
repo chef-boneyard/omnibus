@@ -10,12 +10,12 @@ This project is managed by the CHEF Release Engineering team. For more informati
 Announcement
 ------------
 Starting with omnibus cookbook version 4.0.0:
-* Chef 11 is no longer supported, since 12.5.1 is required to use [chef-ingredient](https://github.com/chef-cookbooks/chef-ingredient). If needed, you can pin to omnibus version `3.2.x` to preserve the old functionality.
+* Chef 11 is no longer supported, since Chef 12.1+ is required to use [chef-ingredient](https://github.com/chef-cookbooks/chef-ingredient). If needed, you can pin to omnibus version `3.2.x` to preserve the old functionality.
 * Instead of compiling everything from source in this cookbook, the [omnibus-toolchain](https://github.com/chef/omnibus-toolchain) package will be installed. This package contains patch, bash, make, git, ruby, rubygems, and bundler (built from [omnibus-software](https://github.com/chef/omnibus-software) definitions).
 
 Requirements
 ------------
-This cookbook requires Chef 12.5.1+.
+This cookbook requires Chef 12.1+.
 
 For a full list of supported platforms and external cookbook requirements, please see the `metadata.rb` file at the root of the cookbook.
 
