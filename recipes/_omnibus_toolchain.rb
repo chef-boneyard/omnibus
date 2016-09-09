@@ -22,7 +22,7 @@ return unless omnibus_toolchain_enabled?
 
 chef_ingredient node['omnibus']['toolchain_name'] do
   version node['omnibus']['toolchain_version']
-  channel :stable
+  channel node['omnibus']['toolchain_channel'].to_sym
   platform_version_compatibility_mode true
   action :upgrade
 end
