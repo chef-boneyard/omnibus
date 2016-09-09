@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.5
+------
+- Expose toolchain channel attribute
+
 v4.2.4
 ------
 - Fix toolchain update logic to work on all platforms (always update)
