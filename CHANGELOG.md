@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.7
+------
+- Update toolchain version
+
 v4.2.6
 ------
 - Update toolchain version
