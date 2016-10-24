@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v4.2.9
+------
+- Update omnibus-toolchain to version 1.1.42. This is the first version that contains the full s390x matrix for both angry and regular toolchain.
+
 v4.2.8
 ------
 - Update toolchain version (1.1.39)
