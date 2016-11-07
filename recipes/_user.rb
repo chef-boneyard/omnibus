@@ -73,6 +73,7 @@ group node['omnibus']['build_user_group'] do
   members node['omnibus']['build_user']
   append true
   action :modify
+  ignore_failure true if windows? # Cannot modify a group that doesn't exist
 end
 
 # Ensure the build user's home directory exists
@@ -95,14 +96,14 @@ if windows?
   else
     directory build_user_home do
       owner node['omnibus']['build_user']
-      group node['omnibus']['build_user_group']
+      group node['omnibus']['build_user_group'] unless windows?
       action :create
     end
   end
 else
   directory build_user_home do
     owner node['omnibus']['build_user']
-    group node['omnibus']['build_user_group']
+    group node['omnibus']['build_user_group'] unless windows?
     mode '0755'
     action :create
   end
