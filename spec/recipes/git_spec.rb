@@ -13,9 +13,6 @@ describe 'omnibus::_git' do
 
   context 'on platforms that use omnibus toolchain' do
     let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
-    before(:each) do
-      allow_any_instance_of(Chef::Recipe).to receive(:omnibus_toolchain_enabled?).and_return(true)
-    end
 
     it "properly configures git's cacert" do
       expect(chef_run).to run_execute('/opt/omnibus-toolchain/bin/git config --global http.sslCAinfo /opt/omnibus-toolchain/embedded/ssl/certs/cacert.pem')

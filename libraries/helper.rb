@@ -46,16 +46,19 @@ module Omnibus
       node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
     end
 
-    def omnibus_toolchain_enabled?
-      # We don't have an omnibus toolchain for windows yet.
-      !windows?
+    def toolchain_install_dir
+      if windows?
+        windows_safe_path_join(ENV['SYSTEMDRIVE'], 'opscode', node['omnibus']['toolchain_name'])
+      else
+        "/opt/#{node['omnibus']['toolchain_name']}"
+      end
     end
 
     def build_user_shell
-      if omnibus_toolchain_enabled?
-        "/opt/#{node['omnibus']['toolchain_name']}/bin/bash"
+      if windows?
+        windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', 'usr', 'bin', 'bash')
       else
-        '/usr/local/bin/bash'
+        ::File.join(toolchain_install_dir, 'bin', 'bash')
       end
     end
 

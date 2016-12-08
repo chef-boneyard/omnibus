@@ -17,12 +17,17 @@
 # limitations under the License.
 #
 
-log "omnibus-toolchain is #{omnibus_toolchain_enabled? ? 'enabled' : 'disabled'}"
-return unless omnibus_toolchain_enabled?
-
 chef_ingredient node['omnibus']['toolchain_name'] do
   version node['omnibus']['toolchain_version']
   channel node['omnibus']['toolchain_channel'].to_sym
   platform_version_compatibility_mode true
-  action :upgrade
+  if windows?
+    action :install
+  else
+    action :upgrade
+  end
 end
+
+omnibus_env['MSYSTEM'] << (windows_arch_i386? ? 'MINGW32' : 'MINGW64') if windows?
+omnibus_env['OMNIBUS_TOOLCHAIN_INSTALL_DIR'] << toolchain_install_dir
+omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'ssl', 'certs', 'cacert.pem')

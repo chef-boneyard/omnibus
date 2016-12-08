@@ -80,10 +80,3 @@ def omnibus_platform_version(provided_platform, provided_platform_version)
     provided_platform_version
   end
 end
-
-# this is essentially a copy of the omnibus_toolchain_enabled method in
-# Omnibus::Helper
-def omnibus_toolchain_enabled?
-  # the only platforms we don't run the toolchain on yet is Windows
-  !windows?
-end

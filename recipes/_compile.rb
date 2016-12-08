@@ -26,7 +26,7 @@ include_recipe 'omnibus::_common'
 # recipe should just "go away" and the build-essential cookbook should become
 # more awesome.
 #
-include_recipe 'build-essential::default'
+include_recipe 'build-essential::default' unless windows?
 
 if freebsd?
   # Ensuring BSD Make is executed with the `-B` option (backward-compat mode)
@@ -73,10 +73,6 @@ elsif rhel?
   package 'tar'
   package 'bzip2'
 elsif windows?
-  bitness = windows_arch_i386? ? '32' : '64'
-  msys_path = node['build-essential']['msys2']['path']
-  omnibus_env['MSYSTEM'] << "MINGW#{bitness}"
-  omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'bin')
-  omnibus_env['PATH'] << windows_safe_path_join(msys_path, "mingw#{bitness}", 'bin')
-  omnibus_env['PATH'] << windows_safe_path_join(msys_path, 'usr', 'bin')
+  node.default['seven_zip']['syspath'] = true
+  include_recipe 'seven_zip::default'
 end
