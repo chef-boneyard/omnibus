@@ -18,7 +18,6 @@
 #
 
 # Include Chef Sugar here
-include_recipe 'chef-sugar::default'
 require 'chef/sugar/core_extensions'
 
 # This works around the fact that seven_zip's default differs from the default installer:

@@ -20,8 +20,9 @@ default['omnibus'].tap do |omnibus|
   omnibus['build_user_home']    = nil
   omnibus['install_dir']        = nil
   omnibus['toolchain_name']     = 'omnibus-toolchain'
-  omnibus['toolchain_version']  = '1.1.42'
-  omnibus['toolchain_channel']  = 'stable'
+  omnibus['windows_guid']       = '3A542C80-3784-4C03-A2CE-94FED4EB7002'
+  omnibus['toolchain_version']  = '1.1.44+20161207225251.git.17.e6c2b55'
+  omnibus['toolchain_channel']  = 'unstable'
   omnibus['git_version']        = '2.6.2'
   omnibus['ruby_version']       = '2.1.8'
 

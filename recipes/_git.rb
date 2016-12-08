@@ -52,7 +52,7 @@ file File.join(build_user_home, '.gitconfig') do
 end
 
 # Provided by the omnibus-toolchain package
-if omnibus_toolchain_enabled?
+if omnibus_toolchain_enabled? && !windows?
 
   # We need to configure the omnibus-toolchain's embedded git to use
   # ca bundle that ships in the package. This can most likely be fixed by
@@ -68,28 +68,4 @@ if omnibus_toolchain_enabled?
   ENV['GIT_SSL_CAINFO'] = "/opt/#{node['omnibus']['toolchain_name']}/embedded/ssl/certs/cacert.pem"
 
   return
-end
-
-if windows?
-  windows_package "Git version #{node['omnibus']['git_version']}" do
-    source "https://github.com/git-for-windows/git/releases/download/v#{node['omnibus']['git_version']}.windows.1/Git-#{node['omnibus']['git_version']}-32-bit.exe"
-    checksum node['omnibus']['git_checksum']
-    installer_type :inno
-    action :install
-  end
-
-  # Git is installed to Program Files (x86) on 64-bit machines and
-  # 'Program Files' on 32-bit machines
-  program_files = ENV['ProgramFiles(x86)'] || ENV['ProgramFiles']
-
-  git_paths = []
-  git_paths << windows_safe_path_join(program_files, 'Git', 'Cmd')
-  git_paths << windows_safe_path_join(program_files, 'Git', 'libexec', 'git-core')
-  git_path = git_paths.join(File::PATH_SEPARATOR)
-
-  windows_path git_path do
-    action :add
-  end
-
-  omnibus_env['PATH'] << git_path
 end

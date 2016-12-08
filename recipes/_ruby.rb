@@ -20,12 +20,7 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-# Provided by the omnibus-toolchain package
-return if omnibus_toolchain_enabled?
-
-r = ruby_install node['omnibus']['ruby_version']
-
 if windows?
-  omnibus_env['PATH'] << windows_safe_path_join(r.prefix, 'bin')
-  omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(r.prefix, 'ssl', 'certs', 'cacert.pem')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_path, 'bin')
+  omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(toolchain_path, 'ssl', 'certs', 'cacert.pem')
 end

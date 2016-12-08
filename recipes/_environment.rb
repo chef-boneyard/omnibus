@@ -22,6 +22,8 @@ include_recipe 'omnibus::_common'
 
 if windows?
   omni_path = omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)
+  # Get the install path of the omnibus-toolchain
+
   file windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat') do
     content <<-EOH.gsub(/^ {6}/, '')
       @ECHO OFF
@@ -33,6 +35,7 @@ if windows?
       set HOMEDRIVE=#{ENV['SYSTEMDRIVE']}
       set HOMEPATH=#{build_user_home.split(':').last}
       set PATH=#{omni_path};%PATH%
+      set TOOLCHAIN_PATH="#{toolchain_path}"
       #{omnibus_env.map { |k, v| "set #{k}=#{v.first}" }.join("\n")}
 
       ECHO(
@@ -119,6 +122,7 @@ if windows?
 
       $env:HOMEDRIVE="#{ENV['SYSTEMDRIVE']}"
       $env:HOMEPATH="#{build_user_home.split(':').last}"
+      $env:TOOLCHAIN_PATH="#{toolchain_path}"
       $env:PATH="#{omni_path};$env:PATH"
       #{omnibus_env.map { |k, v| "$env:#{k}='#{v.first}'" }.join("\n")}
 

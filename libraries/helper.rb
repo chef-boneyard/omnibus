@@ -47,15 +47,40 @@ module Omnibus
     end
 
     def omnibus_toolchain_enabled?
-      # We don't have an omnibus toolchain for windows yet.
-      !windows?
+      true
     end
 
-    def build_user_shell
-      if omnibus_toolchain_enabled?
-        "/opt/#{node['omnibus']['toolchain_name']}/bin/bash"
+    def toolchain_path
+      if windows?
+        path ||= begin
+                   registry_get_values("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall{#{node['omnibus']['windows_guid']}}\\InstallLocation")
+                 rescue Chef::Exceptions::Win32RegKeyMissing
+                   nil
+                 end
       else
+        "/opt/#{node['omnibus']['toolchain_name']}"
+      end
+    end
+
+    # TODO: This is a little more complex than I would like. Identify failure
+    # modes for this case stament or remove it entirely if possible.
+    def build_user_shell
+      case omnibus_toolchain_enabled?
+      # Set the path when toolchain is enabled on Windows.
+      when true && !windows?
+        "#{self.toolchain_path}/bin/bash"
+      # Set the path when toolchain is disabled on Windows.
+      when false && !windows?
         '/usr/local/bin/bash'
+      # Set the path when toolchain is enabled on *nix like environments.
+      when true && windows?
+        "#{self.toolchain_path}/embedded/bin/usr/bin/bash"
+      # Set the path when toolchain is disabled on *nix like environments.
+      when false && windows?
+        windows_safe_path('C:\msys2\usr\bin\bash')
+      # If we get here, fail-fast so we can know something is broken.
+      else
+        raise 'Unable to set user shell.'
       end
     end
 
