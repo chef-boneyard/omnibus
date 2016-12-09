@@ -25,7 +25,7 @@ platforms:
     run_list:
       - freebsd::portsnap
       - freebsd::pkgng
-  - name: freebsd-10.1
+  - name: freebsd-10.3
     run_list: freebsd::portsnap
   - name: ubuntu-10.04
     run_list: apt::default
