@@ -65,6 +65,21 @@ module Omnibus
     def windows_arch_i386?
       windows? && (i386? || (node.name =~ /i386/))
     end
+
+    def mingw_toolchain_name
+      windows_arch_i386? ? 'mingw32' : 'mingw64'
+    end
+
+    def mixlib_install_artifact_info_for(options)
+      @toolchain_artifact_info ||= begin
+        Chef::Recipe.send(:include, ChefIngredientCookbook::Helpers)
+        ensure_mixlib_install_gem_installed!
+        toolchain_options = Mixlib::Install.detect_platform
+        toolchain_options.merge!(options)
+        toolchain_options[:platform_version_compatibility_mode] = true
+        Mixlib::Install.new(toolchain_options).artifact_info
+      end
+    end
   end
 end
 

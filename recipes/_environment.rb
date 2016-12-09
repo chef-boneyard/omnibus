@@ -22,10 +22,10 @@ include_recipe 'omnibus::_common'
 
 if windows?
   omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin')
-  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', 'mingw64', 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', mingw_toolchain_name, 'bin')
   omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', 'usr', 'bin')
   omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'git', 'cmd')
-  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'git', 'mingw64', 'libexec', 'git-core')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'git', mingw_toolchain_name, 'libexec', 'git-core')
 
   omnibus_path = omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)
 

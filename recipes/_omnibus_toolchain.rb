@@ -17,17 +17,43 @@
 # limitations under the License.
 #
 
+if windows?
+  toolchain_options = {
+    product_name: node['omnibus']['toolchain_name'],
+    product_version: node['omnibus']['toolchain_version'],
+    channel: node['omnibus']['toolchain_channel'].to_sym,
+    # Override detected architecture on Windows as we use properly
+    # configured 64-bit instances to compile things in 32-bit mode.
+    architecture: (windows_arch_i386? ? 'i386' : 'x86_64')
+  }
+
+  artifact_info = mixlib_install_artifact_info_for(toolchain_options)
+
+  remote_artifact_path = artifact_info.url
+  local_artifact_path  = ::File.join(Chef::Config[:file_cache_path], ::File.basename(remote_artifact_path))
+
+  remote_file local_artifact_path do
+    source remote_artifact_path
+    mode '0644'
+    checksum artifact_info.sha256
+    backup 1
+  end
+
+  omnibus_env['MSYSTEM'] << mingw_toolchain_name.upcase
+  omnibus_env['OMNIBUS_WINDOWS_ARCH'] << (windows_arch_i386? ? 'x86' : 'x64')
+end
+
 chef_ingredient node['omnibus']['toolchain_name'] do
   version node['omnibus']['toolchain_version']
   channel node['omnibus']['toolchain_channel'].to_sym
   platform_version_compatibility_mode true
   if windows?
+    package_source local_artifact_path
     action :install
   else
     action :upgrade
   end
 end
 
-omnibus_env['MSYSTEM'] << (windows_arch_i386? ? 'MINGW32' : 'MINGW64') if windows?
 omnibus_env['OMNIBUS_TOOLCHAIN_INSTALL_DIR'] << toolchain_install_dir
 omnibus_env['SSL_CERT_FILE'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'ssl', 'certs', 'cacert.pem')
