@@ -1,56 +1,54 @@
 sudo: required
+dist: trusty
 
+# install the pre-release chef-dk.  Use chef-stable-trusty to install the stable release
 addons:
   apt:
     sources:
-      - chef-stable-precise
+      - chef-current-trusty
     packages:
       - chefdk
 
-# Don't `bundle install`
+# Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
 branches:
   only:
     - master
 
-services:
-  - docker
+services: docker
 
 env:
   global:
     # Ignore warnings when running specs.
     - RUBYOPT="-W0"
   matrix:
-    - CHEF_VERSION=12.5.1 PLATFORM=debian-7
-    - CHEF_VERSION=12.5.1 PLATFORM=debian-8
-    - CHEF_VERSION=12.5.1 PLATFORM=ubuntu-1204
-    - CHEF_VERSION=12.5.1 PLATFORM=ubuntu-1404
-    - CHEF_VERSION=12.5.1 PLATFORM=centos-6
-    - CHEF_VERSION=12.5.1 PLATFORM=centos-7
-    - CHEF_VERSION=latest PLATFORM=debian-7
-    - CHEF_VERSION=latest PLATFORM=debian-8
-    - CHEF_VERSION=latest PLATFORM=ubuntu-1204
-    - CHEF_VERSION=latest PLATFORM=ubuntu-1404
-    - CHEF_VERSION=latest PLATFORM=centos-6
-    - CHEF_VERSION=latest PLATFORM=centos-7
+    - CHEF_VERSION=12.5.1 INSTANCE=default-debian-7
+    - CHEF_VERSION=12.5.1 INSTANCE=default-debian-8
+    - CHEF_VERSION=12.5.1 INSTANCE=default-ubuntu-1204
+    - CHEF_VERSION=12.5.1 INSTANCE=default-ubuntu-1404
+    - CHEF_VERSION=12.5.1 INSTANCE=default-centos-6
+    - CHEF_VERSION=12.5.1 INSTANCE=default-centos-7
+    - CHEF_VERSION=current INSTANCE=default-debian-7
+    - CHEF_VERSION=current INSTANCE=default-debian-8
+    - CHEF_VERSION=current INSTANCE=default-ubuntu-1204
+    - CHEF_VERSION=current INSTANCE=default-ubuntu-1404
+    - CHEF_VERSION=current INSTANCE=default-centos-6
+    - CHEF_VERSION=current INSTANCE=default-centos-7
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+
+script: KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 
 matrix:
-  fast_finish: true
-
-# Ensure we make ChefDK's Ruby the default
-before_script:
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  # We have to install chef-sugar for ChefSpec
-  - /opt/chefdk/bin/chef gem install chef-sugar
-  # Ensure kitchen-docker is available for testing
-  - /opt/chefdk/bin/chef gem install kitchen-docker
-script:
-  - /opt/chefdk/bin/chef --version
-  - /opt/chefdk/bin/cookstyle --version
-  - /opt/chefdk/bin/cookstyle
-  - /opt/chefdk/bin/foodcritic --version
-  - /opt/chefdk/bin/foodcritic . --exclude spec
-  - /opt/chefdk/embedded/bin/rspec spec
-  - /opt/chefdk/embedded/bin/kitchen --version
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/bin/kitchen verify "$PLATFORM"
+  include:
+    - before_script:
+      - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+      - /opt/chefdk/embedded/bin/chef --version
+      - /opt/chefdk/embedded/bin/cookstyle --version
+      - /opt/chefdk/embedded/bin/foodcritic --version
+    - script:
+      - /opt/chefdk/bin/chef exec rake
+      env: UNIT_AND_LINT=1
