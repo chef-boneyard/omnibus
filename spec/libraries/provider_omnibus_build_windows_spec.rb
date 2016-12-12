@@ -47,7 +47,8 @@ describe Chef::Provider::OmnibusBuildWindows do
                                  environment: nil,
                                  run_action: nil,
                                  user: nil,
-                                 group: nil
+                                 group: nil,
+                                 live_stream: nil
       )
     end
 

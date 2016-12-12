@@ -54,9 +54,10 @@ Attribute          | Default                                               | Des
 `log_level`        | `:internal`                                           | Log level used during the build. Valid values include: `:internal, :debug, :info, :warn, :error, :fatal`
 `config_file`      | `<PROJECT_DIR>/omnibus.rb`                            | Omnibus configuration file used for the build.
 `config_overrides` | `{}`                                                  | Overrides for one or more Omnibus config options
-`expire_cache`     | `false`                                               | Indiciates the Omnibus cache (including git cache) should be wiped before building.
+`expire_cache`     | `false`                                               | Indicates the Omnibus cache (including git cache) should be wiped before building.
 `build_user`       | `node['omnibus']['build_user']`                       | The user to execute the Omnibus build as.
 `environment`      | `{}`                                                  | Environment variables to set in the underlying build process.
+`live_stream`      | `false`                                               | Indicates output of build process should be logged to Chef event stream.
 
 #### Example Usage
 
