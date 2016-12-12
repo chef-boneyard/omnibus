@@ -41,6 +41,7 @@ if windows?
 
   omnibus_env['MSYSTEM'] << mingw_toolchain_name.upcase
   omnibus_env['OMNIBUS_WINDOWS_ARCH'] << (windows_arch_i386? ? 'x86' : 'x64')
+  omnibus_env['BASH_ENV'] << msys2_path(windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', 'etc', 'msys2.bashrc'))
 end
 
 chef_ingredient node['omnibus']['toolchain_name'] do

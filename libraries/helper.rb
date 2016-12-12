@@ -70,6 +70,11 @@ module Omnibus
       windows_arch_i386? ? 'mingw32' : 'mingw64'
     end
 
+    def msys2_path(path)
+      path.sub(/^([A-Za-z]):\//, "/\\1/")
+    end
+
+
     def mixlib_install_artifact_info_for(options)
       @toolchain_artifact_info ||= begin
         Chef::Recipe.send(:include, ChefIngredientCookbook::Helpers)
