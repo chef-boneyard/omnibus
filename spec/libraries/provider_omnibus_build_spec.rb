@@ -27,7 +27,7 @@ describe Chef::Provider::OmnibusBuild do
   let(:expire_cache) { false }
   let(:environment) do
     {
-      'FOO' => 'BAR'
+      'FOO' => 'BAR',
     }
   end
 
@@ -91,7 +91,7 @@ describe Chef::Provider::OmnibusBuild do
       let(:config_overrides) do
         {
           append_timestamp: false,
-          use_git_caching: false
+          use_git_caching: false,
         }
       end
 
