@@ -110,7 +110,7 @@ describe 'On unix-ish', if: !windows? do
 
     [
       '.gitconfig',
-      'load-omnibus-toolchain.sh'
+      'load-omnibus-toolchain.sh',
     ].each do |env_file|
       describe file(File.join(build_user_home_dir, env_file)) do
         it { should be_file }
@@ -192,7 +192,7 @@ describe 'Windows', if: windows? do
 
     [
       '.gitconfig',
-      'load-omnibus-toolchain.bat'
+      'load-omnibus-toolchain.bat',
     ].each do |env_file|
       # We are using regular Ruby because ServerSpec existent checks are failing on Windows
       describe env_file do
