@@ -70,6 +70,12 @@ module Omnibus
       windows_arch_i386? ? 'mingw32' : 'mingw64'
     end
 
+    #
+    # Takes a ruby style path (e.g. C:/foo/bar) and coverts it to an msys path (/C/foo/bar).
+    #
+    # @param [String] Windows style path as string.
+    # @return [String]
+    #
     def msys2_path(path)
       path.sub(%r{^([A-Za-z]):/}, '/\\1/')
     end
