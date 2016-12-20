@@ -23,7 +23,7 @@ ENV['PATH'] = [
   # TODO: fix this once the Windows omnibus-toolchain installs executables
   # in the top-level `bin` directory (vs `embedded/bin`)
   windows_safe_path_join(toolchain_install_dir, (windows? ? 'embedded' : ''), 'bin'),
-  ENV['PATH']
+  ENV['PATH'],
 ].join(File::PATH_SEPARATOR)
 
 git harmony_project_dir do

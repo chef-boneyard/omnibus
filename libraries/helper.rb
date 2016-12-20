@@ -71,9 +71,8 @@ module Omnibus
     end
 
     def msys2_path(path)
-      path.sub(/^([A-Za-z]):\//, "/\\1/")
+      path.sub(%r{^([A-Za-z]):/}, '/\\1/')
     end
-
 
     def mixlib_install_artifact_info_for(options)
       @toolchain_artifact_info ||= begin

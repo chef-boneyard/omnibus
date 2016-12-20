@@ -24,7 +24,7 @@ if windows?
     channel: node['omnibus']['toolchain_channel'].to_sym,
     # Override detected architecture on Windows as we use properly
     # configured 64-bit instances to compile things in 32-bit mode.
-    architecture: (windows_arch_i386? ? 'i386' : 'x86_64')
+    architecture: (windows_arch_i386? ? 'i386' : 'x86_64'),
   }
 
   artifact_info = mixlib_install_artifact_info_for(toolchain_options)
