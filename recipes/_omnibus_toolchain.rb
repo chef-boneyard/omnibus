@@ -28,8 +28,11 @@ if windows?
   }
 
   artifact_info = mixlib_install_artifact_info_for(toolchain_options)
-
-  remote_artifact_path = artifact_info.url
+  begin
+    remote_artifact_path = artifact_info.url
+  rescue NoMethodError
+    raise "The version #{toolchain_options[:product_version]} of the toolchain #{toolchain_options[:product_name]} does not exist in the channel #{toolchain_options[:channel]}."
+  end
   local_artifact_path  = ::File.join(Chef::Config[:file_cache_path], ::File.basename(remote_artifact_path))
 
   remote_file local_artifact_path do
