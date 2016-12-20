@@ -7,11 +7,27 @@ describe 'omnibus::_compile' do
     expect(chef_run).to include_recipe('build-essential::default')
   end
 
-  it 'includes homebrew on OSX' do
-    stub_command('which git')
-    osx_chef_run = ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.8.2')
-                                       .converge(described_recipe)
-    expect(osx_chef_run).to include_recipe('homebrew::default')
+  context 'on OSX' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'mac_os_x',
+        version: '10.8.2'
+      ).converge(described_recipe)
+    end
+
+    # Keep the resources from an included recipe from being loaded into the Chef run,
+    # but test that the recipe was included. Note, I attempted to scope the receive
+    # message to just 'homebrew::default' and other recipes within the cookbook,
+    # but it resulted in odd behavior which I could not easily resolve.
+    before do
+      allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
+      allow_any_instance_of(Chef::Recipe).to receive(:include_recipe)
+    end
+
+    it 'includes the homebrew cookbook' do
+      expect_any_instance_of(Chef::Recipe).to receive(:include_recipe).with('homebrew::default')
+      chef_run
+    end
   end
 
   context 'on freebsd' do
