@@ -19,7 +19,12 @@ harmony_project_dir = File.join(build_user_home, 'harmony')
 # In order to have all the toolchain executables in the path, we need to set up
 # the environment like load-omnibus-toolchain.sh does. This is a little hacky
 # but we can't source the env like a shell does so this works.
-ENV['PATH'] = "/opt/omnibus-toolchain/bin:#{ENV['PATH']}"
+ENV['PATH'] = [
+  # TODO: fix this once the Windows omnibus-toolchain installs executables
+  # in the top-level `bin` directory (vs `embedded/bin`)
+  windows_safe_path_join(toolchain_install_dir, (windows? ? 'embedded' : ''), 'bin'),
+  ENV['PATH'],
+].join(File::PATH_SEPARATOR)
 
 git harmony_project_dir do
   repository 'https://github.com/chef/omnibus-harmony.git'

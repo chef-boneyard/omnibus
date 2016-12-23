@@ -21,7 +21,14 @@
 include_recipe 'omnibus::_common'
 
 if windows?
-  omni_path = omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', mingw_toolchain_name, 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'bin', 'usr', 'bin')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'git', 'cmd')
+  omnibus_env['PATH'] << windows_safe_path_join(toolchain_install_dir, 'embedded', 'git', mingw_toolchain_name, 'libexec', 'git-core')
+
+  omnibus_path = omnibus_env.delete('PATH').uniq.join(File::PATH_SEPARATOR)
+
   file windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat') do
     content <<-EOH.gsub(/^ {6}/, '')
       @ECHO OFF
@@ -32,7 +39,7 @@ if windows?
 
       set HOMEDRIVE=#{ENV['SYSTEMDRIVE']}
       set HOMEPATH=#{build_user_home.split(':').last}
-      set PATH=#{omni_path};%PATH%
+      set PATH=#{omnibus_path};%PATH%
       #{omnibus_env.map { |k, v| "set #{k}=#{v.first}" }.join("\n")}
 
       ECHO(
@@ -119,7 +126,7 @@ if windows?
 
       $env:HOMEDRIVE="#{ENV['SYSTEMDRIVE']}"
       $env:HOMEPATH="#{build_user_home.split(':').last}"
-      $env:PATH="#{omni_path};$env:PATH"
+      $env:PATH="#{omnibus_path};$env:PATH"
       #{omnibus_env.map { |k, v| "$env:#{k}='#{v.first}'" }.join("\n")}
 
       Write-Host " ========================================"
@@ -166,8 +173,7 @@ if windows?
     sensitive true
   end
 else
-
-  omnibus_env['PATH'] << "/opt/#{node['omnibus']['toolchain_name']}/bin" if omnibus_toolchain_enabled?
+  omnibus_env['PATH'] << File.join(toolchain_install_dir, 'bin')
   omnibus_env['PATH'] << '/usr/local/bin'
 
   if aix?

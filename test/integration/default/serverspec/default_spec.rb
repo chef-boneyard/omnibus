@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'On unix-ish', if: !windows? do
-  describe 'platforms with omnibus toolchain enabled', if: omnibus_toolchain_enabled? do
+  describe 'platforms with omnibus toolchain enabled' do
     describe user(build_user) do
       it { should exist }
       it { should have_login_shell '/opt/omnibus-toolchain/bin/bash' }
@@ -55,45 +55,6 @@ describe 'On unix-ish', if: !windows? do
       end
       describe command("su - #{build_user} -l -c 'source ~/load-omnibus-toolchain.sh && echo $PATH'") do
         its(:stdout) { should match %r{^/opt/omnibus-toolchain/bin(.+)} }
-      end
-    end
-  end
-
-  describe 'platforms without omnibus toolchain enabled', if: !omnibus_toolchain_enabled? do
-    describe 'ruby' do
-      describe command('/opt/languages/ruby/2.1.5/bin/ruby --version') do
-        its(:stdout) { should match('2.1.5') }
-      end
-    end
-
-    describe 'bash' do
-      describe command('/usr/local/bin/bash --version') do
-        its(:stdout) { should match('4.3.30') }
-      end
-    end
-
-    describe 'git' do
-      describe command('/usr/local/bin/git --version') do
-        its(:stdout) { should match('2.6.2') }
-      end
-
-      # Ensure `https` remote functions correctly
-      Dir.mktmpdir('omnibus') do |tmpdir|
-        # Ensure HTTPS remote support works
-        describe command("/usr/local/bin/git clone https://github.com/chef-cookbooks/omnibus.git #{tmpdir}") do
-          its(:exit_status) { should eq 0 }
-        end
-      end
-    end
-
-    describe file(File.join(build_user_home_dir, 'load-omnibus-toolchain.sh')) do
-      it { should be_file }
-
-      describe command("su - #{build_user} -l -c 'source ~/load-omnibus-toolchain.sh && which ruby'") do
-        its(:stdout) { should match %r{/opt/languages/ruby/2.1.5/bin/ruby$} }
-      end
-      describe command("su - #{build_user} -l -c 'source ~/load-omnibus-toolchain.sh && echo $PATH'") do
-        its(:stdout) { should match %r{^/usr/local/bin(.+)} }
       end
     end
   end

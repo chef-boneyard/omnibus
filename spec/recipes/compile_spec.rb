@@ -7,11 +7,27 @@ describe 'omnibus::_compile' do
     expect(chef_run).to include_recipe('build-essential::default')
   end
 
-  it 'includes homebrew on OSX' do
-    stub_command('which git')
-    osx_chef_run = ChefSpec::SoloRunner.new(platform: 'mac_os_x', version: '10.8.2')
-                                       .converge(described_recipe)
-    expect(osx_chef_run).to include_recipe('homebrew::default')
+  context 'on OSX' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'mac_os_x',
+        version: '10.8.2'
+      ).converge(described_recipe)
+    end
+
+    # Keep the resources from an included recipe from being loaded into the Chef run,
+    # but test that the recipe was included. Note, I attempted to scope the receive
+    # message to just 'homebrew::default' and other recipes within the cookbook,
+    # but it resulted in odd behavior which I could not easily resolve.
+    before do
+      allow_any_instance_of(Chef::Recipe).to receive(:include_recipe).and_call_original
+      allow_any_instance_of(Chef::Recipe).to receive(:include_recipe)
+    end
+
+    it 'includes the homebrew cookbook' do
+      expect_any_instance_of(Chef::Recipe).to receive(:include_recipe).with('homebrew::default')
+      chef_run
+    end
   end
 
   context 'on freebsd' do
@@ -42,44 +58,13 @@ describe 'omnibus::_compile' do
   end
 
   context 'on Windows' do
-    let(:node_name) { 'chefdk-windows-2008r2-builder-1a6dad' }
-    let(:platform_version) { '2008R2' }
-
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: platform_version) do |node|
-        node.name(node_name)
-        node.automatic['fqdn'] = node_name
-      end.converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2')
+                          .converge(described_recipe)
     end
 
-    let(:omnibus_env_path) { chef_run.node.run_state[:omnibus_env]['PATH'] }
-    let(:omnibus_msystem) { chef_run.node.run_state[:omnibus_env]['MSYSTEM'] }
-
-    it 'prefers the 64-bit MinGW toolchain' do
-      expect(omnibus_env_path).to include('C:\msys2\bin', 'C:\msys2\mingw64\bin')
-      expect(omnibus_msystem).to eq(['MINGW64'])
-    end
-
-    context 'when a Windows node has a 32-bit architecture' do
-      # This version of Windows has a 32-bit arch in Fauxhai:
-      #
-      #   https://github.com/customink/fauxhai/blob/master/lib/fauxhai/platforms/windows/2003R2.json#L186
-      #
-      let(:platform_version) { '2003R2' }
-
-      it 'prefers the 32-bit MinGW toolchain' do
-        expect(omnibus_env_path).to include('C:\msys2\bin', 'C:\msys2\mingw32\bin')
-        expect(omnibus_msystem).to eq(['MINGW32'])
-      end
-    end
-
-    context 'when a Windows node has i386 in its name' do
-      let(:node_name) { 'chefdk-windows-2008r2-i386-builder-dcb6f4' }
-
-      it 'prefers the 32-bit MinGW toolchain' do
-        expect(omnibus_env_path).to include('C:\msys2\bin', 'C:\msys2\mingw32\bin')
-        expect(omnibus_msystem).to eq(['MINGW32'])
-      end
+    it 'includes seven_zip' do
+      expect(chef_run).to include_recipe('seven_zip::default')
     end
   end
 end

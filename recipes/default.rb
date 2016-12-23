@@ -20,15 +20,13 @@
 # Include the common recipe
 include_recipe 'omnibus::_common'
 
-# Install the Omnibus toolchain package on platforms that support it
+# Install the omnibus-toolchain package
 include_recipe 'omnibus::_omnibus_toolchain'
 
 # Include other recipes. Note: they may not be executed in this order, since
 # private recipes may depend on each other.
-include_recipe 'omnibus::_cacerts'
 include_recipe 'omnibus::_compile'
 include_recipe 'omnibus::_git'
-include_recipe 'omnibus::_ruby'
 include_recipe 'omnibus::_github'
 include_recipe 'omnibus::_libffi'
 include_recipe 'omnibus::_packaging'

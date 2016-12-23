@@ -36,11 +36,4 @@ RSpec.configure do |config|
 
   # Be random!
   config.order = 'random'
-
-  # this is essentially a copy of the omnibus_toolchain_enabled method in
-  # Omnibus::Helper
-  def omnibus_toolchain_enabled?
-    # the only platforms we don't run the toolchain on yet is Windows
-    !windows?
-  end
 end
