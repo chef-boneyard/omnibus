@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.0.0
+------
+- `omnibus-toolchain` now fully supports Windows
+- Update `omnibus-toolchain` to 1.1.46
+- Remove all traces of the pre-omnibus-toolchain world as ALL platforms are now assumed to use omnibus-toolchain
+
 v4.2.9
 ------
 - Update omnibus-toolchain to version 1.1.42. This is the first version that contains the full s390x matrix for both angry and regular toolchain.
