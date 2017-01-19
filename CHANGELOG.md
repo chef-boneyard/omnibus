@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.0.1
+------
+- Ignore build user group on Windows
+
 v5.0.0
 ------
 - `omnibus-toolchain` now fully supports Windows
