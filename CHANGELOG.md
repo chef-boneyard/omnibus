@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.1.0
+------
+- Add `live_stream` attribute to `omnibus_build` resource
+
 v5.0.1
 ------
 - Ignore build user group on Windows
