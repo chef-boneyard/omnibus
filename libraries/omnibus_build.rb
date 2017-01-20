@@ -56,6 +56,9 @@ class Chef
     attribute :environment,
               kind_of: Hash,
               default: {}
+    attribute :live_stream,
+              kind_of: [TrueClass, FalseClass],
+              default: false
   end
 
   class Provider::OmnibusBuild < Provider::LWRPBase
@@ -139,6 +142,7 @@ class Chef
       )
       execute.cwd(new_resource.project_dir)
       execute.environment(environment)
+      execute.live_stream(new_resource.live_stream)
       execute.user(new_resource.build_user)
       execute.run_action(:run)
     end
@@ -172,6 +176,7 @@ class Chef
       execute.command("call #{windows_safe_path_join(build_user_home, 'load-omnibus-toolchain.bat')} && #{command}")
       execute.cwd(new_resource.project_dir)
       execute.environment(new_resource.environment)
+      execute.live_stream(new_resource.live_stream)
       execute.run_action(:run)
     end
   end

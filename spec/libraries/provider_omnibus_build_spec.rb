@@ -25,6 +25,7 @@ describe Chef::Provider::OmnibusBuild do
   let(:project_dir) { '/tmp/harmony' }
   let(:config_overrides) { Hash.new }
   let(:expire_cache) { false }
+  let(:live_stream) { false }
   let(:environment) do
     {
       'FOO' => 'BAR',
@@ -40,6 +41,7 @@ describe Chef::Provider::OmnibusBuild do
     r.environment(environment)
     r.config_overrides(config_overrides)
     r.expire_cache(expire_cache)
+    r.live_stream(live_stream)
     r.build_user(build_user)
     r
   end
@@ -146,7 +148,8 @@ describe Chef::Provider::OmnibusBuild do
                                  environment: nil,
                                  run_action: nil,
                                  user: nil,
-                                 group: nil
+                                 group: nil,
+                                 live_stream: nil
       )
     end
 
@@ -177,6 +180,15 @@ describe Chef::Provider::OmnibusBuild do
     it 'executes the command as the provided user' do
       expect(execute_resource).to receive(:user).with(build_user)
       subject.send(:execute_with_omnibus_toolchain, command)
+    end
+
+    context 'live_stream is true' do
+      let(:live_stream) { true }
+
+      it 'executes the command with live_stream enabled' do
+        expect(execute_resource).to receive(:live_stream).with(live_stream)
+        subject.send(:execute_with_omnibus_toolchain, command)
+      end
     end
   end
 
