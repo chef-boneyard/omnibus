@@ -20,8 +20,22 @@
 module Omnibus
   # Recipe Helpers
   module Helper
-    def windows_safe_path_join(*args)
-      ::File.join(args).gsub(::File::SEPARATOR, ::File::ALT_SEPARATOR || File::SEPARATOR)
+    #
+    # Convert the given path to be appropiate for shelling out on Windows.
+    #
+    # @param [String, Array<String>] pieces
+    #   the pieces of the path to join and fix
+    # @return [String]
+    #   the path with applied changes
+    #
+    def windows_safe_path_join(*pieces)
+      path = File.join(*pieces)
+
+      if File::ALT_SEPARATOR
+        path.gsub(File::SEPARATOR, File::ALT_SEPARATOR)
+      else
+        path
+      end
     end
 
     def windows_safe_path_expand(arg)
