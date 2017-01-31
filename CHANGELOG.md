@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.1.2
+------
+- Update omnibus-toolchain to version 1.1.52
+- Switching to stable chef release
+
 v5.1.1
 ------
 - Make `windows_safe_path_join` smarter and allow strings or arrays as input.
