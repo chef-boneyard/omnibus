@@ -5,7 +5,7 @@ dist: trusty
 addons:
   apt:
     sources:
-      - chef-current-trusty
+      - chef-stable-trusty
     packages:
       - chefdk
 
@@ -51,4 +51,4 @@ matrix:
       - /opt/chefdk/embedded/bin/foodcritic --version
     - script:
       - /opt/chefdk/bin/chef exec rake
-      env: UNIT_AND_LINT=1
+      env: CHEF_VERSION=12.17.44 UNIT_AND_LINT=1
