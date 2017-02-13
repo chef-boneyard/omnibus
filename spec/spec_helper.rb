@@ -19,6 +19,15 @@ RSpec.configure do |config|
     stub_const('File::ALT_SEPARATOR', '\\')
     allow(ENV).to receive(:[])
     allow(ENV).to receive(:[]).with('SYSTEMDRIVE').and_return('C:')
+    # This stops "undefined method `split' for nil:NilClass" errors from
+    # being thrown by ChefSpec. This works around a Chef compatibility
+    # issue that was introduced in Chef 12.18+.
+    #
+    # See the following Chef issue for more details:
+    #
+    #   https://github.com/chef/chef/issues/5769
+    #
+    allow(ENV).to receive(:[]).with('PATH').and_return('')
   end
 
   config.log_level = :fatal
