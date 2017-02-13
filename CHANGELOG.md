@@ -2,6 +2,11 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.1.3
+------
+- Use new `architecture` attribute on toolchain install
+- Add permanent fix for ChefSpec/Chef 12.18+ compat issues
+
 v5.1.2
 ------
 - Update omnibus-toolchain to version 1.1.52
