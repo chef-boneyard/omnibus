@@ -5,7 +5,7 @@ describe 'omnibus::_cacerts' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '9.1')
+      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '9.3')
                             .converge(described_recipe)
     end
   end

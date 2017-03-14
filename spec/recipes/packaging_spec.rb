@@ -19,7 +19,7 @@ describe 'omnibus::_packaging' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.1')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.3')
                           .converge(described_recipe)
     end
 
