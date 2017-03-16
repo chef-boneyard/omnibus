@@ -11,7 +11,7 @@ describe 'omnibus::_compile' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'mac_os_x',
-        version: '10.8.2'
+        version: '10.9.2'
       ).converge(described_recipe)
     end
 
@@ -32,7 +32,7 @@ describe 'omnibus::_compile' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '10.0')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.3')
                           .converge(described_recipe)
     end
 
