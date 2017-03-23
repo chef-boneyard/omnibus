@@ -20,7 +20,7 @@
 chef_ingredient node['omnibus']['toolchain_name'] do
   version node['omnibus']['toolchain_version']
   channel node['omnibus']['toolchain_channel'].to_sym
-  architecture(windows_arch_i386? ? 'i386' : 'x86_64')
+  architecture(windows_arch_i386? || node['kernel']['machine'] == 'i686' ? 'i386' : 'x86_64')
   platform_version_compatibility_mode true
   action(windows? ? :install : :upgrade)
 end
