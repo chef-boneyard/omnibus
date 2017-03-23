@@ -20,12 +20,12 @@ default['omnibus'].tap do |omnibus|
   omnibus['build_user_home']    = nil
   omnibus['install_dir']        = nil
   omnibus['toolchain_name']     = 'omnibus-toolchain'
-  omnibus['toolchain_version']  = '1.1.61'
+  omnibus['toolchain_version']  = '1.1.64'
   omnibus['toolchain_channel']  = 'stable'
   omnibus['git_version']        = '2.6.2'
   omnibus['ruby_version']       = '2.1.8'
 
-  if platform_family == 'windows'
+  if platform_family?('windows')
     omnibus['build_user_group'] = 'Administrators'
     omnibus['base_dir']         = windows_safe_path_join(ENV['SYSTEMDRIVE'], 'omnibus-ruby')
     omnibus['git_checksum']     = 'ade9f885220964ec190b5de6c6aa42857e00afc7b21827223807c857cce38a78'
@@ -38,8 +38,8 @@ default['omnibus'].tap do |omnibus|
   # You should store this password in an encrypted data bag item and
   # override in your wrapper. We've set a default password here purely
   # for testing purposes.
-  omnibus['build_user_password'] = if platform_family == 'windows' || platform_family == 'mac_os_x'
-                                     # Passsword must be clear-text on Windows and Mac OS X.
+  omnibus['build_user_password'] = if platform_family?('windows', 'mac_os_x')
+                                     # Password must be clear-text on Windows and Mac OS X.
                                      'get0ntheBus'
                                    else
                                      # Per Chef's requirements on Unix systems, the password below is
