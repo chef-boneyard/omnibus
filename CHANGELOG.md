@@ -2,9 +2,13 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.1.5
+------
+- Update omnibus-toolchain to version 1.1.64
+
 v5.1.4
 ------
-- Update omnibus-toolcain to version 1.1.61 (which include windows fixes!)
+- Update omnibus-toolchain to version 1.1.61 (which include windows fixes!)
 
 v5.1.3
 ------
