@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe 'omnibus::_omnibus_toolchain' do
-  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
+  let(:chef_run) do
+    ChefSpec::SoloRunner.converge(described_recipe)
+  end
 
   context 'on platforms that use omnibus toolchain' do
     it 'installs omnibus-toolchain' do
-      expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain')
+      expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain').with(architecture: 'x86_64')
     end
 
     context 'when version has an override' do
@@ -27,6 +29,18 @@ describe 'omnibus::_omnibus_toolchain' do
 
       it 'installs omnibus-toolchain from a specific channel' do
         expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain').with channel: :unstable
+      end
+    end
+
+    context 'on an i386 system' do
+      let(:chef_run) do
+        ChefSpec::SoloRunner.new do |node|
+          node.automatic['kernel']['machine'] = 'i386'
+        end.converge(described_recipe)
+      end
+
+      it 'installs omnibus-toolchain' do
+        expect(chef_run).to upgrade_chef_ingredient('omnibus-toolchain').with(architecture: 'i386')
       end
     end
   end
