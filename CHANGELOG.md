@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.1.7
+------
+- Override suse/sles toolchain versions.
+
 v5.1.6
 ------
 - Fix regression where toolchain will not install on non-x86_64 architecture.
