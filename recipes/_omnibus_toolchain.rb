@@ -19,12 +19,32 @@
 
 arch = (windows_arch_i386? || i386?) ? 'i386' : node['kernel']['machine']
 
-chef_ingredient node['omnibus']['toolchain_name'] do
-  version node['omnibus']['toolchain_version']
-  channel node['omnibus']['toolchain_channel'].to_sym
-  architecture arch
-  platform_version_compatibility_mode true
-  action(windows? ? :install : :upgrade)
+# Throwing a huge if/else here for ease of removal later
+if suse? && intel?
+  mapped_version = nil
+  if node['platform_version'] =~ /11.*/
+    mapped_version = '5'
+  elsif node['platform_version'] =~ /12.*/
+    mapped_version = '6'
+  end
+
+  chef_ingredient node['omnibus']['toolchain_name'] do
+    platform 'el'
+    platform_version mapped_version
+    version node['omnibus']['toolchain_version']
+    channel node['omnibus']['toolchain_channel'].to_sym
+    architecture arch
+    platform_version_compatibility_mode true
+    action(windows? ? :install : :upgrade)
+  end
+else
+  chef_ingredient node['omnibus']['toolchain_name'] do
+    version node['omnibus']['toolchain_version']
+    channel node['omnibus']['toolchain_channel'].to_sym
+    architecture arch
+    platform_version_compatibility_mode true
+    action(windows? ? :install : :upgrade)
+  end
 end
 
 omnibus_env['OMNIBUS_TOOLCHAIN_INSTALL_DIR'] << toolchain_install_dir
