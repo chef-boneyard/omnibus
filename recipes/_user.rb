@@ -59,6 +59,16 @@ execute 'chsec_login_shell' do
   only_if { aix? }
 end
 
+if windows?
+  powershell_script 'Disable password complexity requirements' do
+    code <<-EOH
+      secedit /export /cfg $env:temp/export.cfg
+      ((get-content $env:temp/export.cfg) -replace ('PasswordComplexity = 1', 'PasswordComplexity = 0')) | Out-File $env:temp/export.cfg
+      secedit /configure /db $env:windir/security/new.sdb /cfg $env:temp/export.cfg /areas SECURITYPOLICY
+    EOH
+  end
+end
+
 user node['omnibus']['build_user'] do
   home     build_user_home
   password node['omnibus']['build_user_password']
