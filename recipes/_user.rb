@@ -59,6 +59,27 @@ execute 'chsec_login_shell' do
   only_if { aix? }
 end
 
+#
+# On windows alter the security policy to allow poor passwords
+#
+if windows?
+  fix_pw_file = 'c:\users\vagrant\fixpwpol.cmd'
+
+  file fix_pw_file do
+    action :create
+    content <<EOC
+[System Access]\r
+PasswordComplexity = 0\r
+[Version]\r
+signature="$CHICAGO$"
+EOC
+  end
+
+  execute 'FixSecurityPolicy' do
+    command "secedit /configure /db C:\\Windows\\security\\new.sdb /cfg #{fix_pw_file} /areas SECURITYPOLICY"
+  end
+end
+
 user node['omnibus']['build_user'] do
   home     build_user_home
   password node['omnibus']['build_user_password']
