@@ -8,7 +8,6 @@ metadata
 
 group :integration do
   cookbook 'apt'
-  cookbook 'fancy_execute'
   cookbook 'freebsd'
   cookbook 'yum-epel'
   fixture 'build'
