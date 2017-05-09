@@ -2,7 +2,7 @@
 # Cookbook Name:: omnibus
 # Recipe:: _environment
 #
-# Copyright 2014, Chef Software, Inc.
+# Copyright 2014-2017, Chef Software Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,37 +54,37 @@ if windows?
       REM # Query tool versions
       REM ###############################################################
 
-      FOR /F "tokens=*" %%a in ('git --version') do SET GIT_VERSION=%%a
-      FOR /F "tokens=*" %%a in ('ruby --version') do SET RUBY_VERSION=%%a
-      FOR /F "tokens=*" %%a in ('gem --version') do SET GEM_VERSION=%%a
-      FOR /F "tokens=*" %%a in ('bundle --version 2^> nul') do SET BUNDLER_VERSION=%%a
+      FOR /F "tokens=*" %%a in ('git --version') do SET OMNIBUS_GIT_VERSION=%%a
+      FOR /F "tokens=*" %%a in ('ruby --version') do SET OMNIBUS_RUBY_VERSION=%%a
+      FOR /F "tokens=*" %%a in ('gem --version') do SET OMNIBUS_GEM_VERSION=%%a
+      FOR /F "tokens=*" %%a in ('bundle --version 2^> nul') do SET OMNIBUS_BUNDLER_VERSION=%%a
       FOR /F "tokens=*" %%a in ('gcc --version') do (
-        SET GCC_VERSION=%%a
+        SET OMNIBUS_GCC_VERSION=%%a
         GOTO :next
       )
       :next
       FOR /F "tokens=*" %%a in ('make --version') do (
-        SET MAKE_VERSION=%%a
+        SET OMNIBUS_MAKE_VERSION=%%a
         GOTO :next
       )
       :next
       FOR /F "tokens=*" %%a in ('7z -h') do (
-        SET SEVENZIP_VERSION=%%a
+        SET OMNIBUS_SEVENZIP_VERSION=%%a
         GOTO :next
       )
       :next
       FOR /F "tokens=*" %%a in ('heat -help') do (
-        SET WIX_HEAT_VERSION=%%a
+        SET OMNIBUS_WIX_HEAT_VERSION=%%a
         GOTO :next
       )
       :next
       FOR /F "tokens=*" %%a in ('candle -help') do (
-        SET WIX_CANDLE_VERSION=%%a
+        SET OMNIBUS_WIX_CANDLE_VERSION=%%a
         GOTO :next
       )
       :next
       FOR /F "tokens=*" %%a in ('light -help') do (
-        SET WIX_LIGHT_VERSION=%%a
+        SET OMNIBUS_WIX_LIGHT_VERSION=%%a
         GOTO :next
       )
       :next
@@ -96,16 +96,16 @@ if windows?
       ECHO ========================================
       ECHO(
 
-      ECHO 7-Zip..........%SEVENZIP_VERSION%
-      ECHO Bundler........%BUNDLER_VERSION%
-      ECHO GCC............%GCC_VERSION%
-      ECHO Git............%GIT_VERSION%
-      ECHO Make...........%MAKE_VERSION%
-      ECHO Ruby...........%RUBY_VERSION%
-      ECHO RubyGems.......%GEM_VERSION%
-      ECHO WiX:Candle.....%WIX_CANDLE_VERSION%
-      ECHO WiX:Heat.......%WIX_HEAT_VERSION%
-      ECHO WiX:Light......%WIX_LIGHT_VERSION%
+      ECHO 7-Zip..........%OMNIBUS_SEVENZIP_VERSION%
+      ECHO Bundler........%OMNIBUS_BUNDLER_VERSION%
+      ECHO GCC............%OMNIBUS_GCC_VERSION%
+      ECHO Git............%OMNIBUS_GIT_VERSION%
+      ECHO Make...........%OMNIBUS_MAKE_VERSION%
+      ECHO Ruby...........%OMNIBUS_RUBY_VERSION%
+      ECHO RubyGems.......%OMNIBUS_GEM_VERSION%
+      ECHO WiX:Candle.....%OMNIBUS_WIX_CANDLE_VERSION%
+      ECHO WiX:Heat.......%OMNIBUS_WIX_HEAT_VERSION%
+      ECHO WiX:Light......%OMNIBUS_WIX_LIGHT_VERSION%
 
       ECHO(
       ECHO ========================================
@@ -139,31 +139,31 @@ if windows?
       # Query tool versions
       ###############################################################
 
-      $env:GIT_VERSION=git --version
-      $env:RUBY_VERSION=ruby --version
-      $env:GEM_VERSION=gem --version
-      $env:BUNDLER_VERSION=bundle --version
-      $env:GCC_VERSION=(gcc --version)[0]
-      $env:MAKE_VERSION=(make --version)[0]
-      $env:SEVENZIP_VERSION=(7z -h)[1]
-      $env:WIX_HEAT_VERSION=(heat -help)[0]
-      $env:WIX_CANDLE_VERSION=(candle -help)[0]
-      $env:WIX_LIGHT_VERSION=(light -help)[0]
+      $env:OMNIBUS_GIT_VERSION=git --version
+      $env:OMNIBUS_RUBY_VERSION=ruby --version
+      $env:OMNIBUS_GEM_VERSION=gem --version
+      $env:OMNIBUS_BUNDLER_VERSION=bundle --version
+      $env:OMNIBUS_GCC_VERSION=(gcc --version)[0]
+      $env:OMNIBUS_MAKE_VERSION=(make --version)[0]
+      $env:OMNIBUS_SEVENZIP_VERSION=(7z -h)[1]
+      $env:OMNIBUS_WIX_HEAT_VERSION=(heat -help)[0]
+      $env:OMNIBUS_WIX_CANDLE_VERSION=(candle -help)[0]
+      $env:OMNIBUS_WIX_LIGHT_VERSION=(light -help)[0]
 
       Write-Host " ========================================"
       Write-Host " = Tool Versions"
       Write-Host " ========================================"
 
-      Write-Host " 7-Zip..........$env:SEVENZIP_VERSION"
-      Write-Host " Bundler........$env:BUNDLER_VERSION"
-      Write-Host " GCC............$env:GCC_VERSION"
-      Write-Host " Git............$env:GIT_VERSION"
-      Write-Host " Make...........$env:MAKE_VERSION"
-      Write-Host " Ruby...........$env:RUBY_VERSION"
-      Write-Host " RubyGems.......$env:GEM_VERSION"
-      Write-Host " WiX:Heat.......$env:WIX_HEAT_VERSION"
-      Write-Host " WiX:Candle.....$env:WIX_CANDLE_VERSION"
-      Write-Host " WiX:Light......$env:WIX_LIGHT_VERSION"
+      Write-Host " 7-Zip..........$env:OMNIBUS_SEVENZIP_VERSION"
+      Write-Host " Bundler........$env:OMNIBUS_BUNDLER_VERSION"
+      Write-Host " GCC............$env:OMNIBUS_GCC_VERSION"
+      Write-Host " Git............$env:OMNIBUS_GIT_VERSION"
+      Write-Host " Make...........$env:OMNIBUS_MAKE_VERSION"
+      Write-Host " Ruby...........$env:OMNIBUS_RUBY_VERSION"
+      Write-Host " RubyGems.......$env:OMNIBUS_GEM_VERSION"
+      Write-Host " WiX:Heat.......$env:OMNIBUS_WIX_HEAT_VERSION"
+      Write-Host " WiX:Candle.....$env:OMNIBUS_WIX_CANDLE_VERSION"
+      Write-Host " WiX:Light......$env:OMNIBUS_WIX_LIGHT_VERSION"
 
       Write-Host " ========================================"
 
