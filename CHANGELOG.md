@@ -2,6 +2,13 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.2.0
+------
+- Fix node.set for Chef 14
+- Use SPDX standard license string
+- Remove fancy_execute cookbook
+- prefix all windows vars by OMNIBUS_
+
 v5.1.7
 ------
 - Override suse/sles toolchain versions.
