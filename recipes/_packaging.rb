@@ -57,7 +57,7 @@ elsif rhel?
   end
 elsif windows?
   include_recipe 'wix::default'
-  include_recipe 'windows-sdk::windows_sdk'
+  include_recipe 'windows-sdk::windows_sdk' unless ec2?
 
   omnibus_env['PATH'] << node['wix']['home']
   omnibus_env['PATH'] << node['seven_zip']['home']
