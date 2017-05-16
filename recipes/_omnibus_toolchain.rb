@@ -39,6 +39,8 @@ if suse? && intel?
   end
 else
   chef_ingredient node['omnibus']['toolchain_name'] do
+    platform node['platform_family']
+    platform_version node['platform_version']
     version node['omnibus']['toolchain_version']
     channel node['omnibus']['toolchain_channel'].to_sym
     architecture arch
