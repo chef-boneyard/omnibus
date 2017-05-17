@@ -37,6 +37,18 @@ if suse? && intel?
     platform_version_compatibility_mode true
     action(windows? ? :install : :upgrade)
   end
+elsif windows?
+  # todo - remove this windows specific logic when chef-ingredient has defaults
+  # set correctly
+  chef_ingredient node['omnibus']['toolchain_name'] do
+    platform node['platform_family']
+    platform_version node['platform_version']
+    version node['omnibus']['toolchain_version']
+    channel node['omnibus']['toolchain_channel'].to_sym
+    architecture arch
+    platform_version_compatibility_mode true
+    action(windows? ? :install : :upgrade)
+  end
 else
   chef_ingredient node['omnibus']['toolchain_name'] do
     version node['omnibus']['toolchain_version']
