@@ -173,7 +173,7 @@ describe Chef::Provider::OmnibusBuild do
     end
 
     it 'executes the command with the provided environment' do
-      expect(execute_resource).to receive(:environment).with(environment)
+      expect(execute_resource).to receive(:environment).with(hash_including(environment))
       subject.send(:execute_with_omnibus_toolchain, command)
     end
 
