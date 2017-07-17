@@ -2,6 +2,10 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.2.1
+------
+- Bump omnibus-toolchain version to 1.1.72
+
 v5.2.0
 ------
 - Fix node.set for Chef 14

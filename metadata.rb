@@ -4,7 +4,7 @@ maintainer_email  'releng@chef.io'
 license           'Apache-2.0'
 description       'Prepares a machine to be an Omnibus builder.'
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           '5.2.0'
+version           '5.2.1'
 
 supports 'amazon'
 supports 'centos'
