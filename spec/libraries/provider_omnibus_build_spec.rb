@@ -23,7 +23,7 @@ describe Chef::Provider::OmnibusBuild do
   let(:build_user) { 'some_user' }
   let(:build_user_home) { "/home/#{build_user}" }
   let(:project_dir) { '/tmp/harmony' }
-  let(:config_overrides) { Hash.new }
+  let(:config_overrides) {}
   let(:expire_cache) { false }
   let(:live_stream) { false }
   let(:environment) do
