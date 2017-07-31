@@ -148,7 +148,7 @@ class Chef
     end
 
     def environment
-      environment = new_resource.environment || {}
+      environment = new_resource.environment.dup || {}
       # Ensure we inheriet the calling procceses $PATH
       environment['PATH'] = ENV['PATH']
       # We need to all underlying build process respect the build user
