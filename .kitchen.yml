@@ -11,27 +11,19 @@ provisioner:
     vagrant: true
 
 platforms:
-  - name: centos-5.11
+  - name: centos-6
     run_list: yum-epel::default
-  - name: centos-6.7
+  - name: centos-7
     run_list: yum-epel::default
-  - name: centos-7.1
-    run_list: yum-epel::default
-  - name: debian-7.8
+  - name: debian-7
     run_list: apt::default
-  - name: debian-8.1
+  - name: debian-8
     run_list: apt::default
-  - name: freebsd-9.3
-    run_list:
-      - freebsd::portsnap
-      - freebsd::pkgng
-  - name: freebsd-10.3
+  - name: freebsd-10
     run_list: freebsd::portsnap
-  - name: ubuntu-10.04
-    run_list: apt::default
-  - name: ubuntu-12.04
-    run_list: apt::default
   - name: ubuntu-14.04
+    run_list: apt::default
+  - name: ubuntu-16.04
     run_list: apt::default
   #
   # The following (private) boxes are shared via Atlas. Please note this
@@ -42,9 +34,6 @@ platforms:
   # as the default provider by copying `.kitchen.local.yml.vmware.example`
   # over to `.kitchen.local.yml`.
   #
-  - name: macosx-10.8
-    driver:
-      box: chef/macosx-10.8 # private
   - name: macosx-10.9
     driver:
       box: chef/macosx-10.9 # private
