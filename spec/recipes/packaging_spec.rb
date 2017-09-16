@@ -14,6 +14,9 @@ describe 'omnibus::_packaging' do
       expect(chef_run).to install_package('dpkg-dev')
       expect(chef_run).to install_package('ncurses-dev')
       expect(chef_run).to install_package('zlib1g-dev')
+      expect(chef_run).to install_package('fakeroot')
+      expect(chef_run).to install_package('binutils')
+      expect(chef_run).to install_package('gnupg')
     end
   end
 
