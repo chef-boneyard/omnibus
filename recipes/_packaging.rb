@@ -30,6 +30,8 @@ if debian?
   package 'ncurses-dev'
   package 'zlib1g-dev'
   package 'fakeroot'
+  package 'binutils'
+  package 'gnupg'
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
