@@ -33,7 +33,7 @@ describe 'omnibus::_packaging' do
 
   context 'on rhel' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'redhat', version: '6.5')
+      ChefSpec::SoloRunner.new(platform: 'redhat', version: '6.7')
                           .converge(described_recipe)
     end
 

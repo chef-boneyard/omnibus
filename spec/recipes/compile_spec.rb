@@ -7,11 +7,11 @@ describe 'omnibus::_compile' do
     expect(chef_run).to include_recipe('build-essential::default')
   end
 
-  context 'on OSX' do
+  context 'on macOS' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(
         platform: 'mac_os_x',
-        version: '10.9.2'
+        version: '10.12'
       ).converge(described_recipe)
     end
 
@@ -45,7 +45,7 @@ describe 'omnibus::_compile' do
 
   context 'on RHEL' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.6').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8').converge(described_recipe)
     end
 
     it 'installs tar' do

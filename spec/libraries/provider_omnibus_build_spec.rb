@@ -32,7 +32,7 @@ describe Chef::Provider::OmnibusBuild do
     }
   end
 
-  let(:node) { stub_node(platform: 'ubuntu', version: '12.04') }
+  let(:node) { stub_node(platform: 'ubuntu', version: '16.04') }
 
   let(:run_context) { Chef::RunContext.new(node, {}, nil) }
   let(:resource) do
@@ -204,7 +204,7 @@ describe Chef::Provider::OmnibusBuild do
     end
 
     context 'on Mac OS X' do
-      let(:node) { stub_node(platform: 'mac_os_x', version: '10.9.2') }
+      let(:node) { stub_node(platform: 'mac_os_x', version: '10.12') }
 
       it 'unsets $TMPDIR' do
         expect(subject.send(:environment)['TMPDIR']).to be_nil

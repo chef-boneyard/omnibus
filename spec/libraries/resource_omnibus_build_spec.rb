@@ -19,7 +19,7 @@ require 'spec_helper'
 
 describe Chef::Resource::OmnibusBuild do
   subject { Chef::Resource::OmnibusBuild.new(project_name, run_context) }
-  let(:node) { stub_node(platform: 'ubuntu', version: '12.04') }
+  let(:node) { stub_node(platform: 'ubuntu', version: '16.04') }
   let(:run_context) { Chef::RunContext.new(node, {}, nil) }
   let(:build_user) { 'morty' }
   let(:project_dir) { "/home/#{build_user}/#{project_name}" }
