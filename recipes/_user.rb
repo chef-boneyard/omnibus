@@ -90,7 +90,7 @@ if windows?
         whoami = Mixlib::ShellOut.new('whoami.exe', user: node['omnibus']['build_user'], password: node['omnibus']['build_user_password'])
         whoami.run_command
       end
-      action :create
+      action :run
       not_if { ::File.exist?(build_user_home) }
     end
   else
