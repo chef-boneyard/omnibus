@@ -2,6 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.2.3
+------
+- Update foodcritic rules
+- Update for Chef 13
+- Fix selinux paths
+
 v5.2.2
 ------
 - Bump omnibus-toolchain version to 1.1.73
