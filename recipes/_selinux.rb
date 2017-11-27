@@ -25,6 +25,7 @@ return unless !docker? && rhel?
 # Omnibus requires SELinux be in a permissive state or rsync commands will fail
 execute 'selinux-permissive' do
   command 'setenforce 0'
+  environment 'PATH' => "#{ENV['PATH']}:/sbin:/usr/sbin"
   not_if  'getenforce | egrep -qx "Permissive|Disabled"'
 end
 
