@@ -31,6 +31,8 @@ depends 'windows'
 depends 'wix'
 depends 'windows-sdk'
 
+gem 'pkg-config'
+
 source_url 'https://github.com/chef-cookbooks/omnibus'
 issues_url 'https://github.com/chef-cookbooks/omnibus/issues'
-chef_version '>= 12.5.1' if respond_to?(:chef_version)
+chef_version '>= 12.8' if respond_to?(:chef_version)

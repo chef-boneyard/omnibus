@@ -30,7 +30,6 @@ return unless ppc64? || ppc64le?
 
 include_recipe 'omnibus::_compile'
 
-chef_gem 'pkg-config'
 require 'pkg-config'
 
 # libffi.pc is installed at below path and its not default
