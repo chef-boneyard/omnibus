@@ -35,11 +35,6 @@ platforms:
     intermediate_instructions:
       - RUN /usr/bin/apt-get update
 
-- name: centos-5
-  driver:
-    image: dokken/centos-5
-    pid_one_command: /sbin/init
-
 - name: centos-6
   driver:
     image: dokken/centos-6
@@ -54,14 +49,6 @@ platforms:
   driver:
     image: dokken/fedora-latest
     pid_one_command: /usr/lib/systemd/systemd
-
-- name: ubuntu-12.04
-  driver:
-    image: ubuntu-upstart:12.04
-    pid_one_command: /sbin/init
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install lsb-release procps -y
 
 - name: ubuntu-14.04
   driver:
