@@ -2,8 +2,6 @@ require 'chefspec'
 require 'chefspec/berkshelf'
 require 'chef/sugar'
 
-ChefSpec::Coverage.start!
-
 # load all libraries for testing
 Dir['libraries/*.rb'].each { |f| require_relative "../#{f}" }
 
