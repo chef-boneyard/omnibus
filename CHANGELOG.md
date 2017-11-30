@@ -2,6 +2,18 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.3.0
+------
+- Create mutable copy of environment to allow modication
+- Add binutils and gnupg packages for debian and derivative systems
+- Update tested OSes
+- Clean up testing
+- Resolve foodcritic issues
+- Resolve pathing issues with selinux
+- Update minimum chef supported to 12.14
+- Bump omnibus-toolchain version to 1.1.79
+- Take advantage of using gem dependency in cookbook metadata with newer Chef
+
 v5.2.2
 ------
 - Bump omnibus-toolchain version to 1.1.73
