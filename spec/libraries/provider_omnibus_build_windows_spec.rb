@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-require 'chef'
 require 'spec_helper'
 
 describe Chef::Provider::OmnibusBuildWindows do

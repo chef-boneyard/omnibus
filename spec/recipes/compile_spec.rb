@@ -32,7 +32,7 @@ describe 'omnibus::_compile' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.3')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '11.0')
                           .converge(described_recipe)
     end
 
@@ -45,7 +45,7 @@ describe 'omnibus::_compile' do
 
   context 'on RHEL' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.9').converge(described_recipe)
     end
 
     it 'installs tar' do
@@ -59,7 +59,7 @@ describe 'omnibus::_compile' do
 
   context 'on Windows' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2')
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2')
                           .converge(described_recipe)
     end
 

@@ -5,10 +5,8 @@ addons:
   apt:
     sources:
       - chef-current-trusty
-
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y chefdk=1.5.0-1
+    packages:
+      - chefdk
 
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
@@ -26,30 +24,30 @@ env:
   matrix:
     - CHEF_VERSION=12.9.38 INSTANCE=default-debian-7
     - CHEF_VERSION=12.9.38 INSTANCE=default-debian-8
-    - CHEF_VERSION=12.9.38 INSTANCE=default-ubuntu-1204
+    - CHEF_VERSION=12.9.38 INSTANCE=default-debian-9
     - CHEF_VERSION=12.9.38 INSTANCE=default-ubuntu-1404
+    - CHEF_VERSION=12.9.38 INSTANCE=default-ubuntu-1604
     - CHEF_VERSION=12.9.38 INSTANCE=default-centos-6
     - CHEF_VERSION=12.9.38 INSTANCE=default-centos-7
     - CHEF_VERSION=current INSTANCE=default-debian-7
     - CHEF_VERSION=current INSTANCE=default-debian-8
-    - CHEF_VERSION=current INSTANCE=default-ubuntu-1204
+    - CHEF_VERSION=current INSTANCE=default-debian-9
     - CHEF_VERSION=current INSTANCE=default-ubuntu-1404
+    - CHEF_VERSION=current INSTANCE=default-ubuntu-1604
     - CHEF_VERSION=current INSTANCE=default-centos-6
     - CHEF_VERSION=current INSTANCE=default-centos-7
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(chef shell-init bash)"
+  - chef --version
+  - cookstyle --version
+  - foodcritic --version
 
-script: KITCHEN_LOCAL_YAML=.kitchen.docker.yml kitchen verify ${INSTANCE}
+script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
-    - before_script:
-      - eval "$(chef shell-init bash)"
-      - chef --version
-      - cookstyle --version
-      - foodcritic --version
     - script:
-      - chef exec rake
-      env: CHEF_VERSION=12.17.44 UNIT_AND_LINT=1
+      - chef exec delivery local all
+      env: UNIT_AND_LINT=1

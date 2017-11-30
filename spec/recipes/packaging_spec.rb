@@ -5,7 +5,7 @@ describe 'omnibus::_packaging' do
 
   context 'on debian' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'debian', version: '7.4')
+      ChefSpec::SoloRunner.new(platform: 'debian', version: '7.11')
                           .converge(described_recipe)
     end
 
@@ -22,7 +22,7 @@ describe 'omnibus::_packaging' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.3')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '11.0')
                           .converge(described_recipe)
     end
 
@@ -33,7 +33,7 @@ describe 'omnibus::_packaging' do
 
   context 'on rhel' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'redhat', version: '6.7')
+      ChefSpec::SoloRunner.new(platform: 'redhat', version: '6.9')
                           .converge(described_recipe)
     end
 
