@@ -15,7 +15,7 @@ Starting with omnibus cookbook version 4.0.0:
 
 ## Requirements
 
-This cookbook requires Chef 12.5.1+.
+This cookbook requires Chef 12.14+.
 
 For a full list of supported platforms and external cookbook requirements, please see the `metadata.rb` file at the root of the cookbook.
 
@@ -111,7 +111,7 @@ The following assumes you are on a Mac OS X workstation and have installed and s
 - Author: Stephen Delano ([stephen@chef.io](mailto:stephen@chef.io))
 
 ```text
-Copyright:: 2012-2016, Chef Software, Inc. (<legal@chef.io>)
+Copyright:: 2012-2017, Chef Software, Inc. (<legal@chef.io>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
