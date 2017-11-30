@@ -46,8 +46,8 @@ describe 'omnibus::_omnibus_toolchain' do
   end
 
   context 'on Windows' do
-    let(:node_name) { 'chefdk-windows-2008r2-builder-1a6dad' }
-    let(:platform_version) { '2008R2' }
+    let(:node_name) { 'chefdk-windows-2012r2-builder-1a6dad' }
+    let(:platform_version) { '2012R2' }
 
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'windows', version: platform_version) do |node|
@@ -75,20 +75,8 @@ describe 'omnibus::_omnibus_toolchain' do
       expect(omnibus_msystem).to eq(['MINGW64'])
     end
 
-    context 'when a Windows node has a 32-bit architecture' do
-      # This version of Windows has a 32-bit arch in Fauxhai:
-      #
-      #   https://github.com/customink/fauxhai/blob/master/lib/fauxhai/platforms/windows/2003R2.json#L186
-      #
-      let(:platform_version) { '2003R2' }
-
-      it 'prefers the 32-bit MinGW toolchain' do
-        expect(omnibus_msystem).to eq(['MINGW32'])
-      end
-    end
-
     context 'when a Windows node has i386 in its name' do
-      let(:node_name) { 'chefdk-windows-2008r2-i386-builder-dcb6f4' }
+      let(:node_name) { 'chefdk-windows-2012r2-i386-builder-dcb6f4' }
 
       it 'prefers the 32-bit MinGW toolchain' do
         expect(omnibus_msystem).to eq(['MINGW32'])
