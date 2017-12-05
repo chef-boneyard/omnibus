@@ -2,9 +2,12 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.3.2
+------
+- Bump omnibus-toolchain version to 1.1.80
+
 v5.3.1
 ------
-
 - Bump to update chef_version requirements to Supermarket
 
 v5.3.0
