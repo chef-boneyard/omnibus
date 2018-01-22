@@ -29,7 +29,6 @@ depends 'remote_install'
 depends 'seven_zip'
 depends 'windows'
 depends 'wix'
-depends 'windows-sdk'
 
 gem 'pkg-config'
 
