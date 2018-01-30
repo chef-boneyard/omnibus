@@ -59,7 +59,23 @@ elsif rhel?
   end
 elsif windows?
   include_recipe 'wix::default'
-  include_recipe 'windows-sdk::windows_sdk'
+  # Because of some really nasty path issues with the Windows 8.1 SDK installer, we're
+  # not using the windows-sdk cookbook, and are installing it manually here instead :(
+  # The main issue is if the installer itself is in a long filename directory (ie
+  # C:\Users\Administrator\...) it will not install because it reads this as
+  # C:\Users\ADMINI~1\... and this somehow mangles the download path...
+  file_url = 'http://download.microsoft.com/download/B/0/C/B0C80BA3-8AD6-4958-810B-6882485230B5/standalonesdk/sdksetup.exe'
+  file_path = ::File.join(Chef::Config[:file_cache_path], 'sdksetup.exe')
+
+  remote_file file_path do
+    source file_url
+  end
+
+  # Thankfully the installer is idempotent, so we don't need a guard on this.
+  powershell_script 'convert_path_name' do
+    cwd  Chef::Config[:file_cache_path]
+    code '.\\sdksetup.exe /norestart /quiet /features OptionId.WindowsDesktopSoftwareDevelopmentKit'
+  end
 
   omnibus_env['PATH'] << node['wix']['home']
   omnibus_env['PATH'] << node['seven_zip']['home']
