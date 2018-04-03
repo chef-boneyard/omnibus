@@ -6,9 +6,9 @@ driver:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: <%= ENV['CHEF_VERSION'] || '12.21.3' %>
-  attributes:
-    vagrant: true
+  product_name: chef
+  product_version: latest
+  channel: current
 
 platforms:
   - name: centos-6
@@ -34,9 +34,6 @@ platforms:
   # as the default provider by copying `.kitchen.local.yml.vmware.example`
   # over to `.kitchen.local.yml`.
   #
-  - name: macosx-10.9
-    driver:
-      box: chef/macosx-10.9 # private
   - name: macosx-10.10
     driver:
       box: chef/macosx-10.10 # private
@@ -45,18 +42,15 @@ platforms:
       box: chef/macosx-10.11 # private
   # By adding an `i386` to the name `OMNIBUS_WINDOWS_ARCH` will be
   # configured correctly to force Omnibus to 32-bit build mode.
-  - name: windows-2008r2-standard-i386
-    driver:
-      box: chef/windows-server-2008r2-standard # private
-  - name: windows-2008r2-standard
-    driver:
-      box: chef/windows-server-2008r2-standard # private
   - name: windows-server-2012r2-standard-i386
     driver:
       box: chef/windows-server-2012r2-standard # private
   - name: windows-server-2012r2-standard
     driver:
       box: chef/windows-server-2012r2-standard # private
+  - name: windows-server-2016-standard
+    driver:
+      box: chef/windows-server-2016-standard # private
 
 suites:
   - name: default
