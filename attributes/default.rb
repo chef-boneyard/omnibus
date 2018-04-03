@@ -20,7 +20,7 @@ default['omnibus'].tap do |omnibus|
   omnibus['build_user_home']    = nil
   omnibus['install_dir']        = nil
   omnibus['toolchain_name']     = 'omnibus-toolchain'
-  omnibus['toolchain_version']  = '1.1.82'
+  omnibus['toolchain_version']  = 'latest'
   omnibus['toolchain_channel']  = 'stable'
 
   if platform_family?('windows')
