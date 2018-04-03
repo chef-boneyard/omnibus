@@ -2,6 +2,15 @@ omnibus Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the omnibus cookbook.
 
+v5.3.4
+------
+- Update toolchain to latest released version (always pull latest from stable)
+- Update kitchen yml
+  - retrieve chef-client the modern way
+  - add Win2016
+  - remove old platforms
+- Remove very old unused attributes
+
 v5.3.3
 ------
 - Bump omnibus-toolchain version to 1.1.82
