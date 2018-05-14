@@ -27,7 +27,7 @@ describe 'omnibus::_common' do
     let(:install_dir) { '/opt/foo' }
     let(:chef_run) do
       ChefSpec::SoloRunner.new do |node|
-        node.set['omnibus']['install_dir'] = install_dir
+        node.override['omnibus']['install_dir'] = install_dir
       end.converge(described_recipe)
     end
 

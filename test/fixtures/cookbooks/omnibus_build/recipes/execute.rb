@@ -6,9 +6,9 @@ include_recipe 'chef-sugar::default'
 # only happens when running things in Test Kitchen with the Vagrant driver
 # so we'll just make the `build_user` "vagrant" in this scenerio.
 if mac_os_x? && vagrant?
-  node.set['omnibus']['build_user']          = 'vagrant'
-  node.set['omnibus']['build_user_group']    = 'vagrant'
-  node.set['omnibus']['build_user_password'] = 'vagrant'
+  node.override['omnibus']['build_user']          = 'vagrant'
+  node.override['omnibus']['build_user_group']    = 'vagrant'
+  node.override['omnibus']['build_user_password'] = 'vagrant'
 end
 
 include_recipe 'omnibus::default'
