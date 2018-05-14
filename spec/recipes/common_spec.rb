@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::_common' do
-  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
+  cached(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   it 'includes _user' do
     expect(chef_run).to include_recipe('omnibus::_user')
