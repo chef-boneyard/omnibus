@@ -22,18 +22,18 @@ env:
     # Ignore warnings when running specs.
     - RUBYOPT="-W0"
   matrix:
-    - CHEF_VERSION=12.14.89 INSTANCE=default-debian-7
     - CHEF_VERSION=12.14.89 INSTANCE=default-debian-8
     - CHEF_VERSION=12.14.89 INSTANCE=default-debian-9
     - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1404
     - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1604
+    - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1804
     - CHEF_VERSION=12.14.89 INSTANCE=default-centos-6
     - CHEF_VERSION=12.14.89 INSTANCE=default-centos-7
-    - CHEF_VERSION=current INSTANCE=default-debian-7
     - CHEF_VERSION=current INSTANCE=default-debian-8
     - CHEF_VERSION=current INSTANCE=default-debian-9
     - CHEF_VERSION=current INSTANCE=default-ubuntu-1404
     - CHEF_VERSION=current INSTANCE=default-ubuntu-1604
+    - CHEF_VERSION=current INSTANCE=default-ubuntu-1804
     - CHEF_VERSION=current INSTANCE=default-centos-6
     - CHEF_VERSION=current INSTANCE=default-centos-7
 

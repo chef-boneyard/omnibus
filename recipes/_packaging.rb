@@ -25,19 +25,11 @@ include_recipe 'omnibus::_common'
 #
 
 if debian?
-  package 'devscripts'
-  package 'dpkg-dev'
-  package 'ncurses-dev'
-  package 'zlib1g-dev'
-  package 'fakeroot'
-  package 'binutils'
-  package 'gnupg'
+  package %w(devscripts dpkg-dev ncurses-dev zlib1g-dev fakeroot binutils gnupg)
 elsif freebsd?
   package 'devel/ncurses'
 elsif rhel?
-  package 'ncurses-devel'
-  package 'rpm-build'
-  package 'zlib-devel'
+  package %w(ncurses-devel rpm-build zlib-devel)
 
   if node['platform_version'].satisfies?('>= 7')
     # EL 7 split rpm-sign into its own package:  http://cholla.mmto.org/computers/linux/rpm/signing.html

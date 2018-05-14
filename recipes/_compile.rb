@@ -26,7 +26,7 @@ include_recipe 'omnibus::_common'
 # recipe should just "go away" and the build-essential cookbook should become
 # more awesome.
 #
-include_recipe 'build-essential::default' unless windows?
+build_essential 'install compilation tools' unless windows?
 
 if freebsd?
   # Ensuring BSD Make is executed with the `-B` option (backward-compat mode)
@@ -70,8 +70,7 @@ elsif rhel?
   #
   #   https://github.com/CentOS/sig-cloud-instance-images/issues/4
   #
-  package 'tar'
-  package 'bzip2'
+  package %w(tar bzip2)
 elsif windows?
   node.default['seven_zip']['syspath'] = true
   include_recipe 'seven_zip::default'
