@@ -70,8 +70,7 @@ elsif rhel?
   #
   #   https://github.com/CentOS/sig-cloud-instance-images/issues/4
   #
-  package 'tar'
-  package 'bzip2'
+  package %w(tar bzip2)
 elsif windows?
   node.default['seven_zip']['syspath'] = true
   include_recipe 'seven_zip::default'
