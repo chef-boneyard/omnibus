@@ -4,7 +4,7 @@ describe 'omnibus::_compile' do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   it 'includes build-esssential' do
-    expect(chef_run).to include_recipe('build-essential::default')
+    expect(chef_run).to install_build_essential('install compilation tools')
   end
 
   context 'on macOS' do
@@ -32,7 +32,7 @@ describe 'omnibus::_compile' do
 
   context 'on freebsd' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '11.0')
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '11.1')
                           .converge(described_recipe)
     end
 
@@ -48,12 +48,8 @@ describe 'omnibus::_compile' do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.9').converge(described_recipe)
     end
 
-    it 'installs tar' do
-      expect(chef_run).to install_package('tar')
-    end
-
-    it 'installs bzip2' do
-      expect(chef_run).to install_package('bzip2')
+    it 'installs tar and bzip2' do
+      expect(chef_run).to install_package(%w(tar bzip2))
     end
   end
 

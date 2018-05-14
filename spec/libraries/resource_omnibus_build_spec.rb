@@ -38,7 +38,7 @@ describe Chef::Resource::OmnibusBuild do
   end
 
   it 'has a default build_user based on node attributes' do
-    node.set['omnibus']['build_user'] = build_user
+    node.override['omnibus']['build_user'] = build_user
     expect(subject.build_user).to eq(build_user)
   end
 

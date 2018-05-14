@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'omnibus::_common' do
-  let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
+  cached(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
 
   it 'includes _user' do
     expect(chef_run).to include_recipe('omnibus::_user')
@@ -27,7 +27,7 @@ describe 'omnibus::_common' do
     let(:install_dir) { '/opt/foo' }
     let(:chef_run) do
       ChefSpec::SoloRunner.new do |node|
-        node.set['omnibus']['install_dir'] = install_dir
+        node.override['omnibus']['install_dir'] = install_dir
       end.converge(described_recipe)
     end
 
