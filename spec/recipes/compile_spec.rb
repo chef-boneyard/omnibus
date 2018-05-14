@@ -48,12 +48,8 @@ describe 'omnibus::_compile' do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.9').converge(described_recipe)
     end
 
-    it 'installs tar' do
-      expect(chef_run).to install_package('tar')
-    end
-
-    it 'installs bzip2' do
-      expect(chef_run).to install_package('bzip2')
+    it 'installs tar and bzip2' do
+      expect(chef_run).to install_package('tar', 'bzip2')
     end
   end
 
