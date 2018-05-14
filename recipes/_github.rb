@@ -39,7 +39,6 @@ ruby_block 'disable strict host key checking for github.com' do
   block do
     f = Chef::Util::FileEdit.new(ssh_config_file)
     f.insert_line_if_no_match(/github\.com/, <<-EOH
-
 Host github.com
   StrictHostKeyChecking no
 EOH
@@ -54,7 +53,6 @@ ruby_block 'make sudo honor ssh_auth_sock' do
   block do
     f = Chef::Util::FileEdit.new(sudoers_file)
     f.insert_line_if_no_match(/SSH_AUTH_SOCK/, <<-EOH
-
 Defaults env_keep+=SSH_AUTH_SOCK
 EOH
                              )

@@ -1,6 +1,5 @@
 module RSpec
   module Core
-    #
     module DSL
       def omnibus_build(pattern)
         Serverspec::Type::OmnibusBuild.new(pattern)
