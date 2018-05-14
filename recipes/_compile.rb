@@ -26,7 +26,7 @@ include_recipe 'omnibus::_common'
 # recipe should just "go away" and the build-essential cookbook should become
 # more awesome.
 #
-include_recipe 'build-essential::default' unless windows?
+build_essential 'install compilation tools' unless windows?
 
 if freebsd?
   # Ensuring BSD Make is executed with the `-B` option (backward-compat mode)
