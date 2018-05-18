@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## 5.5.0 (2018-05-18)
+
+- We have native sles packages now for toolchain, let's use them
+
 ## v5.4.0
 
 - Update toolchain to latest released version (always pull latest from stable)
