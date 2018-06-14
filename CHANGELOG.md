@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## 5.6.0 (2018-06-14)
+
+- Pin omnibus toolchain to 1.1.83 due to msys windows issues.
+
 ## 5.5.0 (2018-05-18)
 
 - We have native sles packages now for toolchain, let's use them
