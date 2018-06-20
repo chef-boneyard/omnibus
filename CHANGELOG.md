@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## 5.6.1 (2018-06-20)
+
+- Get latest stable toolchain
+
 ## 5.6.0 (2018-06-14)
 
 - Pin omnibus toolchain to 1.1.83 due to msys windows issues.
