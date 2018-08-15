@@ -27,7 +27,6 @@ depends 'git'
 depends 'homebrew'
 depends 'remote_install'
 depends 'seven_zip'
-depends 'windows'
 depends 'wix'
 
 gem 'pkg-config'
