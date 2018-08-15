@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## 5.7.0 (2018-08-15)
+
+- Update version for AIX xlC path
+- Move files out of the default directories, which was a Chef 11-ism
+- Remove dependency on windows cookbook, which isn't actually being used 
+
 ## 5.6.1 (2018-06-20)
 
 - Get latest stable toolchain
