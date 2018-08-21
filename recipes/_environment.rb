@@ -177,7 +177,6 @@ else
   omnibus_env['PATH'] << '/usr/local/bin'
 
   if aix?
-    omnibus_env['PATH'] << '/opt/freeware/bin'
     omnibus_env['PATH'].unshift('/opt/IBM/xlC/13.1.3/bin:/opt/IBM/xlc/13.1.3/bin:/opt/IBM/xlC/13.1.0/bin:/opt/IBM/xlc/13.1.0/bin')
   elsif solaris_10?
     omnibus_env['PATH'] << '/usr/sfw/bin'
