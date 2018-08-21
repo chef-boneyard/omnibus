@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## 5.7.2 (2018-08-21)
+
+- Remove AIX OpenTools from path
+
 ## 5.7.1 (2018-08-17)
 
 - Fix AIX env PATH
