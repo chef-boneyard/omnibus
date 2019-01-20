@@ -1,4 +1,3 @@
-
 include_recipe 'chef-sugar::default'
 
 # There are issues on Mac OS X using the `omnibus_build` resource when
