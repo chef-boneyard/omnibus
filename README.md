@@ -77,7 +77,7 @@ Include the `omnibus::default` recipe in your node's run list and override the c
 
 ## Using Test Kitchen with Docker
 
-The following assumes you are on a Mac OS X workstation and have installed and started [Kitematic](https://kitematic.com/).
+The following assumes you are on a macOS workstation and have installed and started [Kitematic](https://kitematic.com/).
 
 1. Set environment variables to point kitchen-docker at your local Kitematic instance:
 

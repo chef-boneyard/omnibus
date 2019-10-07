@@ -15,9 +15,9 @@ platforms:
     run_list: yum-epel::default
   - name: centos-7
     run_list: yum-epel::default
-  - name: debian-8
+  - name: debian-10
     run_list: apt::default
-  - name: debian-9
+  - name: debian-10
     run_list: apt::default
   - name: freebsd-10
     run_list: freebsd::portsnap
@@ -46,15 +46,15 @@ platforms:
       box: chef/macosx-10.11 # private
   # By adding an `i386` to the name `OMNIBUS_WINDOWS_ARCH` will be
   # configured correctly to force Omnibus to 32-bit build mode.
-  - name: windows-server-2012r2-standard-i386
+  - name: windows-server-2012r2-i386
     driver:
-      box: chef/windows-server-2012r2-standard # private
-  - name: windows-server-2012r2-standard
+      box: tas50/windows_2012r2
+  - name: windows-server-2012r2
     driver:
-      box: chef/windows-server-2012r2-standard # private
+      box: tas50/windows_2012r2
   - name: windows-server-2016-standard
     driver:
-      box: chef/windows-server-2016-standard # private
+      box: tas50/windows_2016
 
 suites:
   - name: default

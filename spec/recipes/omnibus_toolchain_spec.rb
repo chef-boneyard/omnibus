@@ -12,7 +12,7 @@ describe 'omnibus::_omnibus_toolchain' do
 
     context 'when version has an override' do
       before do
-        chef_run.node.normal['omnibus']['toolchain_version'] = '1.1.0-30499'
+        chef_run.node.override['omnibus']['toolchain_version'] = '1.1.0-30499'
         chef_run.converge(described_recipe)
       end
 
@@ -23,7 +23,7 @@ describe 'omnibus::_omnibus_toolchain' do
 
     context 'when channel has an override' do
       before do
-        chef_run.node.normal['omnibus']['toolchain_channel'] = 'unstable'
+        chef_run.node.override['omnibus']['toolchain_channel'] = 'unstable'
         chef_run.converge(described_recipe)
       end
 

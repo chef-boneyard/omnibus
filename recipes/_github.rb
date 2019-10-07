@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: omnibus
+# Cookbook:: omnibus
 # Recipe:: github
 #
-# Copyright 2013-2014, Chef Software, Inc.
+# Copyright:: 2013-2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ ruby_block 'disable strict host key checking for github.com' do
 Host github.com
   StrictHostKeyChecking no
     EOH
-  )
+    )
     f.write_file
   end
   only_if { ::File.exist?(ssh_config_file) }
@@ -55,7 +55,7 @@ ruby_block 'make sudo honor ssh_auth_sock' do
     f.insert_line_if_no_match(/SSH_AUTH_SOCK/, <<-EOH
 Defaults env_keep+=SSH_AUTH_SOCK
     EOH
-  )
+    )
     f.write_file
   end
   only_if { ::File.exist?(sudoers_file) }

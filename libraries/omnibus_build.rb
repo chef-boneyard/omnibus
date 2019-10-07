@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: omnibus
+# Cookbook:: omnibus
 # HWRP:: omnibus_build
 #
-# Copyright 2015, Chef Software, Inc.
+# Copyright:: 2015, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -65,10 +65,6 @@ class Chef
     include Omnibus::Helper
 
     provides :omnibus_build
-
-    def whyrun_supported?
-      true
-    end
 
     action(:execute) do
       converge_by("execute #{new_resource}") do

@@ -5,7 +5,6 @@ addons:
     packages:
       - chef-workstation
 
-# Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
 env:
@@ -22,16 +21,14 @@ env:
     # Ignore warnings when running specs.
     - RUBYOPT="-W0"
   matrix:
-    - CHEF_VERSION=12.14.89 INSTANCE=default-debian-8
     - CHEF_VERSION=12.14.89 INSTANCE=default-debian-9
-    - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1404
+    - CHEF_VERSION=12.14.89 INSTANCE=default-debian-10
     - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1604
     - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1804
     - CHEF_VERSION=12.14.89 INSTANCE=default-centos-6
     - CHEF_VERSION=12.14.89 INSTANCE=default-centos-7
-    - CHEF_VERSION=current INSTANCE=default-debian-8
     - CHEF_VERSION=current INSTANCE=default-debian-9
-    - CHEF_VERSION=current INSTANCE=default-ubuntu-1404
+    - CHEF_VERSION=current INSTANCE=default-debian-10
     - CHEF_VERSION=current INSTANCE=default-ubuntu-1604
     - CHEF_VERSION=current INSTANCE=default-ubuntu-1804
     - CHEF_VERSION=current INSTANCE=default-centos-6
@@ -41,8 +38,6 @@ before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(chef shell-init bash)"
   - chef --version
-  - cookstyle --version
-  - foodcritic --version
 
 script: KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen verify ${INSTANCE}
 
