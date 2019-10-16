@@ -21,12 +21,12 @@ env:
     # Ignore warnings when running specs.
     - RUBYOPT="-W0"
   matrix:
-    - CHEF_VERSION=12.14.89 INSTANCE=default-debian-9
-    - CHEF_VERSION=12.14.89 INSTANCE=default-debian-10
-    - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1604
-    - CHEF_VERSION=12.14.89 INSTANCE=default-ubuntu-1804
-    - CHEF_VERSION=12.14.89 INSTANCE=default-centos-6
-    - CHEF_VERSION=12.14.89 INSTANCE=default-centos-7
+    - CHEF_VERSION=14 INSTANCE=default-debian-9
+    - CHEF_VERSION=14 INSTANCE=default-debian-10
+    - CHEF_VERSION=14 INSTANCE=default-ubuntu-1604
+    - CHEF_VERSION=14 INSTANCE=default-ubuntu-1804
+    - CHEF_VERSION=14 INSTANCE=default-centos-6
+    - CHEF_VERSION=14 INSTANCE=default-centos-7
     - CHEF_VERSION=current INSTANCE=default-debian-9
     - CHEF_VERSION=current INSTANCE=default-debian-10
     - CHEF_VERSION=current INSTANCE=default-ubuntu-1604
@@ -39,7 +39,7 @@ before_script:
   - eval "$(chef shell-init bash)"
   - chef --version
 
-script: KITCHEN_LOCAL_YAML=kitchen.dokken.yml kitchen verify ${INSTANCE}
+script: KITCHEN_LOCAL_YAML=kitchen.dokken.yml CHEF_VERSION=${CHEF_VERSION} kitchen verify ${INSTANCE}
 
 matrix:
   include:

@@ -9,22 +9,21 @@ provisioner:
   product_name: chef
   product_version: latest
   channel: current
+  chef_license: accept-no-persist
 
 platforms:
   - name: centos-6
     run_list: yum-epel::default
   - name: centos-7
     run_list: yum-epel::default
-  - name: debian-10
+  - name: centos-8
+    run_list: yum-epel::default
+  - name: debian-9
     run_list: apt::default
   - name: debian-10
     run_list: apt::default
-  - name: freebsd-10
-    run_list: freebsd::portsnap
   - name: freebsd-11
     run_list: freebsd::portsnap
-  - name: ubuntu-14.04
-    run_list: apt::default
   - name: ubuntu-16.04
     run_list: apt::default
   - name: ubuntu-18.04
