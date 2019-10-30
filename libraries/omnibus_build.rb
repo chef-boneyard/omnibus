@@ -21,8 +21,6 @@ require_relative 'helper'
 class Chef
   class Resource::OmnibusBuild < Resource::LWRPBase
     resource_name :omnibus_build
-
-    actions :execute
     default_action :execute
 
     attribute :project_name,

@@ -9,4 +9,4 @@ module RSpec
 end
 
 extend RSpec::Core::DSL
-Module.send(:include, RSpec::Core::DSL)
+Module.include RSpec::Core::DSL

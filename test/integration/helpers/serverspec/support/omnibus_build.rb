@@ -2,7 +2,7 @@ require 'json'
 
 module Serverspec
   module Type
-    # rubocop:disable PredicateName
+    # rubocop:disable Naming/PredicateName
     class OmnibusBuild < Base
       def initialize(metadata_pattern)
         @metadata_pattern = metadata_pattern
