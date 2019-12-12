@@ -41,10 +41,10 @@ if freebsd?
       file.insert_line_if_no_match(/\.MAKEFLAGS:/, '.MAKEFLAGS: -B')
       file.write_file
     end
-    only_if { File.exist?('/etc/make.conf') }
+    only_if { ::File.exist?('/etc/make.conf') }
   end
 elsif mac_os_x?
-  # Use homebrew as the default package manager on OSX. We cannot install homebrew
+  # Use homebrew as the default package manager on macOS. We cannot install homebrew
   # until AFTER we have installed the XCode command line tools via build-essential
   # node.set['homebrew']['owner']       = node['omnibus']['build_user']
   node.normal['homebrew']['auto-update'] = false
