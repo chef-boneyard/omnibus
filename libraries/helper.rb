@@ -57,7 +57,7 @@ module Omnibus
     end
 
     def omnibus_env
-      node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
+      node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] }
     end
 
     def toolchain_install_dir
