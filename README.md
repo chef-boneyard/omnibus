@@ -15,7 +15,7 @@ Starting with omnibus cookbook version 4.0.0:
 
 ## Requirements
 
-This cookbook requires Chef 12.14+.
+This cookbook requires Chef 14+
 
 For a full list of supported platforms and external cookbook requirements, please see the `metadata.rb` file at the root of the cookbook.
 
@@ -24,7 +24,7 @@ For a full list of supported platforms and external cookbook requirements, pleas
 The default recipe is the main entrypoint for the cookbook and does the following:
 
 - Ensures all required Omnibus-related directories are created and owned by the build user.
-- Ensures a sane build tool-chain is installed and configured (using the [build-essential](http://community.opscode.com/cookbooks/build-essential) cookbook)
+- Ensures a sane build tool-chain is installed and configured
 - Ensures the necessary tools to run an Omnibus project (ruby, git, etc) are installed (using the [omnibus-toolchain](https://github.com/chef/omnibus-toolchain) package)
 - Includes a platform-specific recipe to apply additional tweaks as appropriate.
 
@@ -77,7 +77,7 @@ Include the `omnibus::default` recipe in your node's run list and override the c
 
 ## Using Test Kitchen with Docker
 
-The following assumes you are on a Mac OS X workstation and have installed and started [Kitematic](https://kitematic.com/).
+The following assumes you are on a macOS workstation and have installed and started [Kitematic](https://kitematic.com/).
 
 1. Set environment variables to point kitchen-docker at your local Kitematic instance:
 

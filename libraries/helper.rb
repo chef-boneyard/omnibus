@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: omnibus
+# Cookbook:: omnibus
 # Library:: helper
 #
-# Copyright 2013, Chef Software, Inc.
+# Copyright:: 2013-2019, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ module Omnibus
     end
 
     def omnibus_env
-      node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] } # ~FC001
+      node.run_state[:omnibus_env] ||= Hash.new { |hash, key| hash[key] = [] }
     end
 
     def toolchain_install_dir
@@ -86,7 +86,7 @@ module Omnibus
 
     def mixlib_install_artifact_info_for(options)
       @toolchain_artifact_info ||= begin
-        Chef::Recipe.send(:include, ChefIngredientCookbook::Helpers)
+        Chef::Recipe.include ChefIngredientCookbook::Helpers
         ensure_mixlib_install_gem_installed!
         toolchain_options = Mixlib::Install.detect_platform
         toolchain_options.merge!(options)
@@ -97,6 +97,6 @@ module Omnibus
   end
 end
 
-Chef::Node.send(:include, Omnibus::Helper)
-Chef::Recipe.send(:include, Omnibus::Helper)
-Chef::Resource.send(:include, Omnibus::Helper)
+Chef::Node.include Omnibus::Helper
+Chef::Recipe.include Omnibus::Helper
+Chef::Resource.include Omnibus::Helper
