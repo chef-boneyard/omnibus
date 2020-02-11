@@ -47,7 +47,7 @@ elsif mac_os_x?
   # Use homebrew as the default package manager on macOS. We cannot install homebrew
   # until AFTER we have installed the XCode command line tools via build-essential
   # node.set['homebrew']['owner']       = node['omnibus']['build_user']
-  node.normal['homebrew']['auto-update'] = false
+  node.default['homebrew']['auto-update'] = false
   include_recipe 'homebrew::default'
 
   # Ensure /usr/local/* are writable by the `staff` group

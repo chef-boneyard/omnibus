@@ -130,7 +130,7 @@ class Chef
       execute = Resource::Execute.new("#{new_resource.project_name}: #{command}", run_context)
       execute.command(
         <<-CODE.gsub(/^ {10}/, '')
-          . #{::File.join(build_user_home('load-omnibus-toolchain.sh'))}
+          . #{::File.join(build_user_home, 'load-omnibus-toolchain.sh')}
           #{command}
         CODE
       )
