@@ -31,10 +31,10 @@ class Chef
               required: true
     attribute :install_dir,
               kind_of: String,
-              default: lazy { |r| Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
+              default: lazy { |r| platform?('windows') ? ::File.join(ENV['SYSTEMDRIVE'], r.project_name) : "/opt/#{r.project_name}" }
     attribute :base_dir,
               kind_of: String,
-              default: lazy { Chef::Platform.windows? ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
+              default: lazy { platform?('windows') ? ::File.join(ENV['SYSTEMDRIVE'], 'omnibus-ruby') : '/var/cache/omnibus' }
     attribute :log_level,
               kind_of: Symbol,
               equal_to: [:internal, :debug, :info, :warn, :error, :fatal],

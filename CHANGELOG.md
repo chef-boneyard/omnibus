@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## Unreleased
+
+- resolved cookstyle error: libraries/omnibus_build.rb:34:35 warning: `ChefDeprecations/ChefWindowsPlatformHelper`
+- resolved cookstyle error: libraries/omnibus_build.rb:37:31 warning: `ChefDeprecations/ChefWindowsPlatformHelper`
+
 ## 5.7.2 (2018-08-21)
 
 - Remove AIX OpenTools from path
