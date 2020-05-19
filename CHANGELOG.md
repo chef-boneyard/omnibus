@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the omnibus cookbook.
 
 ## Unreleased
 
+- resolved cookstyle error: spec/recipes/compile_spec.rb:35:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
+- resolved cookstyle error: spec/recipes/packaging_spec.rb:19:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
 - resolved cookstyle error: libraries/omnibus_build.rb:34:35 warning: `ChefDeprecations/ChefWindowsPlatformHelper`
 - resolved cookstyle error: libraries/omnibus_build.rb:37:31 warning: `ChefDeprecations/ChefWindowsPlatformHelper`
 
