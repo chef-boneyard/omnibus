@@ -3,7 +3,7 @@ maintainer        'Chef Software, Inc.'
 maintainer_email  'releng@chef.io'
 license           'Apache-2.0'
 description       'Prepares a machine to be an Omnibus builder.'
-version           '5.7.2'
+version           '6.0.0'
 
 supports 'amazon'
 supports 'centos'

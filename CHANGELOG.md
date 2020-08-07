@@ -2,8 +2,10 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
-## Unreleased
+## 6.0.0 (2020-08-06)
 
+- Require Chef Infra Client 14+ to remove the dependency on build-essential - [@tas50](https://github.com/tas50)
+- Use ::File not File in the conditional - [@tas50](https://github.com/tas50)
 - resolved cookstyle error: spec/recipes/compile_spec.rb:35:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
 - resolved cookstyle error: spec/recipes/packaging_spec.rb:19:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
 - resolved cookstyle error: libraries/omnibus_build.rb:34:35 warning: `ChefDeprecations/ChefWindowsPlatformHelper`
@@ -21,7 +23,7 @@ This file is used to list changes made in each version of the omnibus cookbook.
 
 - Update version for AIX xlC path
 - Move files out of the default directories, which was a Chef 11-ism
-- Remove dependency on windows cookbook, which isn't actually being used 
+- Remove dependency on windows cookbook, which isn't actually being used
 
 ## 5.6.1 (2018-06-20)
 
