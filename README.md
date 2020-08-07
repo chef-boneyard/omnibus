@@ -8,6 +8,10 @@ This project is managed by the CHEF Release Engineering team. For more informati
 
 ## Announcement
 
+Starting with omnibus cookbook version 5.0.0:
+
+This cookbook requires Chef Infra Client 14 or later
+
 Starting with omnibus cookbook version 4.0.0:
 
 - Chef 11 is no longer supported, since 12.5.1 is required to use [chef-ingredient](https://github.com/chef-cookbooks/chef-ingredient). If needed, you can pin to omnibus version `3.2.x` to preserve the old functionality.
