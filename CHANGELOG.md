@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the omnibus cookbook.
 
+## Unreleased
+
+- resolved cookstyle error: spec/recipes/compile_spec.rb:48:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
+- resolved cookstyle error: spec/recipes/packaging_spec.rb:8:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
+- resolved cookstyle error: spec/recipes/packaging_spec.rb:30:7 warning: `ChefDeprecations/DeprecatedChefSpecPlatform`
+
 ## 6.0.0 (2020-08-06)
 
 - Require Chef Infra Client 14+ to remove the dependency on build-essential - [@tas50](https://github.com/tas50)

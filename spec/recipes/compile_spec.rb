@@ -45,7 +45,7 @@ describe 'omnibus::_compile' do
 
   context 'on RHEL' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.9').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6').converge(described_recipe)
     end
 
     it 'installs tar and bzip2' do
