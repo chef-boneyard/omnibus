@@ -5,7 +5,7 @@ describe 'omnibus::_packaging' do
 
   context 'on debian' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'debian', version: '8.10')
+      ChefSpec::SoloRunner.new(platform: 'debian', version: '8')
                           .converge(described_recipe)
     end
 
@@ -27,7 +27,7 @@ describe 'omnibus::_packaging' do
 
   context 'on rhel' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.9')
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6')
                           .converge(described_recipe)
     end
 
