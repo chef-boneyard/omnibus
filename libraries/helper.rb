@@ -86,7 +86,7 @@ module Omnibus
 
     def mixlib_install_artifact_info_for(options)
       @toolchain_artifact_info ||= begin
-        Chef::Recipe.include ChefIngredientCookbook::Helpers
+        Chef::DSL::Recipe.include ChefIngredientCookbook::Helpers
         ensure_mixlib_install_gem_installed!
         toolchain_options = Mixlib::Install.detect_platform
         toolchain_options.merge!(options)
@@ -98,5 +98,5 @@ module Omnibus
 end
 
 Chef::Node.include Omnibus::Helper
-Chef::Recipe.include Omnibus::Helper
+Chef::DSL::Recipe.include Omnibus::Helper
 Chef::Resource.include Omnibus::Helper
